@@ -1,0 +1,15 @@
+{
+  "title": "Crea una nueva cuenta para My Walet",
+  "texthintUsername": "Fulanito Wallet",
+  "texthintEmail": "yourmail@domain.com",
+  "texthintPassword": "******",
+  "labelUsername": "Nombre de usuario",
+  "labelEmail": "Email",
+  "labelPassword": "Contraseña",
+  "textMessageError": "Ocurrió un error al crear la cuenta. Por favor, inténtelo de nuevo.",
+  "singInBtnLabel": "Ya tengo una cuenta",
+  "singUpBtnLabel": "Empezar",
+  "textErrorEmail": "Correo electrónico inválido",
+  "textErrorPassword": "Número de caracteres inválidos",
+  "textErrorUsername": "Debe ser al menos 6 caracteres y solo letras"
+}

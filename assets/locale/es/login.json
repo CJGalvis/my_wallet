@@ -1,0 +1,14 @@
+{
+  "title": "Inicia sesión con tu cuenta",
+  "subtitle": "Please create an account.",
+  "texthintEmail": "yourmail@domain.com",
+  "texthintPassword": "******",
+  "labelEmail": "Email",
+  "labelPassword": "Contraseña",
+  "textMessageError": "Ocurrió un error al iniciar sesión. Por favor, inténtelo de nuevo.",
+  "singInBtnLabel": "Iniciar sesión",
+  "singUpBtnLabel": "Crear una cuenta",
+  "forgotPasswordLabel": "¿Olvidaste tu contraseña?",
+  "textErrorEmail": "Correo electrónico inválido",
+  "textErrorPassword": "Número de caracteres inválidos"
+}
