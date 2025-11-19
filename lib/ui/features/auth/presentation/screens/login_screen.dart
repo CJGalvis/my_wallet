@@ -1,45 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/ui/design_system/organisms/loading_screen.dart';
-import 'package:my_wallet/ui/features/auth/presentation/mappers/login_mapper.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/language_notifier.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/organisms/loading.dart';
+import '../../../../design_system/organisms/loading_screen.dart';
+import '../../../../helpers/message_helper.dart';
 import '../args/login_args.dart';
 import '../helpers/constans.dart';
 import '../helpers/form_validators.dart';
+import '../mappers/login_mapper.dart';
 import '../models/login_model_ui.dart';
-import '../interface/login_interface.dart';
+import '../notifiers/login_interface_notifier.dart';
 import '../presenters/login_presenter.dart';
+import '../states/login_interface_state.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerWidget {
   static const String routeName = '/login';
   final LoginArgs args;
 
   const LoginScreen({super.key, required this.args});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncLabels = ref.watch(languageProvider);
+    final presenter = ref.read(loginPresenterProvider(args));
 
-class _LoginScreenState extends State<LoginScreen>
-    implements LoginInterface {
-  late LoginPresenter _presenter;
-  late LoginModelUi _model;
-  late Loading _loading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<LanguageProvider>(
-      builder: (context, languageProvider, child) {
-        if (languageProvider.isLoading) {
-          return const LoadingScreen();
+    ref.listen<LoginInterfaceState>(
+      loginInterfaceProvider,
+      (previous, next) {
+        if (next.isLoading) {
+          Loading().show(context);
+        } else {
+          Loading().hide();
         }
 
-        _model = LoginMapper().fromMap(
-          languageProvider.getWidgetsLabels(widget.args.language),
-        );
+        if (next.errorMessage.isNotEmpty) {
+          MessageHelper.showSnackBar(
+            context,
+            message: next.errorMessage,
+            isError: true,
+          );
+        }
+
+        if (next.loginSuccess) {
+          debugPrint('por aquí pasó');
+          // Navegar a la siguiente pantalla
+        }
+      },
+    );
+
+    return asyncLabels.when(
+      loading: () => const LoadingScreen(),
+      error: (err, st) => Text('Error: $err'),
+      data: (labelsMap) {
+        final model =
+            LoginMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
           body: Container(
@@ -62,16 +78,22 @@ class _LoginScreenState extends State<LoginScreen>
                     children: [
                       const FlutterLogo(size: 100),
                       const SizedBox(height: 50),
-                      _TitleScreen(model: _model),
+                      _TitleScreen(model: model),
                       const SizedBox(height: 30),
                       _LoginForm(
-                          presenter: _presenter, model: _model),
+                        presenter: presenter,
+                        model: model,
+                      ),
                       const SizedBox(height: 10),
-                      _ForgetPasswordButton(model: _model),
+                      _ForgetPasswordButton(model: model),
                       _LoginButton(
-                          presenter: _presenter, model: _model),
+                        presenter: presenter,
+                        model: model,
+                      ),
                       _NewAccountButton(
-                          widget: widget, model: _model),
+                        model: model,
+                        callback: () => args.onNewAccount.call(),
+                      ),
                     ],
                   ),
                 ),
@@ -81,33 +103,6 @@ class _LoginScreenState extends State<LoginScreen>
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    _loading = Loading();
-    _presenter = LoginPresenter(this, widget.args);
-    super.initState();
-  }
-
-  @override
-  void loginSuccess() {
-    widget.args.onLoginSuccess?.call();
-  }
-
-  @override
-  void showErrorMessage(String message) {
-    widget.args.onLoginError?.call(message);
-  }
-
-  @override
-  void hideLoading() {
-    _loading.hide();
-  }
-
-  @override
-  void showLoading() {
-    _loading.show(context);
   }
 }
 
@@ -155,17 +150,17 @@ class _ForgetPasswordButton extends StatelessWidget {
 
 class _NewAccountButton extends StatelessWidget {
   const _NewAccountButton({
-    required this.widget,
     required LoginModelUi model,
+    required this.callback,
   }) : _model = model;
 
-  final LoginScreen widget;
   final LoginModelUi _model;
+  final VoidCallback callback;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => widget.args.onNewAccount.call(),
+      onPressed: callback,
       child: Text(
         _model.singUpBtnLabel,
         style: const TextStyle(

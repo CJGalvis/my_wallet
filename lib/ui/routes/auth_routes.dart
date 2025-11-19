@@ -18,7 +18,7 @@ class AuthRoutes {
       args: LoginArgs(
         language: AssetsConfigLanguage.assetsLanguageLogin,
         config: AuthConfig(
-          context.read<AuthGateway>(),
+          AuthGatewayFactory(context).authGateway,
         ),
         onLoginSuccess: () => Navigator.pushReplacementNamed(
           context,

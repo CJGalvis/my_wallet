@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_wallet/ui/features/auth/presentation/notifiers/login_interface_notifier.dart';
 
 import '../../../../../domain/models/error_item.dart';
 import '../../domain/entities/login_entity.dart';
 import '../args/login_args.dart';
-import '../interface/login_interface.dart';
 
 class LoginPresenter {
   final LoginArgs _args;
-  final LoginInterface _interface;
+  final LoginInterfaceNotifier _interface;
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isValidForm() => formKey.currentState?.validate() ?? false;
@@ -30,9 +31,17 @@ class LoginPresenter {
     }
 
     if (error != null) {
-      _interface.showErrorMessage(error.toString());
+      _interface.showError(error.toString());
     }
 
     _interface.hideLoading();
   }
 }
+
+final loginPresenterProvider =
+    Provider.family<LoginPresenter, LoginArgs>(
+  (ref, args) => LoginPresenter(
+    ref.read(loginInterfaceProvider.notifier),
+    args,
+  ),
+);
