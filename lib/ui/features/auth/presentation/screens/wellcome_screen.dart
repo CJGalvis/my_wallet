@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../../domain/providers/language_notifier.dart';
+import '../../../../design_system/atoms/atoms.dart';
+import '../../../../design_system/molecules/molecules.dart';
 import '../../../../design_system/organisms/loading.dart';
 import '../../../../design_system/organisms/loading_screen.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
+import '../helpers/theme.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../notifiers/wellcome_interface_notifier.dart';
@@ -42,8 +44,7 @@ class WellcomeScreen extends ConsumerWidget {
         }
 
         if (next.signedIn) {
-          debugPrint('por aquí pasó');
-          // Navegar a la siguiente pantalla
+          args.onGoogleAuthSuccess.call();
         }
       },
     );
@@ -58,92 +59,34 @@ class WellcomeScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: _getGradient(),
-            child: Column(
-              children: [
-                const SizedBox(height: 150),
-                const FlutterLogo(size: 150),
-                const SizedBox(height: 50),
-                _TitleScreen(model: model),
-                const SizedBox(height: 30),
-                _OptionsAuth(
-                  presenter: presenter,
-                  model: model,
-                  args: args,
-                ),
-                const SizedBox(height: 20),
-                _ButtonSignIn(args: args, model: model),
-                const SizedBox(height: 30),
-                _TextPolicy(model: model),
-              ],
+            decoration: AuthTheme.getBackgroundGradient(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 150),
+                  const FlutterLogo(size: 150),
+                  const SizedBox(height: 50),
+                  HeaderTitle(title: model.title),
+                  const SizedBox(height: 30),
+                  _OptionsAuth(
+                    presenter: presenter,
+                    model: model,
+                    args: args,
+                  ),
+                  const SizedBox(height: 20),
+                  ButtonSecondary(
+                    label: model.singInBtnLabel,
+                    callback: args.onLoginPressed,
+                  ),
+                  const SizedBox(height: 30),
+                  TextDisclaimer(description: model.policyText),
+                ],
+              ),
             ),
           ),
         );
       },
-    );
-  }
-
-  BoxDecoration _getGradient() {
-    return const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Colors.indigo,
-          Colors.black,
-        ],
-      ),
-    );
-  }
-}
-
-class _TextPolicy extends StatelessWidget {
-  const _TextPolicy({
-    required this.model,
-  });
-
-  final WellcomeModelUi model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Text(
-        model.policyText,
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white24),
-      ),
-    );
-  }
-}
-
-class _ButtonSignIn extends StatelessWidget {
-  const _ButtonSignIn({
-    required this.args,
-    required this.model,
-  });
-
-  final WellcomeArgs args;
-  final WellcomeModelUi model;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
-      ),
-      color: Colors.white,
-      onPressed: () => args.onLoginPressed.call(),
-      child: SizedBox(
-        width: 250,
-        height: 45,
-        child: Center(
-          child: Text(
-            model.singInBtnLabel,
-            style: TextStyle(fontSize: 18),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -164,81 +107,18 @@ class _OptionsAuth extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  presenter.signWithGoogle();
-                },
-                icon: SvgPicture.asset(
-                  'assets/icons/google.svg',
-                  width: 30,
-                  colorFilter: ColorFilter.mode(
-                    Colors.blue,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-            Text(
-              model.labelGoogle,
-              style: TextStyle(color: Colors.white),
-            )
-          ],
+        ButtonCircularSVG(
+          bottomLabel: model.labelGoogle,
+          callback: () => presenter.signWithGoogle(),
+          path: 'assets/icons/google.svg',
         ),
         const SizedBox(width: 10),
-        Column(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                onPressed: () => args.onNewAccountPressed.call(),
-                icon: const Icon(
-                  Icons.person_add_alt_1_outlined,
-                  size: 30,
-                ),
-              ),
-            ),
-            Text(
-              model.labelNewAccount,
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        )
+        ButtonCircular(
+          bottomLabel: model.labelNewAccount,
+          callback: args.onNewAccountPressed,
+          icon: Icons.person_add_alt_1_outlined,
+        ),
       ],
-    );
-  }
-}
-
-class _TitleScreen extends StatelessWidget {
-  const _TitleScreen({
-    required this.model,
-  });
-
-  final WellcomeModelUi model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      model.title,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
     );
   }
 }

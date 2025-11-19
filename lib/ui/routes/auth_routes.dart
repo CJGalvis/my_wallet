@@ -15,8 +15,7 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginSuccess: () =>
-            context.pushReplacementNamed(WellcomeScreen.routeName),
+        onLoginSuccess: () => debugPrint('Login success'),
         onLoginError: (message) {},
         onNewAccount: () => context.pushReplacementNamed(
           WellcomeScreen.routeName,
@@ -32,7 +31,7 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onRegisterSuccess: () {},
+        onRegisterSuccess: () => debugPrint('Register success'),
         onRegisterError: (value) {},
         onAlreadyAccount: () => context.pushReplacementNamed(
           LoginScreen.routeName,
@@ -55,6 +54,7 @@ class AuthRoutes {
         onNewAccountPressed: () => context.pushReplacementNamed(
           RegisterScreen.routeName,
         ),
+        onGoogleAuthSuccess: () => debugPrint('GoogleAuth success'),
       ),
     );
   }

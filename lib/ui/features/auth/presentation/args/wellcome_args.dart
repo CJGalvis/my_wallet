@@ -8,6 +8,7 @@ class WellcomeArgs {
   final VoidCallback onLoginPressed;
   final VoidCallback onGoogleAccountPressed;
   final VoidCallback onNewAccountPressed;
+  final VoidCallback onGoogleAuthSuccess;
 
   WellcomeArgs({
     required this.language,
@@ -15,5 +16,6 @@ class WellcomeArgs {
     required this.onLoginPressed,
     required this.onGoogleAccountPressed,
     required this.onNewAccountPressed,
+    required this.onGoogleAuthSuccess,
   });
 }

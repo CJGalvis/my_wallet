@@ -5,7 +5,7 @@ import '../../config/auth_config.dart';
 class LoginArgs {
   final String language;
   final AuthConfig config;
-  final VoidCallback? onLoginSuccess;
+  final VoidCallback onLoginSuccess;
   final VoidCallback onNewAccount;
   final ValueChanged<String>? onLoginError;
 

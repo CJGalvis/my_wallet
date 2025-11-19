@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_notifier.dart';
+import '../../../../design_system/atoms/atoms.dart';
 import '../../../../design_system/molecules/input.dart';
+import '../../../../design_system/molecules/molecules.dart';
 import '../../../../design_system/organisms/loading.dart';
 import '../../../../design_system/organisms/loading_screen.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/register_args.dart';
 import '../helpers/constans.dart';
 import '../helpers/form_validators.dart';
+import '../helpers/theme.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
 import '../notifiers/register_interface_notifier.dart';
@@ -44,8 +47,7 @@ class RegisterScreen extends ConsumerWidget {
         }
 
         if (next.registerSuccess) {
-          debugPrint('por aquí pasó');
-          // Navegar a la siguiente pantalla
+          args.onRegisterSuccess.call();
         }
       },
     );
@@ -60,16 +62,7 @@ class RegisterScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.indigo,
-                  Colors.black,
-                ],
-              ),
-            ),
+            decoration: AuthTheme.getBackgroundGradient(),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -78,15 +71,15 @@ class RegisterScreen extends ConsumerWidget {
                     children: [
                       const FlutterLogo(size: 100),
                       const SizedBox(height: 50),
-                      _TitleScreen(model: model),
+                      HeaderTitle(title: model.title),
                       const SizedBox(height: 30),
                       _RegisterForm(
                         presenter: presenter,
                         model: model,
                       ),
-                      _AlreadyAccountButton(
-                        model: model,
-                        callback: () => args.onAlreadyAccount.call(),
+                      ButtonText(
+                        label: model.singInBtnLabel,
+                        callback: args.onAlreadyAccount,
                       ),
                     ],
                   ),
@@ -96,51 +89,6 @@ class RegisterScreen extends ConsumerWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _TitleScreen extends StatelessWidget {
-  const _TitleScreen({
-    required RegisterModelUi model,
-  }) : _model = model;
-
-  final RegisterModelUi _model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _model.title,
-      textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    );
-  }
-}
-
-class _AlreadyAccountButton extends StatelessWidget {
-  const _AlreadyAccountButton({
-    required this.model,
-    required this.callback,
-  });
-
-  final VoidCallback callback;
-  final RegisterModelUi model;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: callback,
-      child: Text(
-        model.singInBtnLabel,
-        style: const TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }
@@ -197,29 +145,13 @@ class _RegisterForm extends StatelessWidget {
                     : _model.textErrorPassword,
           ),
           const SizedBox(height: 20),
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            color: Colors.indigo,
-            onPressed: () {
+          ButtonPrimary(
+            label: _model.singUpBtnLabel,
+            callback: () {
               FocusScope.of(context).unfocus();
               if (!_presenter.isValidForm()) return;
               _presenter.signUp();
             },
-            child: SizedBox(
-              width: double.infinity,
-              height: 45,
-              child: Center(
-                child: Text(
-                  _model.singUpBtnLabel,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       ),
