@@ -39,7 +39,7 @@ class AuthApiMock extends AuthGateway {
       (
         ErrorItem(
           code: 999,
-          message: 'Google error',
+          message: 'Google error mock',
         ),
         false,
       ),

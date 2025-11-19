@@ -9,8 +9,8 @@ import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
+import '../notifiers/wellcome_interface_notifier.dart';
 import '../presenters/wellcome_presenter.dart';
-import '../providers/wellcome_interface_notifier.dart';
 import '../states/wellcome_interface_state.dart';
 
 class WellcomeScreen extends ConsumerWidget {

@@ -7,11 +7,7 @@ import '../../application/config/assets_config_language.dart';
 final languageProvider = AsyncNotifierProvider<LanguageNotifier,
     Map<String, Map<String, dynamic>>>(
   () => LanguageNotifier(
-    assetsFileNames: [
-      AssetsConfigLanguage.assetsLanguageLogin,
-      AssetsConfigLanguage.assetsLanguageRegister,
-      AssetsConfigLanguage.assetsLanguageWellcome,
-    ],
+    assetsFileNames: AssetsConfigLanguage.assetsFileNames,
   ),
 );
 
