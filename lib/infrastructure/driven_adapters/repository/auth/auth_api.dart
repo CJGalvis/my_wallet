@@ -12,6 +12,7 @@ import '../../../helpers/auth_endpoints.dart';
 class AuthApi extends AuthGateway {
   final GoogleAuthService _googleAuthService;
   final SessionManager _session;
+  // ignore: unused_field
   final HttpClient _apiClient;
 
   AuthApi({

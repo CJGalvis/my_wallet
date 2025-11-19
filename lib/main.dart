@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
-import 'domain/providers/providers.dart';
 import 'ui/features/screens.dart';
 import 'ui/routes/routes.dart';
 
@@ -33,10 +32,7 @@ class AppState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: Providers.listenerNotifiersProviders(),
-      child: const MyApp(),
-    );
+    return ProviderScope(child: const MyApp());
   }
 }
 

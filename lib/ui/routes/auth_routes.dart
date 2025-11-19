@@ -50,6 +50,26 @@ class AuthRoutes {
     );
   }
 
+  // static WellcomeScreen getWellcomeScreen(BuildContext context) {
+  //   return WellcomeScreen(
+  //     args: WellcomeArgs(
+  //       language: AssetsConfigLanguage.assetsLanguageWellcome,
+  //       config: AuthConfig(
+  //         AuthGatewayFactory(context).authGateway,
+  //       ),
+  //       onLoginPressed: () => Navigator.pushReplacementNamed(
+  //         context,
+  //         LoginScreen.routeName,
+  //       ),
+  //       onGoogleAccountPressed: () {},
+  //       onNewAccountPressed: () => Navigator.pushReplacementNamed(
+  //         context,
+  //         RegisterScreen.routeName,
+  //       ),
+  //     ),
+  //   );
+  // }
+
   static WellcomeScreen getWellcomeScreen(BuildContext context) {
     return WellcomeScreen(
       args: WellcomeArgs(

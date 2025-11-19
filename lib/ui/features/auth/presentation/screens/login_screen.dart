@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/domain/providers/language_provider.dart';
 import 'package:my_wallet/ui/design_system/organisms/loading_screen.dart';
 import 'package:my_wallet/ui/features/auth/presentation/mappers/login_mapper.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/providers/language_provider.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/organisms/loading.dart';
 import '../args/login_args.dart';
