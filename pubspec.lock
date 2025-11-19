@@ -28,9 +28,11 @@ packages:
   api_http_client:
     dependency: "direct main"
     description:
-      path: "../../Paquetes/api_http_client"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: a9458a809659c9f0d6055a1538c843a7421da996
+      url: "https://github.com/CJGalvis/api_http_client.git"
+    source: git
     version: "0.0.1"
   args:
     dependency: transitive
@@ -527,14 +529,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -647,14 +641,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.2"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      sha256: "4e82183fa20e5ca25703ead7e05de9e4cceed1fbd1eadc1ac3cb6f565a09f272"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.5+1"
   pub_semver:
     dependency: transitive
     description:
@@ -815,9 +801,11 @@ packages:
   user_session_manager:
     dependency: "direct main"
     description:
-      path: "../../Paquetes/user_session_manager"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: e681d6e57be1da8e26bb645ce89f95806eed974f
+      url: "https://github.com/CJGalvis/user_session_manager.git"
+    source: git
     version: "0.0.1"
   vector_graphics:
     dependency: transitive
