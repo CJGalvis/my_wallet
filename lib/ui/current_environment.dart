@@ -1,5 +1,5 @@
 class CurrentEnvironment {
-  static const Environment environment = Environment.mock;
+  static const Environment environment = Environment.testing;
 
   static bool get isProduction =>
       environment == Environment.production;

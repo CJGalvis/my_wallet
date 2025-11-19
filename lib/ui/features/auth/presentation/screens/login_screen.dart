@@ -5,8 +5,7 @@ import '../../../../../domain/providers/language_notifier.dart';
 import '../../../../design_system/atoms/atoms.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/loading.dart';
-import '../../../../design_system/organisms/loading_screen.dart';
+import '../../../../design_system/organisms/organisms.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/login_args.dart';
 import '../helpers/constans.dart';
@@ -54,7 +53,7 @@ class LoginScreen extends ConsumerWidget {
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
-      error: (err, st) => Text('Error: $err'),
+      error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
         final model =
             LoginMapper().fromMap(labelsMap[args.language]!);
@@ -108,43 +107,42 @@ class LoginScreen extends ConsumerWidget {
 
 class _LoginForm extends StatelessWidget {
   const _LoginForm({
-    required LoginPresenter presenter,
-    required LoginModelUi model,
-  })  : _presenter = presenter,
-        _model = model;
+    required this.presenter,
+    required this.model,
+  });
 
-  final LoginPresenter _presenter;
-  final LoginModelUi _model;
+  final LoginPresenter presenter;
+  final LoginModelUi model;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _presenter.formKey,
+      key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           Input(
             keyboardType: TextInputType.emailAddress,
-            texthint: _model.texthintEmail,
-            label: _model.labelEmail,
+            texthint: model.texthintEmail,
+            label: model.labelEmail,
             onChanged: (value) =>
-                _presenter.loginEntity.email = value,
+                presenter.loginEntity.email = value,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
-                    : _model.textErrorEmail,
+                    : model.textErrorEmail,
           ),
           const SizedBox(height: 20),
           Input(
             obscureText: true,
-            texthint: _model.texthintPassword,
-            label: _model.labelPassword,
+            texthint: model.texthintPassword,
+            label: model.labelPassword,
             onChanged: (value) =>
-                _presenter.loginEntity.password = value,
+                presenter.loginEntity.password = value,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null
-                    : _model.textErrorPassword,
+                    : model.textErrorPassword,
           ),
         ],
       ),

@@ -5,8 +5,7 @@ import '../../../../../domain/providers/language_notifier.dart';
 import '../../../../design_system/atoms/atoms.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/loading.dart';
-import '../../../../design_system/organisms/loading_screen.dart';
+import '../../../../design_system/organisms/organisms.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/register_args.dart';
 import '../helpers/constans.dart';
@@ -54,7 +53,7 @@ class RegisterScreen extends ConsumerWidget {
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
-      error: (err, st) => Text('Error: $err'),
+      error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
         final model =
             RegisterMapper().fromMap(labelsMap[args.language]!);
@@ -95,62 +94,61 @@ class RegisterScreen extends ConsumerWidget {
 
 class _RegisterForm extends StatelessWidget {
   const _RegisterForm({
-    required RegisterPresenter presenter,
-    required RegisterModelUi model,
-  })  : _presenter = presenter,
-        _model = model;
+    required this.presenter,
+    required this.model,
+  });
 
-  final RegisterPresenter _presenter;
-  final RegisterModelUi _model;
+  final RegisterPresenter presenter;
+  final RegisterModelUi model;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _presenter.formKey,
+      key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           Input(
-            texthint: _model.texthintUsername,
-            label: _model.labelUsername,
+            texthint: model.texthintUsername,
+            label: model.labelUsername,
             onChanged: (value) =>
-                _presenter.registerEntity.username = value,
+                presenter.registerEntity.username = value,
             validator: (value) =>
                 FormValidators.textValidator(value ?? 'ƒ')
                     ? null
-                    : _model.textErrorUsername,
+                    : model.textErrorUsername,
           ),
           const SizedBox(height: 20),
           Input(
             keyboardType: TextInputType.emailAddress,
-            texthint: _model.texthintEmail,
-            label: _model.labelEmail,
+            texthint: model.texthintEmail,
+            label: model.labelEmail,
             onChanged: (value) =>
-                _presenter.registerEntity.email = value,
+                presenter.registerEntity.email = value,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
-                    : _model.textErrorEmail,
+                    : model.textErrorEmail,
           ),
           const SizedBox(height: 20),
           Input(
             obscureText: true,
-            texthint: _model.texthintPassword,
-            label: _model.labelPassword,
+            texthint: model.texthintPassword,
+            label: model.labelPassword,
             onChanged: (value) =>
-                _presenter.registerEntity.password = value,
+                presenter.registerEntity.password = value,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null
-                    : _model.textErrorPassword,
+                    : model.textErrorPassword,
           ),
           const SizedBox(height: 20),
           ButtonPrimary(
-            label: _model.singUpBtnLabel,
+            label: model.singUpBtnLabel,
             callback: () {
               FocusScope.of(context).unfocus();
-              if (!_presenter.isValidForm()) return;
-              _presenter.signUp();
+              if (!presenter.isValidForm()) return;
+              presenter.signUp();
             },
           ),
         ],

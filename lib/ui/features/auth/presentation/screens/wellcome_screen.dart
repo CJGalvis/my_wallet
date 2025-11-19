@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../domain/providers/language_notifier.dart';
 import '../../../../design_system/atoms/atoms.dart';
 import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/loading.dart';
-import '../../../../design_system/organisms/loading_screen.dart';
+import '../../../../design_system/organisms/organisms.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
 import '../helpers/theme.dart';
@@ -51,7 +50,7 @@ class WellcomeScreen extends ConsumerWidget {
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
-      error: (err, st) => Text('Error: $err'),
+      error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
         final model =
             WellcomeMapper().fromMap(labelsMap[args.language]!);

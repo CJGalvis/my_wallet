@@ -1,0 +1,1 @@
+const String ilErrorScreen = 'assets/ilustrations/page-eaten.svg';

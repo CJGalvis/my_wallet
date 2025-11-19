@@ -40,7 +40,8 @@ class LanguageNotifier
 
     for (String fileName in assetsFileNames) {
       final jsonString = await rootBundle.loadString(
-          'assets/locale/$currentLanguage/$fileName.json');
+        'assets/locale/$currentLanguage/$fileName.json',
+      );
       appLabels[fileName] = json.decode(jsonString);
     }
 
