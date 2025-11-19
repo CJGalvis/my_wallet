@@ -1,45 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/language_notifier.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/organisms/loading.dart';
 import '../../../../design_system/organisms/loading_screen.dart';
+import '../../../../helpers/message_helper.dart';
 import '../args/register_args.dart';
 import '../helpers/constans.dart';
 import '../helpers/form_validators.dart';
-import '../interface/register_interface.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
+import '../notifiers/register_interface_notifier.dart';
 import '../presenters/register_presenter.dart';
+import '../states/register_interface_state.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerWidget {
   static const String routeName = '/register';
   final RegisterArgs args;
 
   const RegisterScreen({super.key, required this.args});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncLabels = ref.watch(languageProvider);
+    final presenter = ref.read(registerPresenterProvider(args));
 
-class _RegisterScreenState extends State<RegisterScreen>
-    implements RegisterInterface {
-  late RegisterPresenter _presenter;
-  late RegisterModelUi _model;
-  late Loading _loading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<LanguageProvider>(
-      builder: (context, value, child) {
-        if (value.isLoading) {
-          return const LoadingScreen();
+    ref.listen<RegisterInterfaceState>(
+      registerInterfaceProvider,
+      (previous, next) {
+        if (next.isLoading) {
+          Loading().show(context);
+        } else {
+          Loading().hide();
         }
 
-        _model = RegisterMapper().fromMap(
-          value.getWidgetsLabels(widget.args.language),
-        );
+        if (next.errorMessage.isNotEmpty) {
+          MessageHelper.showSnackBar(
+            context,
+            message: next.errorMessage,
+            isError: true,
+          );
+        }
+
+        if (next.registerSuccess) {
+          debugPrint('por aquí pasó');
+          // Navegar a la siguiente pantalla
+        }
+      },
+    );
+
+    return asyncLabels.when(
+      loading: () => const LoadingScreen(),
+      error: (err, st) => Text('Error: $err'),
+      data: (labelsMap) {
+        final model =
+            RegisterMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
           body: Container(
@@ -62,12 +78,16 @@ class _RegisterScreenState extends State<RegisterScreen>
                     children: [
                       const FlutterLogo(size: 100),
                       const SizedBox(height: 50),
-                      _TitleScreen(model: _model),
+                      _TitleScreen(model: model),
                       const SizedBox(height: 30),
                       _RegisterForm(
-                          presenter: _presenter, model: _model),
+                        presenter: presenter,
+                        model: model,
+                      ),
                       _AlreadyAccountButton(
-                          widget: widget, model: _model),
+                        model: model,
+                        callback: () => args.onAlreadyAccount.call(),
+                      ),
                     ],
                   ),
                 ),
@@ -77,33 +97,6 @@ class _RegisterScreenState extends State<RegisterScreen>
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    _loading = Loading();
-    _presenter = RegisterPresenter(this, widget.args);
-    super.initState();
-  }
-
-  @override
-  void registerSuccess() {
-    widget.args.onRegisterSuccess.call();
-  }
-
-  @override
-  void showErrorMessage(String message) {
-    widget.args.onRegisterError?.call(message);
-  }
-
-  @override
-  void hideLoading() {
-    _loading.hide();
-  }
-
-  @override
-  void showLoading() {
-    _loading.show(context);
   }
 }
 
@@ -130,19 +123,19 @@ class _TitleScreen extends StatelessWidget {
 
 class _AlreadyAccountButton extends StatelessWidget {
   const _AlreadyAccountButton({
-    required this.widget,
-    required RegisterModelUi model,
-  }) : _model = model;
+    required this.model,
+    required this.callback,
+  });
 
-  final RegisterScreen widget;
-  final RegisterModelUi _model;
+  final VoidCallback callback;
+  final RegisterModelUi model;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => widget.args.onAlreadyAccount.call(),
+      onPressed: callback,
       child: Text(
-        _model.singInBtnLabel,
+        model.singInBtnLabel,
         style: const TextStyle(
           fontSize: 16,
           color: Colors.white,

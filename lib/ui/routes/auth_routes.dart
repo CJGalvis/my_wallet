@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/domain/factories/auth_factory.dart';
-import 'package:provider/provider.dart';
 
 import '../../application/config/assets_config_language.dart';
+import '../../domain/factories/auth_factory.dart';
 import '../features/auth/config/auth_config.dart';
-import '../features/auth/domain/gateways/auth_gateway.dart';
 import '../features/auth/presentation/args/login_args.dart';
 import '../features/auth/presentation/args/register_args.dart';
 import '../features/auth/presentation/args/wellcome_args.dart';
@@ -38,7 +36,7 @@ class AuthRoutes {
       args: RegisterArgs(
         language: AssetsConfigLanguage.assetsLanguageRegister,
         config: AuthConfig(
-          Provider.of<AuthGateway>(context, listen: false),
+          AuthGatewayFactory(context).authGateway,
         ),
         onRegisterSuccess: () {},
         onRegisterError: (value) {},
