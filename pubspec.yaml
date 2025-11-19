@@ -24,6 +24,7 @@ dependencies:
   api_http_client:
     path: ../../Paquetes/api_http_client
   flutter_riverpod: ^3.0.3
+  go_router: ^17.0.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../application/config/assets_config_language.dart';
 import '../../domain/factories/auth_factory.dart';
 import '../features/auth/config/auth_config.dart';
-import '../features/auth/presentation/args/login_args.dart';
-import '../features/auth/presentation/args/register_args.dart';
-import '../features/auth/presentation/args/wellcome_args.dart';
-import '../features/auth/presentation/screens/login_screen.dart';
-import '../features/auth/presentation/screens/register_screen.dart';
-import '../features/auth/presentation/screens/wellcome_screen.dart';
+import '../features/auth/presentation/args/args.dart';
+import '../features/screens.dart';
 
 class AuthRoutes {
   static LoginScreen getLoginScreen(BuildContext context) {
@@ -18,13 +15,10 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginSuccess: () => Navigator.pushReplacementNamed(
-          context,
-          WellcomeScreen.routeName,
-        ),
+        onLoginSuccess: () =>
+            context.pushReplacementNamed(WellcomeScreen.routeName),
         onLoginError: (message) {},
-        onNewAccount: () => Navigator.pushReplacementNamed(
-          context,
+        onNewAccount: () => context.pushReplacementNamed(
           WellcomeScreen.routeName,
         ),
       ),
@@ -40,8 +34,7 @@ class AuthRoutes {
         ),
         onRegisterSuccess: () {},
         onRegisterError: (value) {},
-        onAlreadyAccount: () => Navigator.pushReplacementNamed(
-          context,
+        onAlreadyAccount: () => context.pushReplacementNamed(
           LoginScreen.routeName,
         ),
       ),
@@ -55,13 +48,11 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginPressed: () => Navigator.pushReplacementNamed(
-          context,
+        onLoginPressed: () => context.pushReplacementNamed(
           LoginScreen.routeName,
         ),
         onGoogleAccountPressed: () {},
-        onNewAccountPressed: () => Navigator.pushReplacementNamed(
-          context,
+        onNewAccountPressed: () => context.pushReplacementNamed(
           RegisterScreen.routeName,
         ),
       ),
