@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../domain/providers/language_notifier.dart';
+import '../../../../../domain/providers/language_provider.dart';
 import '../../../../design_system/atoms/atoms.dart';
 import '../../../../design_system/molecules/input.dart';
 import '../../../../design_system/molecules/molecules.dart';
