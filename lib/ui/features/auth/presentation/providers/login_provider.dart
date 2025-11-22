@@ -8,8 +8,8 @@ part 'login_provider.g.dart';
 @riverpod
 class LoginUI extends _$LoginUI {
   @override
-  LoginUIState build() {
-    return LoginUIState.initial();
+  LoginState build() {
+    return LoginState.initial();
   }
 
   void setEmail(String value) {

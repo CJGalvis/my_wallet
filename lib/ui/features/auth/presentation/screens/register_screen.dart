@@ -8,8 +8,8 @@ import '../args/register_args.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
 import '../presenters/register_presenter.dart';
-import '../providers/register_ui_provider.dart';
-import '../states/register_ui_state.dart';
+import '../providers/register_provider.dart';
+import '../states/register_state.dart';
 
 class RegisterScreen extends ConsumerWidget {
   static const String routeName = '/register';
@@ -22,8 +22,8 @@ class RegisterScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(regiterPresenterProvider(args));
 
-    ref.listen<RegisterUIState>(
-      regiterUIProvider,
+    ref.listen<RegisterState>(
+      registerProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);
@@ -87,7 +87,7 @@ class RegisterScreen extends ConsumerWidget {
   }
 }
 
-class _RegisterForm extends StatelessWidget {
+class _RegisterForm extends ConsumerWidget {
   const _RegisterForm({
     required this.presenter,
     required this.model,
@@ -97,7 +97,9 @@ class _RegisterForm extends StatelessWidget {
   final RegisterModelUi model;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final registerProv = ref.watch(registerProvider.notifier);
+
     return Form(
       key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -106,8 +108,7 @@ class _RegisterForm extends StatelessWidget {
           Input(
             texthint: model.texthintUsername,
             label: model.labelUsername,
-            onChanged: (value) =>
-                presenter.registerEntity.username = value,
+            onChanged: registerProv.setUsername,
             validator: (value) =>
                 FormValidators.textValidator(value ?? 'ƒ')
                     ? null
@@ -118,8 +119,7 @@ class _RegisterForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: (value) =>
-                presenter.registerEntity.email = value,
+            onChanged: registerProv.setEmail,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -130,8 +130,7 @@ class _RegisterForm extends StatelessWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: (value) =>
-                presenter.registerEntity.password = value,
+            onChanged: registerProv.setPassword,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null

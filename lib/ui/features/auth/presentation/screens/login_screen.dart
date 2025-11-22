@@ -22,7 +22,7 @@ class LoginScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(loginPresenterProvider(args));
 
-    ref.listen<LoginUIState>(
+    ref.listen<LoginState>(
       loginUIProvider,
       (previous, next) {
         if (next.isLoading) {

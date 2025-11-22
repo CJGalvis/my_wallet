@@ -1,35 +1,32 @@
 import '../../domain/entities/login_entity.dart';
 
-class LoginUIState {
+class LoginState {
   final bool isLoading;
   final String errorMessage;
   final bool loginSuccess;
   final LoginEntity loginEntity;
 
-  LoginUIState({
+  LoginState({
     required this.isLoading,
     required this.errorMessage,
     required this.loginSuccess,
     required this.loginEntity,
   });
 
-  factory LoginUIState.initial() => LoginUIState(
+  factory LoginState.initial() => LoginState(
         isLoading: false,
         errorMessage: '',
         loginSuccess: false,
-        loginEntity: LoginEntity(
-          email: '',
-          password: '',
-        ),
+        loginEntity: LoginEntity.initial(),
       );
 
-  LoginUIState copyWith({
+  LoginState copyWith({
     bool? isLoading,
     String? errorMessage,
     bool? loginSuccess,
     LoginEntity? loginEntity,
   }) {
-    return LoginUIState(
+    return LoginState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       loginSuccess: loginSuccess ?? this.loginSuccess,

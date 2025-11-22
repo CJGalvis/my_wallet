@@ -1,0 +1,44 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../domain/entities/register_entity.dart';
+import '../states/register_state.dart';
+
+part 'register_provider.g.dart';
+
+@riverpod
+class Register extends _$Register {
+  @override
+  RegisterState build() => RegisterState.initial();
+
+  void setUsername(String value) {
+    state = state.copyWith(
+      registerEntity: state.registerEntity.copyWith(username: value),
+    );
+  }
+
+  void setEmail(String value) {
+    state = state.copyWith(
+      registerEntity: state.registerEntity.copyWith(email: value),
+    );
+  }
+
+  void setPassword(String value) {
+    state = state.copyWith(
+      registerEntity: state.registerEntity.copyWith(password: value),
+    );
+  }
+
+  void showLoading() => state = state.copyWith(isLoading: true);
+
+  void hideLoading() => state = state.copyWith(isLoading: false);
+
+  void showError(String message) {
+    state = state.copyWith(errorMessage: message);
+  }
+
+  void registerSuccess() {
+    state = state.copyWith(registerSuccess: true);
+  }
+
+  RegisterEntity get register => state.registerEntity;
+}
