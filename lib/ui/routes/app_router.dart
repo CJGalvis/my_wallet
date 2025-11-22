@@ -13,7 +13,7 @@ GoRouter appRouter(Ref ref) {
 
   return GoRouter(
     navigatorKey: key,
-    initialLocation: HomeScreen.routeName,
+    initialLocation: WellcomeScreen.routeName,
     routes: [
       GoRoute(
         path: WellcomeScreen.routeName,

@@ -57,7 +57,7 @@ class WellcomeScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: AuthTheme.getBackgroundGradient(),
+            decoration: AuthTheme.getBackground(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(

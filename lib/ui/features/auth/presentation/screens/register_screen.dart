@@ -56,7 +56,7 @@ class RegisterScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: AuthTheme.getBackgroundGradient(),
+            decoration: AuthTheme.getBackground(),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -137,7 +137,7 @@ class _RegisterForm extends ConsumerWidget {
                     : model.textErrorPassword,
           ),
           const SizedBox(height: 20),
-          ButtonPrimary(
+          ButtonSecondary(
             label: model.singUpBtnLabel,
             callback: () {
               FocusScope.of(context).unfocus();

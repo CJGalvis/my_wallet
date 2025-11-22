@@ -56,7 +56,7 @@ class LoginScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: AuthTheme.getBackgroundGradient(),
+            decoration: AuthTheme.getBackground(),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -76,7 +76,7 @@ class LoginScreen extends ConsumerWidget {
                         label: model.forgotPasswordLabel,
                         callback: () {},
                       ),
-                      ButtonPrimary(
+                      ButtonSecondary(
                         label: model.singInBtnLabel,
                         callback: () {
                           FocusScope.of(context).unfocus();
