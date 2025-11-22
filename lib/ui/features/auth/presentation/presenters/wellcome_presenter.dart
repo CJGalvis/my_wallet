@@ -1,12 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
 import '../args/wellcome_args.dart';
-import '../providers/wellcome_interface_notifier.dart';
+import '../providers/wellcome_ui_provider.dart';
+
+part 'wellcome_presenter.g.dart';
 
 class WellcomePresenter {
   final WellcomeArgs _args;
-  final WellcomeInterfaceNotifier _interface;
+  final WellcomeUI _interface;
 
   WellcomePresenter(this._interface, this._args);
 
@@ -31,10 +33,8 @@ class WellcomePresenter {
   }
 }
 
-final wellcomePresenterProvider =
-    Provider.family<WellcomePresenter, WellcomeArgs>(
-  (ref, args) => WellcomePresenter(
-    ref.read(wellcomeInterfaceProvider.notifier),
-    args,
-  ),
-);
+@riverpod
+WellcomePresenter wellcomePresenter(Ref ref, WellcomeArgs args) {
+  final wellcomeProvider = ref.read(wellcomeUIProvider.notifier);
+  return WellcomePresenter(wellcomeProvider, args);
+}

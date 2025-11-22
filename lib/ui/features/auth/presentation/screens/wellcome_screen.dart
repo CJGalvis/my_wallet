@@ -9,8 +9,8 @@ import '../../../../helpers/theme.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../presenters/wellcome_presenter.dart';
-import '../providers/wellcome_interface_notifier.dart';
-import '../states/wellcome_interface_state.dart';
+import '../providers/wellcome_ui_provider.dart';
+import '../states/wellcome_ui_state.dart';
 
 class WellcomeScreen extends ConsumerWidget {
   static const String routeName = '/wellcome';
@@ -23,8 +23,8 @@ class WellcomeScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(wellcomePresenterProvider(args));
 
-    ref.listen<WellcomeInterfaceState>(
-      wellcomeInterfaceProvider,
+    ref.listen<WellcomeUIState>(
+      wellcomeUIProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);
