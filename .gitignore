@@ -46,3 +46,4 @@ app.*.map.json
 /ios/GoogleService-Info.plist
 /ios/Secrets.xcconfig
 /android/app/google-services.json
+*.g.dart

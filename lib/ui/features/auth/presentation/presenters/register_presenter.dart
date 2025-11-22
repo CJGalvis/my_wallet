@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
 import '../../domain/entities/register_entity.dart';
 import '../args/register_args.dart';
-import '../providers/register_interface_notifier.dart';
+import '../providers/register_ui_provider.dart';
+
+part 'register_presenter.g.dart';
 
 class RegisterPresenter {
   final RegisterArgs _args;
-  final RegisterInterfaceNotifier _interface;
+  final RegiterUI _interface;
   GlobalKey<FormState> formKey = GlobalKey();
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
@@ -41,12 +43,8 @@ class RegisterPresenter {
   }
 }
 
-
-final registerPresenterProvider =
-    Provider.family<RegisterPresenter, RegisterArgs>(
-  (ref, args) => RegisterPresenter(
-    ref.read(registerInterfaceProvider.notifier),
-    args,
-  ),
-);
-
+@riverpod
+RegisterPresenter regiterPresenter(Ref ref, RegisterArgs args) {
+  final registerUI =  ref.read(regiterUIProvider.notifier);
+  return RegisterPresenter(registerUI, args);
+}

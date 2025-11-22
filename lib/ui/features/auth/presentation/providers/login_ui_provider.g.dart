@@ -40,7 +40,7 @@ final class LoginUIProvider extends $NotifierProvider<LoginUI, LoginUIState> {
   }
 }
 
-String _$loginUIHash() => r'3cc0b02ae4df3f4aabf68e7aa7730cb3a272b329';
+String _$loginUIHash() => r'1917030f187901a03950ff88b7f74318f7c69e42';
 
 abstract class _$LoginUI extends $Notifier<LoginUIState> {
   LoginUIState build();

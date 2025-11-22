@@ -8,8 +8,8 @@ import '../args/register_args.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
 import '../presenters/register_presenter.dart';
-import '../providers/register_interface_notifier.dart';
-import '../states/register_interface_state.dart';
+import '../providers/register_ui_provider.dart';
+import '../states/register_ui_state.dart';
 
 class RegisterScreen extends ConsumerWidget {
   static const String routeName = '/register';
@@ -20,10 +20,10 @@ class RegisterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
-    final presenter = ref.read(registerPresenterProvider(args));
+    final presenter = ref.read(regiterPresenterProvider(args));
 
-    ref.listen<RegisterInterfaceState>(
-      registerInterfaceProvider,
+    ref.listen<RegisterUIState>(
+      regiterUIProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);
