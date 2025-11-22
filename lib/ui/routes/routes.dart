@@ -1,3 +1,3 @@
-export 'auth_routes.dart';
-export 'home_routes.dart';
+export 'widgets_routes/auth_routes.dart';
+export 'widgets_routes/home_routes.dart';
 

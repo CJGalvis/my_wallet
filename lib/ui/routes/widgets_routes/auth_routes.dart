@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../application/config/assets_config_language.dart';
-import '../../domain/factories/auth_factory.dart';
-import '../features/auth/config/auth_config.dart';
-import '../features/auth/presentation/args/args.dart';
-import '../features/screens.dart';
+import '../../../application/config/assets_config_language.dart';
+import '../../../domain/factories/auth_factory.dart';
+import '../../features/auth/config/auth_config.dart';
+import '../../features/auth/presentation/args/args.dart';
+import '../../features/screens.dart';
 
 class AuthRoutes {
   static LoginScreen getLoginScreen(BuildContext context) {
@@ -52,7 +52,7 @@ class AuthRoutes {
           RegisterScreen.routeName,
         ),
         onGoogleAuthSuccess: () =>
-            context.go(DashboardScreen.routeName),
+            context.go(HomeScreen.routeName),
       ),
     );
   }
