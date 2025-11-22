@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
 import '../../../../domain/models/error_item.dart';
+import '../../../../domain/models/user_auth_model.dart';
 import '../../../../ui/features/auth/domain/entities/login_entity.dart';
 import '../../../../ui/features/auth/domain/entities/register_entity.dart';
 import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
@@ -11,7 +12,7 @@ import '../../../helpers/auth_endpoints.dart';
 
 class AuthApi extends AuthGateway {
   final GoogleAuthService _googleAuthService;
-  final SessionManager _session;
+  final SessionManager _sessionManager;
   // ignore: unused_field
   final HttpClient _apiClient;
 
@@ -20,7 +21,7 @@ class AuthApi extends AuthGateway {
     SessionManager? session,
     HttpClient? client,
   })  : _googleAuthService = googleAuthService ?? GoogleAuthService(),
-        _session = session ?? SessionManager(),
+        _sessionManager = session ?? SessionManager(),
         _apiClient = client ??
             HttpClient(
               HttpConfig(
@@ -35,43 +36,50 @@ class AuthApi extends AuthGateway {
             );
 
   @override
-  Future<(ErrorItem?, bool)> signIn(
+  Future<(ErrorItem?, UserAuth?)> signIn(
     LoginEntity loginEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, true));
+    return Future.value((null, null));
   }
 
   @override
-  Future<(ErrorItem?, bool)> signUp(
+  Future<(ErrorItem?, UserAuth?)> signUp(
     RegisterEntity registerEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, true));
+    return Future.value((null, null));
   }
 
   @override
-  Future<(ErrorItem?, bool)> signWithGoogle() async {
+  Future<(ErrorItem?, UserAuth?)> signWithGoogle() async {
     try {
       User? user = await _googleAuthService.signInWithGoogle();
 
       if (user == null) {
         return (
           ErrorItem(message: "Google sign-in cancelled", code: 001),
-          false
+          null
         );
       }
-      
-      final String? token = await user.getIdToken();
-      _session.saveToken(token ?? '');
 
-      return (null, true);
+      final String? token = await user.getIdToken();
+      _sessionManager.saveToken(token ?? '');
+
+      final UserAuth userAuth = UserAuth(
+        name: user.displayName!,
+        email: user.email!,
+        photo: user.photoURL,
+        uid: user.uid,
+      );
+
+      return (null, userAuth);
     } catch (e) {
       return (
         ErrorItem(message: e.toString(), code: 999),
-        false,
+        null,
       );
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
+import '../../../../../domain/models/user_auth_model.dart';
 import '../args/login_args.dart';
 import '../providers/login_provider.dart';
 
@@ -20,13 +21,13 @@ class LoginPresenter {
   Future<void> signIn() async {
     _loginNotifier.showLoading();
 
-    final (ErrorItem?, bool) response =
+    final (ErrorItem?, UserAuth?) response =
         await _args.config.authUseCase.signIn(_loginNotifier.login);
 
     final ErrorItem? error = response.$1;
-    final bool success = response.$2;
+    final UserAuth? success = response.$2;
 
-    if (success) {
+    if (success != null) {
       _loginNotifier.loginSuccess();
     }
 

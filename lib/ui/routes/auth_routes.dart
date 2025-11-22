@@ -31,7 +31,6 @@ class AuthRoutes {
           AuthGatewayFactory(context).authGateway,
         ),
         onRegisterSuccess: () => debugPrint('Register success'),
-        onRegisterError: (value) {},
         onAlreadyAccount: () => context.pushReplacementNamed(
           LoginScreen.routeName,
         ),
@@ -49,11 +48,11 @@ class AuthRoutes {
         onLoginPressed: () => context.pushReplacementNamed(
           LoginScreen.routeName,
         ),
-        onGoogleAccountPressed: () {},
         onNewAccountPressed: () => context.pushReplacementNamed(
           RegisterScreen.routeName,
         ),
-        onGoogleAuthSuccess: () => debugPrint('GoogleAuth success'),
+        onGoogleAuthSuccess: () =>
+            context.go(DashboardScreen.routeName),
       ),
     );
   }

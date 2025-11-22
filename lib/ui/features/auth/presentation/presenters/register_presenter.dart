@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
+import '../../../../../domain/models/user_auth_model.dart';
 import '../args/register_args.dart';
 import '../providers/register_provider.dart';
 
@@ -19,13 +20,13 @@ class RegisterPresenter {
   Future<void> signUp() async {
     _registerNotifier.showLoading();
 
-    final (ErrorItem?, bool) response =
+    final (ErrorItem?, UserAuth?) response =
         await _args.config.authUseCase.signUp(_registerNotifier.register);
 
     final ErrorItem? error = response.$1;
-    final bool success = response.$2;
+    final UserAuth? success = response.$2;
 
-    if (success) {
+    if (success != null) {
       _registerNotifier.registerSuccess();
     }
 

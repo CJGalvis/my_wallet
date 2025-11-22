@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
+import '../../../../../domain/models/user_auth_model.dart';
 import '../args/wellcome_args.dart';
 import '../providers/wellcome_provider.dart';
 
@@ -15,13 +16,13 @@ class WellcomePresenter {
   Future<void> signWithGoogle() async {
     _wellcomeNotifier.showLoading();
 
-    final (ErrorItem?, bool) response =
+    final (ErrorItem?, UserAuth?) response =
         await _args.config.authUseCase.signWithGoogle();
 
     final ErrorItem? error = response.$1;
-    final bool res = response.$2;
+    final UserAuth? res = response.$2;
 
-    if (res) {
+    if (res != null) {
       _wellcomeNotifier.signSuccess();
     }
 

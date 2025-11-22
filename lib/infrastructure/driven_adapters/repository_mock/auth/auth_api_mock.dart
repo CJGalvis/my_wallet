@@ -1,12 +1,12 @@
-
 import '../../../../domain/models/error_item.dart';
+import '../../../../domain/models/user_auth_model.dart';
 import '../../../../ui/features/auth/domain/entities/login_entity.dart';
 import '../../../../ui/features/auth/domain/entities/register_entity.dart';
 import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
 
 class AuthApiMock extends AuthGateway {
   @override
-  Future<(ErrorItem?, bool)> signIn(
+  Future<(ErrorItem?, UserAuth?)> signIn(
     LoginEntity loginEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
@@ -17,22 +17,22 @@ class AuthApiMock extends AuthGateway {
           code: 999,
           message: 'Login error',
         ),
-        false,
+        null,
       ),
     );
   }
 
   @override
-  Future<(ErrorItem?, bool)> signUp(
+  Future<(ErrorItem?, UserAuth?)> signUp(
     RegisterEntity registerEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, false));
+    return Future.value((null, null));
   }
 
   @override
-  Future<(ErrorItem?, bool)> signWithGoogle() async {
+  Future<(ErrorItem?, UserAuth?)> signWithGoogle() async {
     await Future.delayed(Duration(seconds: 2));
 
     return Future.value(
@@ -41,7 +41,7 @@ class AuthApiMock extends AuthGateway {
           code: 999,
           message: 'Google error mock',
         ),
-        false,
+        null,
       ),
     );
   }
