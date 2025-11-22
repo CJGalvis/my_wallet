@@ -32,6 +32,7 @@ class RegisterScreen extends ConsumerWidget {
         }
 
         if (next.errorMessage.isNotEmpty) {
+          args.onRegisterError?.call(next.errorMessage);
           MessageHelper.showSnackBar(
             context,
             message: next.errorMessage,

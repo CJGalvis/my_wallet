@@ -33,6 +33,7 @@ class WellcomeScreen extends ConsumerWidget {
         }
 
         if (next.errorMessage.isNotEmpty) {
+          args.onGoogleAuthError?.call(next.errorMessage);
           MessageHelper.showSnackBar(
             context,
             message: next.errorMessage,
