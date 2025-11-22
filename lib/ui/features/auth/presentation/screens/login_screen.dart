@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,8 +8,8 @@ import '../../../../helpers/helpers.dart';
 import '../mappers/login_mapper.dart';
 import '../models/login_model_ui.dart';
 import '../presenters/login_presenter.dart';
-import '../providers/login_ui_provider.dart';
-import '../states/login_ui_state.dart';
+import '../providers/login_provider.dart';
+import '../states/login_state.dart';
 
 class LoginScreen extends ConsumerWidget {
   static const String routeName = '/login';
@@ -101,7 +100,7 @@ class LoginScreen extends ConsumerWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends ConsumerWidget {
   const _LoginForm({
     required this.presenter,
     required this.model,
@@ -111,7 +110,9 @@ class _LoginForm extends StatelessWidget {
   final LoginModelUi model;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginUI = ref.watch(loginUIProvider.notifier);
+
     return Form(
       key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -121,8 +122,7 @@ class _LoginForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: (value) =>
-                presenter.loginEntity.email = value,
+            onChanged: loginUI.setEmail,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -133,8 +133,7 @@ class _LoginForm extends StatelessWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: (value) =>
-                presenter.loginEntity.password = value,
+            onChanged: loginUI.setPassword,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null

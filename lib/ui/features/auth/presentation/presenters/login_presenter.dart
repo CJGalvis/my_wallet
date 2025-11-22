@@ -2,41 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
-import '../../domain/entities/login_entity.dart';
 import '../args/login_args.dart';
-import '../providers/login_ui_provider.dart';
+import '../providers/login_provider.dart';
 
 part 'login_presenter.g.dart';
 
 class LoginPresenter {
   final LoginArgs _args;
-  final LoginUI _interface;
+  final LoginUI _loginUIProvider;
+  
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
-  LoginEntity loginEntity = LoginEntity(email: '', password: '');
-
-  LoginPresenter(this._interface, this._args);
+  LoginPresenter(this._loginUIProvider, this._args);
 
   Future<void> signIn() async {
-    _interface.showLoading();
+    _loginUIProvider.showLoading();
 
     final (ErrorItem?, bool) response =
-        await _args.config.authUseCase.signIn(loginEntity);
+        await _args.config.authUseCase.signIn(_loginUIProvider.login);
 
     final ErrorItem? error = response.$1;
     final bool success = response.$2;
 
     if (success) {
-      _interface.loginSuccess();
+      _loginUIProvider.loginSuccess();
     }
 
     if (error != null) {
-      _interface.showError(error.toString());
+      _loginUIProvider.showError(error.toString());
     }
 
-    _interface.hideLoading();
+    _loginUIProvider.hideLoading();
   }
 }
 
