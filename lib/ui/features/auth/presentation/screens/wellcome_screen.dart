@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../design_system/atoms/atoms.dart';
-import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/organisms.dart';
+import '../../../../design_system/design_system.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
-import '../helpers/theme.dart';
+import '../../../../helpers/theme.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
-import '../notifiers/wellcome_interface_notifier.dart';
 import '../presenters/wellcome_presenter.dart';
+import '../providers/wellcome_interface_notifier.dart';
 import '../states/wellcome_interface_state.dart';
 
 class WellcomeScreen extends ConsumerWidget {

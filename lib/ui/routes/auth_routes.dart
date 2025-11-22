@@ -16,7 +16,6 @@ class AuthRoutes {
           AuthGatewayFactory(context).authGateway,
         ),
         onLoginSuccess: () => debugPrint('Login success'),
-        onLoginError: (message) {},
         onNewAccount: () => context.pushReplacementNamed(
           WellcomeScreen.routeName,
         ),

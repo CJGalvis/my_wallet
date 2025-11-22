@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/models/error_item.dart';
 import '../args/wellcome_args.dart';
-import '../notifiers/wellcome_interface_notifier.dart';
+import '../providers/wellcome_interface_notifier.dart';
 
 class WellcomePresenter {
   final WellcomeArgs _args;

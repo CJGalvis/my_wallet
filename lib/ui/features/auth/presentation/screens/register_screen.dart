@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../design_system/atoms/atoms.dart';
-import '../../../../design_system/molecules/input.dart';
-import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/organisms.dart';
-import '../../../../helpers/message_helper.dart';
+import '../../../../design_system/design_system.dart';
+import '../../../../helpers/helpers.dart';
 import '../args/register_args.dart';
-import '../helpers/constans.dart';
-import '../helpers/form_validators.dart';
-import '../helpers/theme.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
-import '../notifiers/register_interface_notifier.dart';
 import '../presenters/register_presenter.dart';
+import '../providers/register_interface_notifier.dart';
 import '../states/register_interface_state.dart';
 
 class RegisterScreen extends ConsumerWidget {

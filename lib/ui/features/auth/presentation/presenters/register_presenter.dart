@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../domain/models/error_item.dart';
 import '../../domain/entities/register_entity.dart';
 import '../args/register_args.dart';
-import '../notifiers/register_interface_notifier.dart';
+import '../providers/register_interface_notifier.dart';
 
 class RegisterPresenter {
   final RegisterArgs _args;

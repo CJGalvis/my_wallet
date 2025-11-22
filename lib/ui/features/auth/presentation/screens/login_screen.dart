@@ -1,21 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../design_system/atoms/atoms.dart';
-import '../../../../design_system/molecules/input.dart';
-import '../../../../design_system/molecules/molecules.dart';
-import '../../../../design_system/organisms/organisms.dart';
-import '../../../../helpers/message_helper.dart';
+import '../../../../design_system/design_system.dart';
 import '../args/login_args.dart';
-import '../helpers/constans.dart';
-import '../helpers/form_validators.dart';
-import '../helpers/theme.dart';
+import '../../../../helpers/helpers.dart';
 import '../mappers/login_mapper.dart';
 import '../models/login_model_ui.dart';
-import '../notifiers/login_interface_notifier.dart';
 import '../presenters/login_presenter.dart';
-import '../states/login_interface_state.dart';
+import '../providers/login_ui_provider.dart';
+import '../states/login_ui_state.dart';
 
 class LoginScreen extends ConsumerWidget {
   static const String routeName = '/login';
@@ -28,8 +23,8 @@ class LoginScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(loginPresenterProvider(args));
 
-    ref.listen<LoginInterfaceState>(
-      loginInterfaceProvider,
+    ref.listen<LoginUIState>(
+      loginUIProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);
@@ -38,6 +33,7 @@ class LoginScreen extends ConsumerWidget {
         }
 
         if (next.errorMessage.isNotEmpty) {
+          args.onLoginError?.call(next.errorMessage);
           MessageHelper.showSnackBar(
             context,
             message: next.errorMessage,

@@ -1,28 +1,28 @@
-class LoginInterfaceState {
+class LoginUIState {
   final bool isLoading;
   final String errorMessage;
   final bool loginSuccess;
 
-  LoginInterfaceState({
+  LoginUIState({
     required this.isLoading,
     required this.errorMessage,
     required this.loginSuccess,
   });
 
-  factory LoginInterfaceState.initial() => LoginInterfaceState(
+  factory LoginUIState.initial() => LoginUIState(
         isLoading: false,
         errorMessage: '',
         loginSuccess: false,
       );
 
-  LoginInterfaceState copyWith({
+  LoginUIState copyWith({
     bool? isLoading,
     String? errorMessage,
     bool? loginSuccess,
   }) {
-    return LoginInterfaceState(
+    return LoginUIState(
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage ?? '',
+      errorMessage: errorMessage ?? this.errorMessage,
       loginSuccess: loginSuccess ?? this.loginSuccess,
     );
   }

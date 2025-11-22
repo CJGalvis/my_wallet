@@ -13,7 +13,7 @@ class LoginArgs {
     required this.language,
     required this.config,
     required this.onLoginSuccess,
-    required this.onLoginError,
     required this.onNewAccount,
+    this.onLoginError,
   });
 }

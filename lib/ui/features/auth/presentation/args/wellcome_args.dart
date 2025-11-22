@@ -9,6 +9,7 @@ class WellcomeArgs {
   final VoidCallback onGoogleAccountPressed;
   final VoidCallback onNewAccountPressed;
   final VoidCallback onGoogleAuthSuccess;
+  final ValueChanged<String>? onGoogleAuthError;
 
   WellcomeArgs({
     required this.language,
@@ -17,5 +18,6 @@ class WellcomeArgs {
     required this.onGoogleAccountPressed,
     required this.onNewAccountPressed,
     required this.onGoogleAuthSuccess,
+    this.onGoogleAuthError,
   });
 }
