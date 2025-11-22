@@ -13,7 +13,7 @@ GoRouter appRouter(Ref ref) {
 
   return GoRouter(
     navigatorKey: key,
-    initialLocation: WellcomeScreen.routeName,
+    initialLocation: HomeScreen.routeName,
     routes: [
       GoRoute(
         path: WellcomeScreen.routeName,
@@ -32,28 +32,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, _) =>
             AuthRoutes.getRegisterScreen(context),
       ),
-      ShellRoute(
-        builder: (context, state, child) => HomeScreen(child: child),
-        routes: [
-          GoRoute(
-            path: DashboardScreen.routeName,
-            name: DashboardScreen.routeName,
-            builder: (context, _) =>
-                HomeRoutes.getDashboardScreen(context),
-          ),
-          GoRoute(
-            path: ReportScreen.routeName,
-            name: ReportScreen.routeName,
-            builder: (context, _) =>
-                HomeRoutes.getReportScreen(context),
-          ),
-          GoRoute(
-            path: SettingsScreen.routeName,
-            name: SettingsScreen.routeName,
-            builder: (context, _) =>
-                HomeRoutes.getSettingsScreen(context),
-          ),
-        ],
+      GoRoute(
+        path: HomeScreen.routeName,
+        name: HomeScreen.routeName,
+        builder: (context, _) => HomeScreen(),
       ),
     ],
   );

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_wallet/ui/routes/routes.dart';
 
 import '../providers/navigation_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const String routeName = '/home';
-  final Widget child;
 
-  const HomeScreen({super.key, required this.child});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screens = [
+      HomeRoutes.getDashboardScreen(context),
+      HomeRoutes.getReportScreen(context),
+      HomeRoutes.getSettingsScreen(context),
+    ];
+
     final navigation = ref.watch(navigationProvider);
 
     return Scaffold(
@@ -36,7 +42,18 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: child,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeOut,
+        child: IndexedStack(
+          key: ValueKey(
+            navigation,
+          ),
+          index: navigation,
+          children: screens,
+        ),
+      ),
     );
   }
 }
