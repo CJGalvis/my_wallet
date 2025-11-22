@@ -9,36 +9,36 @@ part 'register_presenter.g.dart';
 
 class RegisterPresenter {
   final RegisterArgs _args;
-  final Register _registerProvider;
+  final RegisterNotifier _registerNotifier;
 
   GlobalKey<FormState> formKey = GlobalKey();
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
-  RegisterPresenter(this._registerProvider, this._args);
+  RegisterPresenter(this._registerNotifier, this._args);
 
   Future<void> signUp() async {
-    _registerProvider.showLoading();
+    _registerNotifier.showLoading();
 
     final (ErrorItem?, bool) response =
-        await _args.config.authUseCase.signUp(_registerProvider.register);
+        await _args.config.authUseCase.signUp(_registerNotifier.register);
 
     final ErrorItem? error = response.$1;
     final bool success = response.$2;
 
     if (success) {
-      _registerProvider.registerSuccess();
+      _registerNotifier.registerSuccess();
     }
 
     if (error != null) {
-      _registerProvider.showError(error.toString());
+      _registerNotifier.showError(error.toString());
     }
 
-    _registerProvider.hideLoading();
+    _registerNotifier.hideLoading();
   }
 }
 
 @riverpod
 RegisterPresenter regiterPresenter(Ref ref, RegisterArgs args) {
-  final registerUI =  ref.read(registerProvider.notifier);
-  return RegisterPresenter(registerUI, args);
+  final registerNotifier =  ref.read(registerProvider.notifier);
+  return RegisterPresenter(registerNotifier, args);
 }

@@ -6,7 +6,7 @@ import '../states/register_state.dart';
 part 'register_provider.g.dart';
 
 @riverpod
-class Register extends _$Register {
+class RegisterNotifier extends _$RegisterNotifier {
   @override
   RegisterState build() => RegisterState.initial();
 

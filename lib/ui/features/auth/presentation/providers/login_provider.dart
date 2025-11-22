@@ -6,7 +6,7 @@ import '../states/login_state.dart';
 part 'login_provider.g.dart';
 
 @riverpod
-class LoginUI extends _$LoginUI {
+class LoginNotifier extends _$LoginNotifier {
   @override
   LoginState build() {
     return LoginState.initial();

@@ -9,7 +9,7 @@ import '../../../../helpers/theme.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../presenters/wellcome_presenter.dart';
-import '../providers/wellcome_ui_provider.dart';
+import '../providers/wellcome_provider.dart';
 import '../states/wellcome_state.dart';
 
 class WellcomeScreen extends ConsumerWidget {
@@ -24,7 +24,7 @@ class WellcomeScreen extends ConsumerWidget {
     final presenter = ref.read(wellcomePresenterProvider(args));
 
     ref.listen<WellcomeState>(
-      wellcomeUIProvider,
+      wellcomeProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);

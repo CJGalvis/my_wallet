@@ -23,7 +23,7 @@ class LoginScreen extends ConsumerWidget {
     final presenter = ref.read(loginPresenterProvider(args));
 
     ref.listen<LoginState>(
-      loginUIProvider,
+      loginProvider,
       (previous, next) {
         if (next.isLoading) {
           Loading().show(context);
@@ -111,7 +111,7 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginUI = ref.watch(loginUIProvider.notifier);
+    final loginNotifier = ref.watch(loginProvider.notifier);
 
     return Form(
       key: presenter.formKey,
@@ -122,7 +122,7 @@ class _LoginForm extends ConsumerWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: loginUI.setEmail,
+            onChanged: loginNotifier.setEmail,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -133,7 +133,7 @@ class _LoginForm extends ConsumerWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: loginUI.setPassword,
+            onChanged: loginNotifier.setPassword,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null

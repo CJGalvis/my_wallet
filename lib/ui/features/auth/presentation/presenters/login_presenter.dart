@@ -9,37 +9,37 @@ part 'login_presenter.g.dart';
 
 class LoginPresenter {
   final LoginArgs _args;
-  final LoginUI _loginUIProvider;
+  final LoginNotifier _loginNotifier;
   
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
-  LoginPresenter(this._loginUIProvider, this._args);
+  LoginPresenter(this._loginNotifier, this._args);
 
   Future<void> signIn() async {
-    _loginUIProvider.showLoading();
+    _loginNotifier.showLoading();
 
     final (ErrorItem?, bool) response =
-        await _args.config.authUseCase.signIn(_loginUIProvider.login);
+        await _args.config.authUseCase.signIn(_loginNotifier.login);
 
     final ErrorItem? error = response.$1;
     final bool success = response.$2;
 
     if (success) {
-      _loginUIProvider.loginSuccess();
+      _loginNotifier.loginSuccess();
     }
 
     if (error != null) {
-      _loginUIProvider.showError(error.toString());
+      _loginNotifier.showError(error.toString());
     }
 
-    _loginUIProvider.hideLoading();
+    _loginNotifier.hideLoading();
   }
 }
 
 @riverpod
 LoginPresenter loginPresenter(Ref ref, LoginArgs args) {
-  final loginUI = ref.read(loginUIProvider.notifier);
-  return LoginPresenter(loginUI, args);
+  final loginNotifier = ref.read(loginProvider.notifier);
+  return LoginPresenter(loginNotifier, args);
 }

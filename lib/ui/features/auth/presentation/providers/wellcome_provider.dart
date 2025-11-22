@@ -2,10 +2,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../states/wellcome_state.dart';
 
-part 'wellcome_ui_provider.g.dart';
+part 'wellcome_provider.g.dart';
 
 @riverpod
-class WellcomeUI extends _$WellcomeUI {
+class WellcomeNotifier extends _$WellcomeNotifier {
   @override
   WellcomeState build() => WellcomeState.initial();
 
