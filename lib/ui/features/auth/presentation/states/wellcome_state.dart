@@ -1,26 +1,26 @@
-class WellcomeUIState {
+class WellcomeState {
   final bool isLoading;
   final String errorMessage;
   final bool signedIn;
 
-  WellcomeUIState({
+  WellcomeState({
     required this.isLoading,
     required this.errorMessage,
     required this.signedIn,
   });
 
-  factory WellcomeUIState.initial() => WellcomeUIState(
+  factory WellcomeState.initial() => WellcomeState(
         isLoading: false,
         errorMessage: '',
         signedIn: false,
       );
 
-  WellcomeUIState copyWith({
+  WellcomeState copyWith({
     bool? isLoading,
     String? errorMessage,
     bool? signedIn,
   }) {
-    return WellcomeUIState(
+    return WellcomeState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? '',
       signedIn: signedIn ?? this.signedIn,

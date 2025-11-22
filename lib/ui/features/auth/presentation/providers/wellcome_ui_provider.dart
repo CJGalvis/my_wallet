@@ -1,13 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../states/wellcome_ui_state.dart';
+import '../states/wellcome_state.dart';
 
 part 'wellcome_ui_provider.g.dart';
 
 @riverpod
 class WellcomeUI extends _$WellcomeUI {
   @override
-  WellcomeUIState build() => WellcomeUIState.initial();
+  WellcomeState build() => WellcomeState.initial();
 
   void showLoading() => state = state.copyWith(isLoading: true);
 

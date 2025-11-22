@@ -10,7 +10,7 @@ import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../presenters/wellcome_presenter.dart';
 import '../providers/wellcome_ui_provider.dart';
-import '../states/wellcome_ui_state.dart';
+import '../states/wellcome_state.dart';
 
 class WellcomeScreen extends ConsumerWidget {
   static const String routeName = '/wellcome';
@@ -23,7 +23,7 @@ class WellcomeScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(wellcomePresenterProvider(args));
 
-    ref.listen<WellcomeUIState>(
+    ref.listen<WellcomeState>(
       wellcomeUIProvider,
       (previous, next) {
         if (next.isLoading) {
