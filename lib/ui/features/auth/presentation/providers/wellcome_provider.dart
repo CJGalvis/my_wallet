@@ -1,3 +1,4 @@
+import 'package:my_wallet/domain/models/user_auth_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../states/wellcome_state.dart';
@@ -16,5 +17,10 @@ class WellcomeNotifier extends _$WellcomeNotifier {
   void showError(String message) =>
       state = state.copyWith(errorMessage: message);
 
-  void signSuccess() => state = state.copyWith(signedIn: true);
+  void signSuccess(UserAuth user) {
+    state = state.copyWith(
+      signedIn: true,
+      userAuth: user,
+    );
+  }
 }

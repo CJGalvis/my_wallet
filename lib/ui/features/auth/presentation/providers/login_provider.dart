@@ -1,6 +1,7 @@
 import 'package:my_wallet/ui/features/auth/domain/entities/login_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../../domain/models/user_auth_model.dart';
 import '../states/login_state.dart';
 
 part 'login_provider.g.dart';
@@ -34,7 +35,12 @@ class LoginNotifier extends _$LoginNotifier {
     );
   }
 
-  void loginSuccess() => state = state.copyWith(loginSuccess: true);
+  void loginSuccess(UserAuth userAuth) {
+    state = state.copyWith(
+      loginSuccess: true,
+      userAuth: userAuth,
+    );
+  }
 
   LoginEntity get login => state.loginEntity;
 }

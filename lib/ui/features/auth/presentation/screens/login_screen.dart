@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../args/login_args.dart';
 import '../../../../helpers/helpers.dart';
@@ -21,6 +22,7 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(loginPresenterProvider(args));
+    final sessionNotifier = ref.watch(userSessionProvider.notifier);
 
     ref.listen<LoginState>(
       loginProvider,
@@ -41,6 +43,7 @@ class LoginScreen extends ConsumerWidget {
         }
 
         if (next.loginSuccess) {
+          sessionNotifier.setUserSession(next.userAuth);
           args.onLoginSuccess.call();
         }
       },

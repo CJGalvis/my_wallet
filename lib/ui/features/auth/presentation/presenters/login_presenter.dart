@@ -28,7 +28,7 @@ class LoginPresenter {
     final UserAuth? success = response.$2;
 
     if (success != null) {
-      _loginNotifier.loginSuccess();
+      _loginNotifier.loginSuccess(success);
     }
 
     if (error != null) {

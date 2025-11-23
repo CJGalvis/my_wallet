@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
@@ -22,6 +23,7 @@ class WellcomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(wellcomePresenterProvider(args));
+    final sessionNotifier = ref.watch(userSessionProvider.notifier);
 
     ref.listen<WellcomeState>(
       wellcomeProvider,
@@ -42,6 +44,7 @@ class WellcomeScreen extends ConsumerWidget {
         }
 
         if (next.signedIn) {
+          sessionNotifier.setUserSession(next.userAuth);
           args.onGoogleAuthSuccess.call();
         }
       },

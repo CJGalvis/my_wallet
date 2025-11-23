@@ -1,0 +1,1 @@
+enum SummaryType { incomes, expenses }

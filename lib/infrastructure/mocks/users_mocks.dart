@@ -5,5 +5,6 @@ class UsersMocks {
         name: 'Fulanito',
         email: 'fulano@mail.com',
         uid: 'uid',
+        photo: 'https://avatar.iran.liara.run/public',
       );
 }

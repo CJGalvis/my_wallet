@@ -13,7 +13,7 @@ GoRouter appRouter(Ref ref) {
 
   return GoRouter(
     navigatorKey: key,
-    initialLocation: HomeScreen.routeName,
+    initialLocation: WellcomeScreen.routeName,
     routes: [
       GoRoute(
         path: WellcomeScreen.routeName,
@@ -35,7 +35,7 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: HomeScreen.routeName,
         name: HomeScreen.routeName,
-        builder: (context, _) => HomeScreen(),
+        builder: (context, _) => HomeRoutes.getHomeScreen(context),
       ),
     ],
   );

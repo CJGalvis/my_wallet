@@ -10,4 +10,11 @@ class UserAuth {
     required this.uid,
     this.photo,
   });
+
+  factory UserAuth.initial() => UserAuth(
+        name: '',
+        email: '',
+        photo: '',
+        uid:'',
+      );
 }

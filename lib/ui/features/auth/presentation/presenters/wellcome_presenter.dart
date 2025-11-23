@@ -23,7 +23,7 @@ class WellcomePresenter {
     final UserAuth? res = response.$2;
 
     if (res != null) {
-      _wellcomeNotifier.signSuccess();
+      _wellcomeNotifier.signSuccess(res);
     }
 
     if (error != null) {

@@ -3,6 +3,7 @@ import '../../../../domain/models/user_auth_model.dart';
 import '../../../../ui/features/auth/domain/entities/login_entity.dart';
 import '../../../../ui/features/auth/domain/entities/register_entity.dart';
 import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
+import '../../../mocks/users_mocks.dart';
 
 class AuthApiMock extends AuthGateway {
   @override
@@ -33,16 +34,11 @@ class AuthApiMock extends AuthGateway {
 
   @override
   Future<(ErrorItem?, UserAuth?)> signWithGoogle() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
-    return Future.value(
-      (
-        ErrorItem(
-          code: 999,
-          message: 'Google error mock',
-        ),
-        null,
-      ),
-    );
+    return Future.value((
+      null,
+      UsersMocks.getUserAuth(),
+    ));
   }
 }

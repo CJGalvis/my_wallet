@@ -4,3 +4,4 @@ export 'button_primary.dart';
 export 'button_secondary.dart';
 export 'button_text.dart';
 export 'input.dart';
+export 'title_feed.dart';

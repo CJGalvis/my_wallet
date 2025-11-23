@@ -17,7 +17,7 @@ class TextDisclaimer extends StatelessWidget {
       child: Text(
         description,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white24),
+        style: TextStyle(color: Colors.white70),
       ),
     );
   }
