@@ -1,21 +1,23 @@
 class HomeModelUi {
-  final AppBarHome appbar;
+  final AppBarHome appBar;
   final String newPocketLabel;
   final String incomesLabel;
   final String expensesLabel;
   final String currentBalance;
   final String categoryExpenses;
-  final String categoryIncomes;
+  final String descriptionIncomes;
+  final String descriptionExpenses;
   final String latestRecords;
 
   HomeModelUi({
-    required this.appbar,
+    required this.appBar,
     required this.newPocketLabel,
     required this.incomesLabel,
     required this.expensesLabel,
     required this.currentBalance,
     required this.categoryExpenses,
-    required this.categoryIncomes,
+    required this.descriptionIncomes,
+    required this.descriptionExpenses,
     required this.latestRecords,
   });
 }

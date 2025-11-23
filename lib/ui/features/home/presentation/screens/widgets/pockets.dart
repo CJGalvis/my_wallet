@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
+import 'package:my_wallet/ui/features/home/presentation/helpers/format_helper.dart';
 import 'package:my_wallet/ui/features/home/presentation/providers/pockets_provider.dart';
 
 import '../../helpers/constants.dart';
@@ -19,7 +20,8 @@ class Pockets extends ConsumerWidget {
         ? pockets.length
         : pockets.length + 1;
 
-    return SizedBox(
+    return Container(
+      color: Colors.indigoAccent.shade200,
       width: double.infinity,
       height: 130,
       child: Padding(
@@ -92,7 +94,7 @@ class _PocketBalance extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.contain,
       child: Text(
-        '\$$balance',
+        '\$ ${FormatHelper.currency(balance)}',
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

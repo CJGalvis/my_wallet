@@ -6,16 +6,17 @@ class HomeMapper extends Mapper<HomeModelUi> {
   @override
   HomeModelUi fromMap(Map<String, dynamic> json) {
     return HomeModelUi(
-      appbar: AppBarHome(
-        greeting: json['appbar']['greeting'],
-        avatar: json['appbar']['greeting'],
+      appBar: AppBarHome(
+        greeting: json['appBar']['greeting'],
+        avatar: json['appBar']['greeting'],
       ),
       newPocketLabel: json['newPocketLabel'],
       incomesLabel: json['incomesLabel'],
       expensesLabel: json['expensesLabel'],
       currentBalance: json['currentBalance'],
       categoryExpenses: json['categoryExpenses'],
-      categoryIncomes: json['categoryIncomes'],
+      descriptionExpenses: json['descriptionExpenses'],
+      descriptionIncomes: json['descriptionIncomes'],
       latestRecords: json['latestRecords'],
     );
   }
@@ -23,13 +24,14 @@ class HomeMapper extends Mapper<HomeModelUi> {
   @override
   Map<String, dynamic>? toMap(HomeModelUi data) {
     return {
-      'appBar': data.appbar,
+      'appBar': data.appBar,
       'newPocketLabel': data.newPocketLabel,
       'incomesLabel': data.incomesLabel,
       'expensesLabel': data.expensesLabel,
       'currentBalance': data.currentBalance,
       'categoryExpenses': data.categoryExpenses,
-      'categoryIncomes': data.categoryIncomes,
+      'descriptionIncomes': data.descriptionIncomes,
+      'descriptionExpenses': data.descriptionExpenses,
       'latestRecords': data.latestRecords,
     };
   }

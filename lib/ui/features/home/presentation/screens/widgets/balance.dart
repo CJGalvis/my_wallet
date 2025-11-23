@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet/ui/features/home/presentation/providers/balance_provider.dart';
 
 import '../../../../../design_system/molecules/molecules.dart';
+import '../../helpers/format_helper.dart';
 
 class Balance extends ConsumerWidget {
   const Balance({
@@ -35,7 +36,7 @@ class Balance extends ConsumerWidget {
               FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
-                  '\$$balance',
+                  '\$ ${FormatHelper.currency(balance)}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

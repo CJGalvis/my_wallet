@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet/domain/providers/user_session_provider.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/expenses_provider.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/incomes_provider.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../design_system/organisms/organisms.dart';
+import '../../../../../domain/providers/user_session_provider.dart';
+import '../../../../design_system/design_system.dart';
 import '../../domain/models/summary_type.dart';
 import '../args/home_args.dart';
 import '../mappers/home_mapper.dart';
+import '../providers/expenses_provider.dart';
+import '../providers/incomes_provider.dart';
 import 'widgets/widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -36,20 +36,21 @@ class HomeScreen extends ConsumerWidget {
         return Scaffold(
           backgroundColor: Colors.indigoAccent.shade200,
           appBar: AppBar(
-            toolbarHeight: 70,
+            toolbarHeight: sizeAppBar,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+                bottomLeft: borderRadius10,
+                bottomRight: borderRadius10,
               ),
             ),
-            title:
-                Text('${model.appbar.greeting} ${userSession.name}'),
+            title: Text(
+              '${model.appBar.greeting} ${userSession.name}',
+            ),
             leading: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(padding10),
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  userSession.photo ?? model.appbar.avatar,
+                  userSession.photo ?? model.appBar.avatar,
                 ),
               ),
             ),
@@ -68,27 +69,27 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               children: [
                 Pockets(),
-                const SizedBox(height: 20),
+                SizedBox(height: sizeBox20),
                 SummaryCard(
                   type: SummaryType.incomes,
                   title: model.incomesLabel,
-                  description: 'Mes actual',
+                  description: model.descriptionIncomes,
                   value: incomes,
                   callback: () {},
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: sizeBox20),
                 SummaryCard(
                   type: SummaryType.expenses,
                   title: model.expensesLabel,
-                  description: 'Mes actual',
+                  description: model.descriptionExpenses,
                   value: expenses,
                   callback: () {},
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: sizeBox20),
                 Balance(label: model.currentBalance),
-                const SizedBox(height: 20),
+                SizedBox(height: sizeBox20),
                 RecordsCategories(title: model.categoryExpenses),
-                const SizedBox(height: 20),
+                SizedBox(height: sizeBox20),
               ],
             ),
           ),

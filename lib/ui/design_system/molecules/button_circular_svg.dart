@@ -20,8 +20,8 @@ class ButtonCircularSVG extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: radiusbuttonCircular,
-          height: radiusbuttonCircular,
+          width: radiusButtonCircular,
+          height: radiusButtonCircular,
           decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet/ui/features/home/presentation/providers/expenses_category_provider.dart';
 
 import '../../../../../design_system/molecules/molecules.dart';
+import '../../helpers/format_helper.dart';
 
 class RecordsCategories extends ConsumerWidget {
   const RecordsCategories({
@@ -54,7 +55,7 @@ class RecordsCategories extends ConsumerWidget {
                     ),
                     trailing: FittedBox(
                       child: Text(
-                        '\$${expense.balance}',
+                        '\$ ${FormatHelper.currency(expense.balance)}',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,

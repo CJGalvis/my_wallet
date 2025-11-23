@@ -28,6 +28,7 @@ dependencies:
   api_http_client:
     git:
       url: https://github.com/CJGalvis/api_http_client.git
+  intl: ^0.20.2
     # path: ../../Paquetes/api_http_client
 
 dev_dependencies:

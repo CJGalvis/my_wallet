@@ -1,13 +1,14 @@
 {
-    "appbar": {
+    "appBar": {
         "greeting": "Hola",
         "avatar": "https://avatar.iran.liara.run/public"
     },
     "newPocketLabel": "Nuevo",
     "incomesLabel": "Ingresos",
+    "descriptionIncomes": "Mes actual",
     "expensesLabel": "Egresos",
+    "descriptionExpenses": "Mes actual",
     "currentBalance": "Saldo actual",
     "categoryExpenses": "Gastos por categoría",
-    "categoryIncomes": "Ingresos por categoría",
     "latestRecords": "Últimos registros"
 }

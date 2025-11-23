@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/summary_type.dart';
+import '../../helpers/format_helper.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({
@@ -82,7 +83,7 @@ class _BalanceSummary extends StatelessWidget {
         FittedBox(
           fit: BoxFit.contain,
           child: Text(
-            '\$$value',
+            '\$ ${FormatHelper.currency(value)}',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
