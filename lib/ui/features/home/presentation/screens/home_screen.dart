@@ -123,7 +123,7 @@ class _ThemeModeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark =
-        ref.read(themeAppProvider.notifier).isDark(context);
+        ref.watch(themeAppProvider.notifier).isDark(context);
 
     return IconButton(
       icon: Icon(
@@ -131,9 +131,7 @@ class _ThemeModeButton extends ConsumerWidget {
       ),
       onPressed: () {
         ref.read(themeAppProvider.notifier).setTheme(
-              themeMode == ThemeMode.light
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
+              isDark ? ThemeMode.light : ThemeMode.dark,
             );
       },
     );

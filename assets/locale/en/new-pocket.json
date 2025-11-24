@@ -1,0 +1,22 @@
+{
+    "appBarTitle": "Nuevo bolsillo",
+    "typePocketInput": {
+        "label": "Tipo",
+        "textHint": "Efectivo"
+    },
+    "namePocketInput": {
+        "label": "Nombre",
+        "textHint": "Mi banco",
+        "maxLength": 15
+    },
+    "balancePocketInput": {
+        "label": "Saldo actual",
+        "textHint": "120,000.00"
+    },
+    "typePocketOptions": [
+        "Cuenta",
+        "Tarjeta",
+        "Efectivo"
+    ],
+    "btnSave": "Crear"
+}

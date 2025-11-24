@@ -51,7 +51,8 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: NewPocketScreen.routeName,
         name: NewPocketScreen.routeName,
-        builder: (context, _) => NewPocketScreen(),
+        builder: (context, _) =>
+            PocketsRoutes.getNewPocketScreen(context),
       ),
       GoRoute(
         path: NewRecordScreen.routeName,

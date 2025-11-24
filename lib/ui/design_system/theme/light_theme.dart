@@ -8,6 +8,7 @@ class AppLightTheme {
         scaffoldBackgroundColor: Colors.blueGrey.shade50,
         appBarTheme: _appBarTheme(),
         floatingActionButtonTheme: _floatingButtonTheme(),
+        primaryColorLight: Colors.indigo,
         highlightColor: Colors.indigo,
         hintColor: Colors.indigo.shade200
       );

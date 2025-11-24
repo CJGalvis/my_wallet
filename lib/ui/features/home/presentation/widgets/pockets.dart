@@ -37,7 +37,7 @@ class Pockets extends ConsumerWidget {
       height: 120,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Expanded(
+        child: SizedBox(
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: length,

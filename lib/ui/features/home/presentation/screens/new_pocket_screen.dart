@@ -6,64 +6,90 @@ import 'package:go_router/go_router.dart';
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
 import '../../domain/models/pocket_type.dart';
+import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
+import '../mappers/new_pocket_mapper.dart';
+import '../models/new_pocket_model_ui.dart';
 import '../providers/providers.dart';
+
+//ToDo: agrear formulario y validacion 
 
 class NewPocketScreen extends ConsumerWidget {
   static const String routeName = '/new-pocket';
-  const NewPocketScreen({super.key});
+  final NewPocketArgs args;
+
+  const NewPocketScreen({super.key, required this.args});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final asyncLabels = ref.watch(languageProvider);
     final newPocket = ref.watch(newPocketProvider);
     final controllerType =
         TextEditingController(text: newPocket.type.name);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('New pocket'),
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: Icon(Icons.close),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              PocketPreview(),
-              SizedBox(height: sizeBox20),
-              CustomInput(
-                controller: controllerType,
-                onTap: () => _openBottomSheet(context, ref),
-                prefixIcon: Icons.payments_outlined,
-                onChanged: (value) {},
-                texthint: 'Efectivo',
-                label: 'Tipo',
-              ),
-              SizedBox(height: sizeBox20),
-              CustomInput(
-                prefixIcon: Icons.text_fields,
-                onChanged:
-                    ref.read(newPocketProvider.notifier).setName,
-                texthint: 'Mi banco',
-                label: 'Nombre',
-              ),
-              SizedBox(height: sizeBox20),
-              CustomInputBalance(
-                prefixIcon: Icons.attach_money_outlined,
-                onChanged: (value) => _onChangeBalance(value, ref),
-                texthint: '30000',
-                label: 'Saldo actual',
-              ),
-              SizedBox(height: sizeBox20),
-            ],
+    return asyncLabels.when(
+      loading: () => LoadingScreen(),
+      error: (error, stackTrace) => ErrorScreen(),
+      data: (labelsMap) {
+        final model =
+            NewPocketMapper().fromMap(labelsMap[args.language]!);
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(model.appBarTitle),
+            leading: IconButton(
+              onPressed: () {
+                context.pop();
+              },
+              icon: Icon(Icons.close),
+            ),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  PocketPreview(),
+                  SizedBox(height: sizeBox20),
+                  CustomInput(
+                    readOnly: true,
+                    controller: controllerType,
+                    onTap: () =>
+                        _openBottomSheet(context, ref, model),
+                    prefixIcon: Icons.payments_outlined,
+                    onChanged: (value) {},
+                    texthint: model.typePocketInput.textHint,
+                    label: model.typePocketInput.label,
+                  ),
+                  SizedBox(height: sizeBox20),
+                  CustomInput(
+                    prefixIcon: Icons.text_fields,
+                    onChanged:
+                        ref.read(newPocketProvider.notifier).setName,
+                    texthint: model.namePocketInput.textHint,
+                    label: model.namePocketInput.label,
+                  ),
+                  SizedBox(height: sizeBox20),
+                  CustomInputBalance(
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true),
+                    prefixIcon: Icons.attach_money_outlined,
+                    onChanged: (value) =>
+                        _onChangeBalance(value, ref),
+                    texthint: model.balancePocketInput.textHint,
+                    label: model.balancePocketInput.label,
+                  ),
+                  SizedBox(height: sizeBox20),
+                  ButtonPrimary(
+                    callback: args.onPressedPrimaryButton,
+                    label: model.btnSave,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -74,7 +100,11 @@ class NewPocketScreen extends ConsumerWidget {
     ref.read(newPocketProvider.notifier).setBalance(amount);
   }
 
-  Future<void> _openBottomSheet(BuildContext context, WidgetRef ref) {
+  Future<void> _openBottomSheet(
+    BuildContext context,
+    WidgetRef ref,
+    NewPocketModelUi model,
+  ) {
     return showModalBottomSheet<void>(
       context: context,
       builder: (context) {
@@ -93,16 +123,39 @@ class NewPocketScreen extends ConsumerWidget {
               tiles: [
                 ListTile(
                   leading: Icon(Icons.account_balance),
-                  title: Text('Cuenta'),
-                  onTap: () =>_selectPocketType(ref, context),
+                  title: Text(model.typePocketOptions[0]),
+                  onTap: () => _selectPocketType(
+                    ref,
+                    context,
+                    PocketType(
+                      icon: Icons.account_balance,
+                      name: model.typePocketOptions[0],
+                    ),
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.credit_card),
-                  title: Text('Tarjeta'),
+                  title: Text(model.typePocketOptions[1]),
+                  onTap: () => _selectPocketType(
+                    ref,
+                    context,
+                    PocketType(
+                      icon: Icons.credit_card,
+                      name: model.typePocketOptions[2],
+                    ),
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.money),
-                  title: Text('Efectivo'),
+                  title: Text(model.typePocketOptions[2]),
+                  onTap: () => _selectPocketType(
+                    ref,
+                    context,
+                    PocketType(
+                      icon: Icons.money,
+                      name: model.typePocketOptions[2],
+                    ),
+                  ),
                 ),
               ],
             ).toList(),
@@ -112,11 +165,15 @@ class NewPocketScreen extends ConsumerWidget {
     );
   }
 
-  void _selectPocketType(WidgetRef ref, BuildContext context) {
+  void _selectPocketType(
+    WidgetRef ref,
+    BuildContext context,
+    PocketType type,
+  ) {
     ref.read(newPocketProvider.notifier).setType(
           PocketType(
-            icon: Icons.account_balance,
-            name: 'Cuenta',
+            icon: type.icon,
+            name: type.name,
           ),
         );
     context.pop();
@@ -165,7 +222,7 @@ class PocketPreview extends ConsumerWidget {
                   child: Text(
                     newPocket.name.isNotEmpty
                         ? newPocket.name
-                        : 'Mi banco',
+                        : '...',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

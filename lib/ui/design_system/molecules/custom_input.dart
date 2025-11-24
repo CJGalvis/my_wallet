@@ -12,6 +12,7 @@ class CustomInput extends StatelessWidget {
     this.prefixIcon,
     this.onTap,
     this.controller,
+    this.readOnly = false,
   });
 
   final ValueChanged<String> onChanged;
@@ -23,6 +24,7 @@ class CustomInput extends StatelessWidget {
   final IconData? prefixIcon;
   final VoidCallback? onTap;
   final TextEditingController? controller;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class CustomInput extends StatelessWidget {
     final hintColor = Theme.of(context).hintColor;
 
     return TextFormField(
+      readOnly: readOnly,
       controller: controller,
       onTap: onTap,
       autocorrect: false,
