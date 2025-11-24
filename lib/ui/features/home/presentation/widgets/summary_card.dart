@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../domain/models/summary_type.dart';
 import '../helpers/format_helper.dart';
 
-class SummaryCard extends StatelessWidget {
+class SummaryCard extends ConsumerWidget {
   const SummaryCard({
     super.key,
     required this.type,
@@ -21,11 +23,14 @@ class SummaryCard extends StatelessWidget {
   final VoidCallback callback;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        decoration: Decorations.cardsDecorations(),
+        decoration: Decorations.cardsDecorations(context, isDark),
         width: double.infinity,
         height: 70,
         child: Padding(

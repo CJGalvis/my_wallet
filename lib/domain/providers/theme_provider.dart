@@ -10,6 +10,13 @@ class ThemeApp extends _$ThemeApp {
     return ThemeMode.system;
   }
 
+  bool isDark(BuildContext context) {
+    return state == ThemeMode.dark ||
+        (state == ThemeMode.system &&
+            MediaQuery.of(context).platformBrightness ==
+                Brightness.dark);
+  }
+
   void setTheme(ThemeMode mode) {
     state = mode;
   }

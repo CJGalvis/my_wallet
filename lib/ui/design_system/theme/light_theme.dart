@@ -33,7 +33,7 @@ class AppLightTheme {
 
   static FloatingActionButtonThemeData _floatingButtonTheme() {
     return FloatingActionButtonThemeData(
-      backgroundColor: Colors.indigoAccent.shade100,
+      backgroundColor: Colors.indigoAccent.shade200,
       foregroundColor: Colors.white,
     );
   }

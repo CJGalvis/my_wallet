@@ -28,6 +28,8 @@ class HomeScreen extends ConsumerWidget {
     final incomes = ref.watch(incomesProvider);
     final expenses = ref.watch(expensesProvider);
     final themeMode = ref.watch(themeAppProvider);
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
@@ -56,15 +58,14 @@ class HomeScreen extends ConsumerWidget {
               ),
               IconButton(
                 icon: Icon(
-                  themeMode == ThemeMode.dark
-                      ? Icons.light_mode
-                      : Icons.dark_mode,
+                  isDark ? Icons.light_mode : Icons.dark_mode,
                 ),
                 onPressed: () {
                   ref.read(themeAppProvider.notifier).setTheme(
-                      themeMode == ThemeMode.light
-                          ? ThemeMode.dark
-                          : ThemeMode.light);
+                        themeMode == ThemeMode.light
+                            ? ThemeMode.dark
+                            : ThemeMode.light,
+                      );
                 },
               ),
             ],

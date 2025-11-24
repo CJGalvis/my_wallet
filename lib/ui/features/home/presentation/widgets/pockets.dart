@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_wallet/domain/providers/theme_provider.dart';
 
+import '../../../../design_system/design_system.dart';
 import '../../domain/models/pocket_model.dart';
 import '../helpers/constants.dart';
 import '../helpers/format_helper.dart';
@@ -9,23 +11,24 @@ import 'widgets.dart';
 
 class Pockets extends ConsumerWidget {
   final String labelNewPocket;
-  
+
   const Pockets({
-    super.key, required this.labelNewPocket,
+    super.key,
+    required this.labelNewPocket,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pockets = ref.watch(pocketProvider);
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
 
     final int length = pockets.length >= maxPockets
         ? pockets.length
         : pockets.length + 1;
 
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.indigoAccent.shade200,
-      ),
+      decoration: Decorations.pocketBackgroundDecorations(isDark),
       width: double.infinity,
       height: 120,
       child: Padding(
@@ -55,7 +58,7 @@ class Pockets extends ConsumerWidget {
   }
 }
 
-class PocketItem extends StatelessWidget {
+class PocketItem extends ConsumerWidget {
   final Pocket model;
 
   const PocketItem({
@@ -64,14 +67,19 @@ class PocketItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
+
     return Container(
       margin: EdgeInsets.only(left: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
           width: 130,
-          color: Colors.white,
+          color: isDark
+              ? Theme.of(context).primaryColorDark
+              : Colors.white,
           child: Padding(
             padding: EdgeInsets.all(10),
             child: Column(
@@ -118,7 +126,7 @@ class _PocketName extends StatelessWidget {
       fit: BoxFit.contain,
       child: Text(
         name,
-        style: Theme.of(context).textTheme.bodyMedium
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }

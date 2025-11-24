@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../providers/expenses_category_provider.dart';
 import 'widgets.dart';
@@ -16,11 +17,13 @@ class RecordsCategories extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expensesCategory = ref.watch(expensesCategoryProvider);
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        decoration: Decorations.cardsDecorations(),
+        decoration: Decorations.cardsDecorations(context, isDark),
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
