@@ -83,6 +83,7 @@ class HomeScreen extends ConsumerWidget {
                 SizedBox(height: sizeBox20),
                 LastRecords(
                   title: model.latestRecords,
+                  labelShowMore: model.labelShowMore,
                   onPressedShowMore: args.onPressedRecords,
                 ),
                 SizedBox(height: 100),

@@ -10,5 +10,6 @@
     "descriptionExpenses": "Mes actual",
     "currentBalance": "Saldo actual",
     "categoryExpenses": "Gastos por categoría",
-    "latestRecords": "Últimos registros"
+    "latestRecords": "Últimos registros",
+    "labelShowMore": "Ver más"
 }

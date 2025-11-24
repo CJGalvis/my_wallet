@@ -8,6 +8,7 @@ class HomeModelUi {
   final String descriptionIncomes;
   final String descriptionExpenses;
   final String latestRecords;
+  final String labelShowMore;
 
   HomeModelUi({
     required this.appBar,
@@ -19,6 +20,7 @@ class HomeModelUi {
     required this.descriptionIncomes,
     required this.descriptionExpenses,
     required this.latestRecords,
+    required this.labelShowMore,
   });
 }
 
