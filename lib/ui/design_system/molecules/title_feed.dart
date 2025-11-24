@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../design_system.dart';
-
 class TitleFeed extends StatelessWidget {
   const TitleFeed({
     super.key,
@@ -14,11 +12,7 @@ class TitleFeed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-        fontSize: fontSizeTitle,
-        fontWeight: FontWeight.w600,
-        color: primaryTextColor,
-      ),
+      style: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }

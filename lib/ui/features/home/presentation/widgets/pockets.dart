@@ -118,11 +118,7 @@ class _PocketName extends StatelessWidget {
       fit: BoxFit.contain,
       child: Text(
         name,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey.shade700,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium
       ),
     );
   }

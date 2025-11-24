@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../design_system/design_system.dart';
-import '../helpers/format_helper.dart';
 import '../providers/expenses_category_provider.dart';
+import 'widgets.dart';
 
 class RecordsCategories extends ConsumerWidget {
   const RecordsCategories({
@@ -34,34 +34,11 @@ class RecordsCategories extends ConsumerWidget {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: expensesCategory.length,
                 itemBuilder: (context, index) {
-                  final expense = expensesCategory[index];
-
-                  return ListTile(
-                    title: Text(
-                      expense.category,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: primaryTextColor,
-                      ),
-                    ),
-                    subtitle: Text(
-                      expense.pocket,
-                      style: TextStyle(
-                        color: primaryTextColor,
-                      ),
-                    ),
-                    trailing: FittedBox(
-                      child: Text(
-                        '\$ ${FormatHelper.currency(expense.balance)}',
-                        style: TextStyle(
-                          fontSize: fontSizeSubtitle,
-                          color: primaryTextColor,
-                        ),
-                      ),
-                    ),
+                  return ItemRecord(
+                    record: expensesCategory[index],
                   );
                 },
-              ),
+              )
             ],
           ),
         ),

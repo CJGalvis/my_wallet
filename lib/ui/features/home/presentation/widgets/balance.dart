@@ -32,11 +32,7 @@ class Balance extends ConsumerWidget {
                 fit: BoxFit.contain,
                 child: Text(
                   '\$ ${FormatHelper.currency(balance)}',
-                  style: TextStyle(
-                    fontSize: fontSizeBalance,
-                    fontWeight: FontWeight.bold,
-                    color: primaryTextColor,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               )
             ],

@@ -82,16 +82,12 @@ class _BalanceSummary extends StatelessWidget {
           fit: BoxFit.contain,
           child: Text(
             '\$ ${FormatHelper.currency(value)}',
-            style: TextStyle(
-              fontSize: fontSizeTitle,
-              fontWeight: FontWeight.w600,
-              color: primaryTextColor,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
         Text(
           description,
-          style: TextStyle(color: primaryTextColor),
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );
@@ -110,11 +106,7 @@ class _TitleSummary extends StatelessWidget {
     return Expanded(
       child: Text(
         title,
-        style: TextStyle(
-          fontSize: fontSizeTitle,
-          color: primaryTextColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

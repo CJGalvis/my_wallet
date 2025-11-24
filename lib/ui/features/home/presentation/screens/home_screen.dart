@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../domain/models/summary_type.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
     final userSession = ref.watch(userSessionProvider);
     final incomes = ref.watch(incomesProvider);
     final expenses = ref.watch(expensesProvider);
+    final themeMode = ref.watch(themeAppProvider);
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
@@ -34,13 +36,10 @@ class HomeScreen extends ConsumerWidget {
         final model = HomeMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
-          backgroundColor: Colors.blueGrey.shade50,
           appBar: AppBar(
-            backgroundColor: Colors.indigoAccent.shade200,
             toolbarHeight: sizeAppBar,
             title: Text(
               '${model.appBar.greeting} ${userSession.name}',
-              style: TextStyle(color: Colors.white),
             ),
             leading: Padding(
               padding: EdgeInsets.all(padding10),
@@ -53,10 +52,20 @@ class HomeScreen extends ConsumerWidget {
             actions: [
               IconButton(
                 onPressed: () {},
+                icon: Icon(Icons.settings_outlined),
+              ),
+              IconButton(
                 icon: Icon(
-                  Icons.settings_outlined,
-                  color: Colors.white,
+                  themeMode == ThemeMode.dark
+                      ? Icons.light_mode
+                      : Icons.dark_mode,
                 ),
+                onPressed: () {
+                  ref.read(themeAppProvider.notifier).setTheme(
+                      themeMode == ThemeMode.light
+                          ? ThemeMode.dark
+                          : ThemeMode.light);
+                },
               ),
             ],
           ),
@@ -91,8 +100,6 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.indigoAccent.shade100,
-            foregroundColor: Colors.white,
             child: Icon(Icons.add),
             onPressed: () {},
           ),
