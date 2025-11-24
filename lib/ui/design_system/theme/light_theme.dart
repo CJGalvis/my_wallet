@@ -4,31 +4,32 @@ class AppLightTheme {
   static ThemeData theme() => ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.indigo,
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(
-            fontSize: 18,
-            color: Colors.blueGrey,
-            fontWeight: FontWeight.w600,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.blueGrey.shade500,
-          ),
-          bodySmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Colors.blueGrey.shade500,
-          ),
-          labelSmall: TextStyle(
-            color: Colors.blueGrey,
-            fontSize: 12
-          ),
-        ),
+        textTheme: __textTheme(),
         scaffoldBackgroundColor: Colors.blueGrey.shade50,
         appBarTheme: _appBarTheme(),
         floatingActionButtonTheme: _floatingButtonTheme(),
       );
+
+  static TextTheme __textTheme() {
+    return TextTheme(
+      bodyLarge: TextStyle(
+        fontSize: 18,
+        color: Colors.blueGrey,
+        fontWeight: FontWeight.w600,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Colors.blueGrey.shade500,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: Colors.blueGrey.shade500,
+      ),
+      labelSmall: TextStyle(color: Colors.blueGrey, fontSize: 12),
+    );
+  }
 
   static FloatingActionButtonThemeData _floatingButtonTheme() {
     return FloatingActionButtonThemeData(
