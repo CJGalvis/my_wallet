@@ -7,7 +7,7 @@ class NewRecordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('New pocket')),
+      appBar: AppBar(title: Text('New record')),
       body: Center(child: Text('Hola erick estamos creando un nuevo registro')),
     );
   }
