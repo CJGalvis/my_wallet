@@ -31,7 +31,7 @@ class RecordsCategories extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TitleFeed(title: title),
-              Divider(color: primaryTextColor),
+              Divider(),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),

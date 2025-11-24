@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../domain/providers/language_provider.dart';
-import '../../../../../domain/providers/theme_provider.dart';
-import '../../../../../domain/providers/user_session_provider.dart';
+import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
 import '../../domain/models/summary_type.dart';
 import '../args/home_args.dart';
 import '../mappers/home_mapper.dart';
-import '../providers/expenses_provider.dart';
-import '../providers/incomes_provider.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends ConsumerWidget {

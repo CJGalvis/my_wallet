@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet/ui/design_system/theme/dark_theme.dart';
 
 import 'domain/providers/theme_provider.dart';
-import 'ui/design_system/theme/light_theme.dart';
+import 'ui/design_system/design_system.dart';
 import 'ui/routes/app_router.dart';
 
 class App extends StatelessWidget {

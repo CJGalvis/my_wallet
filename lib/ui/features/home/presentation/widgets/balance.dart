@@ -30,7 +30,7 @@ class Balance extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TitleFeed(title: label),
-              Divider(color: primaryTextColor),
+              Divider(),
               FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
