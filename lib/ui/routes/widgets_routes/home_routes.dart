@@ -20,7 +20,12 @@ class HomeRoutes {
           extra: value,
         ),
         onPressedRecords: () => context.push(RecordsScreen.routeName),
-        onPressedNewPocket: () => context.push(NewPocketScreen.routeName)
+        onPressedNewPocket: () =>
+            context.push(NewPocketScreen.routeName),
+        onPressedIncomes: () =>
+            context.push(SummaryIncomesScreen.routeName),
+        onPressedExpenses: () =>
+            context.push(SummaryExpensesScreen.routeName),
       ),
     );
   }

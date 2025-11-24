@@ -41,7 +41,7 @@ class SummaryCard extends ConsumerWidget {
               _TitleSummary(title: title),
               _BalanceSummary(value: value, description: description),
               const SizedBox(width: 15),
-              _ButtonSummary(),
+              _ButtonSummary(onPressed: callback),
             ],
           ),
         ),
@@ -51,19 +51,24 @@ class SummaryCard extends ConsumerWidget {
 }
 
 class _ButtonSummary extends StatelessWidget {
-  const _ButtonSummary();
+  const _ButtonSummary({required this.onPressed});
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: primaryTextColor),
-      ),
-      padding: EdgeInsets.all(5),
-      child: Icon(
-        Icons.keyboard_arrow_right_rounded,
-        color: primaryTextColor,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: primaryTextColor),
+        ),
+        padding: EdgeInsets.all(5),
+        child: Icon(
+          Icons.keyboard_arrow_right_rounded,
+          color: primaryTextColor,
+        ),
       ),
     );
   }

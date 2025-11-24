@@ -62,11 +62,11 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SizedBox(height: padding10),
                 SummaryCard(
+                  callback: args.onPressedIncomes,
                   type: SummaryType.incomes,
                   title: model.incomesLabel,
                   description: model.descriptionIncomes,
                   value: incomes,
-                  callback: () {},
                 ),
                 SizedBox(height: sizeBox20),
                 SummaryCard(
@@ -74,7 +74,7 @@ class HomeScreen extends ConsumerWidget {
                   title: model.expensesLabel,
                   description: model.descriptionExpenses,
                   value: expenses,
-                  callback: () {},
+                  callback: args.onPressedExpenses,
                 ),
                 SizedBox(height: sizeBox20),
                 Balance(label: model.currentBalance),

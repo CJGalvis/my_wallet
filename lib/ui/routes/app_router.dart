@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../features/home/domain/models/pocket_model.dart';
 import '../features/screens.dart';
 import 'routes.dart';
 
@@ -69,6 +69,16 @@ GoRouter appRouter(Ref ref) {
         path: RecordsScreen.routeName,
         name: RecordsScreen.routeName,
         builder: (context, _) => RecordsScreen(),
+      ),
+       GoRoute(
+        path: SummaryIncomesScreen.routeName,
+        name: SummaryIncomesScreen.routeName,
+        builder: (context, _) => SummaryIncomesScreen(),
+      ),
+       GoRoute(
+        path: SummaryExpensesScreen.routeName,
+        name: SummaryExpensesScreen.routeName,
+        builder: (context, _) => SummaryExpensesScreen(),
       ),
     ],
   );

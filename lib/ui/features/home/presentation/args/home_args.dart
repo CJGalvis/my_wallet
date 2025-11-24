@@ -10,6 +10,8 @@ class HomeArgs {
   final ValueChanged<Pocket> onPressedPocket;
   final VoidCallback onPressedRecords;
   final VoidCallback onPressedNewPocket;
+  final VoidCallback onPressedIncomes;
+  final VoidCallback onPressedExpenses;
 
   HomeArgs({
     required this.language,
@@ -19,5 +21,7 @@ class HomeArgs {
     required this.onPressedPocket,
     required this.onPressedRecords,
     required this.onPressedNewPocket,
+    required this.onPressedIncomes,
+    required this.onPressedExpenses,
   });
 }
