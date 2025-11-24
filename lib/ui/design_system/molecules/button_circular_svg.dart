@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../domain/providers/theme_provider.dart';
 import '../tokens/tokens.dart';
 
-class ButtonCircularSVG extends StatelessWidget {
+class ButtonCircularSVG extends ConsumerWidget {
   const ButtonCircularSVG({
     super.key,
     required this.bottomLabel,
@@ -16,14 +18,19 @@ class ButtonCircularSVG extends StatelessWidget {
   final String path;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
+
     return Column(
       children: [
         Container(
           width: radiusButtonCircular,
           height: radiusButtonCircular,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: isDark
+                ? Theme.of(context).highlightColor
+                : Colors.white,
             shape: BoxShape.circle,
           ),
           child: IconButton(

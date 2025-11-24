@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../args/login_args.dart';
@@ -23,6 +24,9 @@ class LoginScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(loginPresenterProvider(args));
     final sessionNotifier = ref.watch(userSessionProvider.notifier);
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
+
 
     ref.listen<LoginState>(
       loginProvider,
@@ -59,7 +63,7 @@ class LoginScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: AuthTheme.getBackground(),
+            decoration: AuthTheme.getBackground(context, isDark),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(

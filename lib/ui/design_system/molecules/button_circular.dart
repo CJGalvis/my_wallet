@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/providers/providers.dart';
 import '../tokens/tokens.dart';
 
-class ButtonCircular extends StatelessWidget {
+class ButtonCircular extends ConsumerWidget {
   const ButtonCircular({
     super.key,
     required this.bottomLabel,
@@ -15,14 +17,19 @@ class ButtonCircular extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
+
     return Column(
       children: [
         Container(
           width: radiusButtonCircular,
           height: radiusButtonCircular,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: isDark
+                ? Theme.of(context).highlightColor
+                : Colors.white,
             shape: BoxShape.circle,
           ),
           child: IconButton(

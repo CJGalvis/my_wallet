@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
+import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/helpers.dart';
 import '../args/register_args.dart';
@@ -20,7 +21,9 @@ class RegisterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
-    final presenter = ref.read(regiterPresenterProvider(args));
+    final presenter = ref.read(registerPresenterProvider(args));
+    final isDark =
+        ref.read(themeAppProvider.notifier).isDark(context);
 
     ref.listen<RegisterState>(
       registerProvider,
@@ -56,7 +59,7 @@ class RegisterScreen extends ConsumerWidget {
         return Scaffold(
           body: Container(
             width: double.infinity,
-            decoration: AuthTheme.getBackground(),
+            decoration: AuthTheme.getBackground(context, isDark),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(

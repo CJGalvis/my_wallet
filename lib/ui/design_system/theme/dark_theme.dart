@@ -9,6 +9,7 @@ class AppDarkTheme {
         appBarTheme: _appBarTheme(),
         floatingActionButtonTheme: _floatingButtonTheme(),
         primaryColorDark: Colors.blueGrey.shade800,
+        highlightColor: Colors.white70,
       );
 
   static TextTheme __textTheme() {

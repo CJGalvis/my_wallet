@@ -39,7 +39,7 @@ class RegisterPresenter {
 }
 
 @riverpod
-RegisterPresenter regiterPresenter(Ref ref, RegisterArgs args) {
+RegisterPresenter registerPresenter(Ref ref, RegisterArgs args) {
   final registerNotifier =  ref.read(registerProvider.notifier);
   return RegisterPresenter(registerNotifier, args);
 }
