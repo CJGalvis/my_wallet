@@ -1,29 +1,34 @@
-import 'package:flutter/material.dart';
+
+import 'pocket_type.dart';
 
 class Pocket {
-  final IconData icon;
+  final String id;
+  final PocketType type;
   final String name;
   final double balance;
 
   Pocket({
-    required this.icon,
+    required this.id,
+    required this.type,
     required this.name,
     required this.balance,
   });
 
   factory Pocket.initial() => Pocket(
-        icon: Icons.blinds_closed,
+        id: '',
+        type: PocketType.initial(),
         name: '',
         balance: 0,
       );
 
   Pocket copyWith({
-    IconData? icon,
+    PocketType? type,
     String? name,
     double? balance,
   }) {
     return Pocket(
-      icon: icon ?? this.icon,
+      id: id,
+      type: type ?? this.type,
       name: name ?? this.name,
       balance: balance ?? this.balance,
     );

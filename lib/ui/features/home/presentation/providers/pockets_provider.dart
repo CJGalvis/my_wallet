@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:my_wallet/ui/features/home/domain/models/pocket_type.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../domain/models/pocket_model.dart';
 
@@ -11,19 +12,10 @@ class PocketNotifier extends _$PocketNotifier {
   List<Pocket> build() {
     return [
       Pocket(
-        icon: Icons.blinds_closed,
-        name: 'Nequi',
-        balance: 30000,
-      ),
-      Pocket(
-        icon: Icons.account_balance,
-        name: 'Bancolombia',
-        balance: 200000,
-      ),
-      Pocket(
-        icon: Icons.money,
-        name: 'Efectivo',
-        balance: 33500,
+        id: Uuid().v4(),
+        type: PocketType.initial(),
+        name: 'Mi banco',
+        balance: 0,
       ),
     ];
   }

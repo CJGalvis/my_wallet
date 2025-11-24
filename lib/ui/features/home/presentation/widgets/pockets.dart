@@ -99,7 +99,7 @@ class PocketItem extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _PocketIcon(model.icon),
+                  _PocketIcon(model.type.icon),
                   _PocketName(model.name),
                   _PocketBalance(model.balance),
                 ],

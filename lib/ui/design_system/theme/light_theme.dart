@@ -8,6 +8,8 @@ class AppLightTheme {
         scaffoldBackgroundColor: Colors.blueGrey.shade50,
         appBarTheme: _appBarTheme(),
         floatingActionButtonTheme: _floatingButtonTheme(),
+        highlightColor: Colors.indigo,
+        hintColor: Colors.indigo.shade200
       );
 
   static TextTheme __textTheme() {

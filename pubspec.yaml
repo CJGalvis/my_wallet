@@ -29,6 +29,8 @@ dependencies:
     git:
       url: https://github.com/CJGalvis/api_http_client.git
   intl: ^0.20.2
+  uuid: ^4.5.2
+  flutter_multi_formatter: ^2.13.10
     # path: ../../Paquetes/api_http_client
 
 dev_dependencies:
