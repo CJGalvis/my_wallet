@@ -8,8 +8,13 @@ import 'widgets.dart';
 
 class LastRecords extends ConsumerWidget {
   final String title;
+  final VoidCallback onPressedShowMore;
 
-  const LastRecords({super.key, required this.title});
+  const LastRecords({
+    super.key,
+    required this.title,
+    required this.onPressedShowMore,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +41,11 @@ class LastRecords extends ConsumerWidget {
                   return ItemRecord(record: lastRecords[index]);
                 },
               ),
+              //ToDo: arreglar por que no se ve
+              ButtonText(
+                callback: onPressedShowMore,
+                label: 'Ver más',
+              )
             ],
           ),
         ),

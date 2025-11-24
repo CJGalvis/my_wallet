@@ -39,10 +39,14 @@ class HomeScreen extends ConsumerWidget {
               '${model.appBar.greeting} ${userSession.name}',
             ),
             leading: _Avatar(
+              onPressed: args.onPressedProfile,
               photo: userSession.photo ?? model.appBar.avatar,
             ),
             actions: [
-              _SettingsButton(),
+              IconButton(
+                onPressed: args.onPressedSettings,
+                icon: Icon(Icons.settings_outlined),
+              ),
               _ThemeModeButton(
                 themeMode: themeMode,
               ),
@@ -51,7 +55,11 @@ class HomeScreen extends ConsumerWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Pockets(labelNewPocket: model.newPocketLabel),
+                Pockets(
+                  labelNewPocket: model.newPocketLabel,
+                  onPressedPocket: args.onPressedPocket,
+                  onPressedNewPocket: args.onPressedNewPocket,
+                ),
                 SizedBox(height: padding10),
                 SummaryCard(
                   type: SummaryType.incomes,
@@ -73,14 +81,17 @@ class HomeScreen extends ConsumerWidget {
                 SizedBox(height: sizeBox20),
                 RecordsCategories(title: model.categoryExpenses),
                 SizedBox(height: sizeBox20),
-                LastRecords(title: model.latestRecords),
+                LastRecords(
+                  title: model.latestRecords,
+                  onPressedShowMore: args.onPressedRecords,
+                ),
                 SizedBox(height: 100),
               ],
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            onPressed: args.onPressedNewRecord,
             child: Icon(Icons.add),
-            onPressed: () {},
           ),
         );
       },
@@ -98,18 +109,6 @@ class _GreetingUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(greeting);
-  }
-}
-
-class _SettingsButton extends StatelessWidget {
-  const _SettingsButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {},
-      icon: Icon(Icons.settings_outlined),
-    );
   }
 }
 
@@ -143,17 +142,22 @@ class _ThemeModeButton extends ConsumerWidget {
 class _Avatar extends StatelessWidget {
   const _Avatar({
     required this.photo,
+    required this.onPressed,
   });
 
   final String photo;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(padding10),
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(
-          photo,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: EdgeInsets.all(padding10),
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(
+            photo,
+          ),
         ),
       ),
     );

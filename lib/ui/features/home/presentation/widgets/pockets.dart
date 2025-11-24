@@ -11,10 +11,14 @@ import 'widgets.dart';
 
 class Pockets extends ConsumerWidget {
   final String labelNewPocket;
+  final ValueChanged<Pocket> onPressedPocket;
+  final VoidCallback onPressedNewPocket;
 
   const Pockets({
     super.key,
     required this.labelNewPocket,
+    required this.onPressedPocket,
+    required this.onPressedNewPocket,
   });
 
   @override
@@ -42,14 +46,20 @@ class Pockets extends ConsumerWidget {
                   pockets.length < maxPockets) {
                 return Row(
                   children: [
-                    NewPocket(label: labelNewPocket),
+                    NewPocket(
+                      label: labelNewPocket,
+                      onPressed: onPressedNewPocket,
+                    ),
                     const SizedBox(width: 50),
                   ],
                 );
               }
 
               final pocket = pockets[index];
-              return PocketItem(model: pocket);
+              return PocketItem(
+                model: pocket,
+                onPressed: onPressedPocket,
+              );
             },
           ),
         ),
@@ -60,10 +70,12 @@ class Pockets extends ConsumerWidget {
 
 class PocketItem extends ConsumerWidget {
   final Pocket model;
+  final ValueChanged<Pocket> onPressed;
 
   const PocketItem({
     super.key,
     required this.model,
+    required this.onPressed,
   });
 
   @override
@@ -71,24 +83,27 @@ class PocketItem extends ConsumerWidget {
     final isDark =
         ref.read(themeAppProvider.notifier).isDark(context);
 
-    return Container(
-      margin: EdgeInsets.only(left: 10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          width: 130,
-          color: isDark
-              ? Theme.of(context).primaryColorDark
-              : Colors.white,
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _PocketIcon(model.icon),
-                _PocketName(model.name),
-                _PocketBalance(model.balance),
-              ],
+    return GestureDetector(
+      onTap: () => onPressed.call(model),
+      child: Container(
+        margin: EdgeInsets.only(left: 10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            width: 130,
+            color: isDark
+                ? Theme.of(context).primaryColorDark
+                : Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _PocketIcon(model.icon),
+                  _PocketName(model.name),
+                  _PocketBalance(model.balance),
+                ],
+              ),
             ),
           ),
         ),

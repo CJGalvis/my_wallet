@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/screens.dart';
@@ -36,6 +37,38 @@ GoRouter appRouter(Ref ref) {
         path: HomeScreen.routeName,
         name: HomeScreen.routeName,
         builder: (context, _) => HomeRoutes.getHomeScreen(context),
+      ),
+      GoRoute(
+        path: ProfileScreen.routeName,
+        name: ProfileScreen.routeName,
+        builder: (context, _) => ProfileScreen(),
+      ),
+      GoRoute(
+        path: SettingsScreen.routeName,
+        name: SettingsScreen.routeName,
+        builder: (context, _) => SettingsScreen(),
+      ),
+      GoRoute(
+        path: NewPocketScreen.routeName,
+        name: NewPocketScreen.routeName,
+        builder: (context, _) => NewPocketScreen(),
+      ),
+      GoRoute(
+        path: NewRecordScreen.routeName,
+        name: NewRecordScreen.routeName,
+        builder: (context, _) => NewRecordScreen(),
+      ),
+      GoRoute(
+        path: PocketScreen.routeName,
+        name: PocketScreen.routeName,
+        builder: (context, state) => PocketScreen(
+          pocket: state.extra as Pocket,
+        ),
+      ),
+      GoRoute(
+        path: RecordsScreen.routeName,
+        name: RecordsScreen.routeName,
+        builder: (context, _) => RecordsScreen(),
       ),
     ],
   );
