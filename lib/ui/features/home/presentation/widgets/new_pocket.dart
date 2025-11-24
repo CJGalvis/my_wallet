@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NewPocket extends StatelessWidget {
+  final String label;
+  
   const NewPocket({
-    super.key,
+    super.key, required this.label,
   });
 
   @override
@@ -22,7 +24,7 @@ class NewPocket extends StatelessWidget {
               children: [
                 Icon(Icons.add_rounded),
                 Text(
-                  'Nuevo',
+                  label,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

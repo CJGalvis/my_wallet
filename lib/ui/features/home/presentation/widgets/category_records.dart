@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/expenses_category_provider.dart';
 
-import '../../../../../design_system/molecules/molecules.dart';
-import '../../helpers/format_helper.dart';
+import '../../../../design_system/design_system.dart';
+import '../helpers/format_helper.dart';
+import '../providers/expenses_category_provider.dart';
 
 class RecordsCategories extends ConsumerWidget {
   const RecordsCategories({
@@ -20,10 +20,7 @@ class RecordsCategories extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white.withValues(alpha: 0.3),
-        ),
+        decoration: Decorations.cardsDecorations(),
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -31,7 +28,7 @@ class RecordsCategories extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TitleFeed(title: title),
-              Divider(color: Colors.white70),
+              Divider(color: primaryTextColor),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -44,21 +41,21 @@ class RecordsCategories extends ConsumerWidget {
                       expense.category,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: primaryTextColor,
                       ),
                     ),
                     subtitle: Text(
                       expense.pocket,
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: primaryTextColor,
                       ),
                     ),
                     trailing: FittedBox(
                       child: Text(
                         '\$ ${FormatHelper.currency(expense.balance)}',
                         style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
+                          fontSize: fontSizeSubtitle,
+                          color: primaryTextColor,
                         ),
                       ),
                     ),

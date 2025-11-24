@@ -9,7 +9,7 @@ import '../args/home_args.dart';
 import '../mappers/home_mapper.dart';
 import '../providers/expenses_provider.dart';
 import '../providers/incomes_provider.dart';
-import 'widgets/widgets.dart';
+import '../widgets/widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const String routeName = '/home';
@@ -34,17 +34,13 @@ class HomeScreen extends ConsumerWidget {
         final model = HomeMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
-          backgroundColor: Colors.indigoAccent.shade200,
+          backgroundColor: Colors.blueGrey.shade50,
           appBar: AppBar(
+            backgroundColor: Colors.indigoAccent.shade200,
             toolbarHeight: sizeAppBar,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: borderRadius10,
-                bottomRight: borderRadius10,
-              ),
-            ),
             title: Text(
               '${model.appBar.greeting} ${userSession.name}',
+              style: TextStyle(color: Colors.white),
             ),
             leading: Padding(
               padding: EdgeInsets.all(padding10),
@@ -57,19 +53,18 @@ class HomeScreen extends ConsumerWidget {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.notification_important_outlined),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.settings_outlined),
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Pockets(),
-                SizedBox(height: sizeBox20),
+                Pockets(labelNewPocket: model.newPocketLabel),
+                SizedBox(height: padding10),
                 SummaryCard(
                   type: SummaryType.incomes,
                   title: model.incomesLabel,
@@ -90,10 +85,14 @@ class HomeScreen extends ConsumerWidget {
                 SizedBox(height: sizeBox20),
                 RecordsCategories(title: model.categoryExpenses),
                 SizedBox(height: sizeBox20),
+                LastRecords(title: model.latestRecords),
+                SizedBox(height: 100),
               ],
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.indigoAccent.shade100,
+            foregroundColor: Colors.white,
             child: Icon(Icons.add),
             onPressed: () {},
           ),

@@ -13,7 +13,7 @@ class PocketNotifier extends _$PocketNotifier {
       Pocket(
         icon: Icons.blinds_closed,
         name: 'Nequi',
-        balance: 50000,
+        balance: 30000,
       ),
       Pocket(
         icon: Icons.account_balance,

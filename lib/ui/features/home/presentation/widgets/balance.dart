@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/balance_provider.dart';
 
-import '../../../../../design_system/molecules/molecules.dart';
-import '../../helpers/format_helper.dart';
+import '../../../../design_system/design_system.dart';
+import '../helpers/format_helper.dart';
+import '../providers/balance_provider.dart';
 
 class Balance extends ConsumerWidget {
   const Balance({
@@ -19,10 +19,7 @@ class Balance extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white.withValues(alpha: 0.3),
-        ),
+        decoration: Decorations.cardsDecorations(),
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -30,17 +27,15 @@ class Balance extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TitleFeed(title: label),
-              Divider(
-                color: Colors.white70,
-              ),
+              Divider(color: primaryTextColor),
               FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
                   '\$ ${FormatHelper.currency(balance)}',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: fontSizeBalance,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: primaryTextColor,
                   ),
                 ),
               )

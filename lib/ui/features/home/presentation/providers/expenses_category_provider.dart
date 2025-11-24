@@ -21,7 +21,7 @@ class ExpensesCategoryNotifier extends _$ExpensesCategoryNotifier {
       ),
       ExpenseCategory(
         balance: 50000,
-        category: 'Macota',
+        category: 'Mascota',
         pocket: 'Nequi',
       ),
     ];

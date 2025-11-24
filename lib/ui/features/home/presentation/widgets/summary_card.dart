@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/summary_type.dart';
-import '../../helpers/format_helper.dart';
+import '../../../../design_system/design_system.dart';
+import '../../domain/models/summary_type.dart';
+import '../helpers/format_helper.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({
@@ -24,10 +25,7 @@ class SummaryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white.withValues(alpha: 0.3),
-        ),
+        decoration: Decorations.cardsDecorations(),
         width: double.infinity,
         height: 70,
         child: Padding(
@@ -55,12 +53,12 @@ class _ButtonSummary extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Colors.white),
+        border: Border.all(color: primaryTextColor),
       ),
       padding: EdgeInsets.all(5),
       child: Icon(
         Icons.keyboard_arrow_right_rounded,
-        color: Colors.white,
+        color: primaryTextColor,
       ),
     );
   }
@@ -85,15 +83,15 @@ class _BalanceSummary extends StatelessWidget {
           child: Text(
             '\$ ${FormatHelper.currency(value)}',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: fontSizeTitle,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: primaryTextColor,
             ),
           ),
         ),
         Text(
           description,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: primaryTextColor),
         ),
       ],
     );
@@ -113,8 +111,8 @@ class _TitleSummary extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 18,
-          color: Colors.white,
+          fontSize: fontSizeTitle,
+          color: primaryTextColor,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -135,7 +133,7 @@ class _IconSummary extends StatelessWidget {
       margin: EdgeInsets.only(right: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
+        border: Border.all(color: primaryTextColor),
       ),
       padding: EdgeInsets.all(5),
       child: type == SummaryType.incomes

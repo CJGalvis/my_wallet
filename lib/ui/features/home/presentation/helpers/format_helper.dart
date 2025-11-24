@@ -10,4 +10,8 @@ class FormatHelper {
 
     return formatter.format(value);
   }
+
+  static String date(DateTime date) {
+    return DateFormat.yMd().format(date);
+  }
 }

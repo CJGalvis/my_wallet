@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
-import 'package:my_wallet/ui/features/home/presentation/helpers/format_helper.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/pockets_provider.dart';
 
-import '../../helpers/constants.dart';
+import '../../domain/models/pocket_model.dart';
+import '../helpers/constants.dart';
+import '../helpers/format_helper.dart';
+import '../providers/pockets_provider.dart';
 import 'widgets.dart';
 
 class Pockets extends ConsumerWidget {
+  final String labelNewPocket;
+  
   const Pockets({
-    super.key,
+    super.key, required this.labelNewPocket,
   });
 
   @override
@@ -21,9 +23,11 @@ class Pockets extends ConsumerWidget {
         : pockets.length + 1;
 
     return Container(
-      color: Colors.indigoAccent.shade200,
+      decoration: BoxDecoration(
+        color: Colors.indigoAccent.shade200,
+      ),
       width: double.infinity,
-      height: 130,
+      height: 120,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Expanded(
@@ -35,7 +39,7 @@ class Pockets extends ConsumerWidget {
                   pockets.length < maxPockets) {
                 return Row(
                   children: [
-                    NewPocket(),
+                    NewPocket(label: labelNewPocket),
                     const SizedBox(width: 50),
                   ],
                 );

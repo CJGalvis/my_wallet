@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../design_system.dart';
+
 class TitleFeed extends StatelessWidget {
   const TitleFeed({
     super.key,
@@ -13,9 +15,9 @@ class TitleFeed extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 18,
+        fontSize: fontSizeTitle,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: primaryTextColor,
       ),
     );
   }
