@@ -70,16 +70,6 @@ GoRouter appRouter(Ref ref) {
         name: RecordsScreen.routeName,
         builder: (context, _) => RecordsScreen(),
       ),
-       GoRoute(
-        path: SummaryIncomesScreen.routeName,
-        name: SummaryIncomesScreen.routeName,
-        builder: (context, _) => SummaryIncomesScreen(),
-      ),
-       GoRoute(
-        path: SummaryExpensesScreen.routeName,
-        name: SummaryExpensesScreen.routeName,
-        builder: (context, _) => SummaryExpensesScreen(),
-      ),
     ],
   );
 }

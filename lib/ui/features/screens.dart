@@ -8,5 +8,3 @@ export 'home/presentation/screens/pocket_screen.dart';
 export 'home/presentation/screens/profile_screen.dart';
 export 'home/presentation/screens/records_screen.dart';
 export 'home/presentation/screens/settings_screen.dart';
-export 'home/presentation/screens/summary_incomes_screen.dart';
-export 'home/presentation/screens/summary_expenses_screen.dart';
