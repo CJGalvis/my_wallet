@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_system/design_system.dart';
 import '../../domain/models/record_item.dart';
 import '../../domain/models/summary_type.dart';
 import '../helpers/format_helper.dart';
@@ -43,7 +42,7 @@ class ItemRecord extends StatelessWidget {
             Text(
               '$symbol \$ ${FormatHelper.currency(record.value)}',
               style: TextStyle(
-                fontSize: fontSizeSubtitle,
+                fontSize: 14,
                 color: color,
               ),
             ),

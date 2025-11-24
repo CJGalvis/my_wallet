@@ -1,1 +1,1 @@
-const String ilErrorScreen = 'assets/ilustrations/page-eaten.svg';
+const String ilErrorScreen = 'assets/illustrations/page-eaten.svg';

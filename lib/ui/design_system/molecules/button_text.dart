@@ -19,7 +19,7 @@ class ButtonText extends StatelessWidget {
       child: Text(
         label,
         style: const TextStyle(
-          fontSize: labelButtontextSize,
+          fontSize: labelButtonTextSize,
           color: Colors.white,
         ),
       ),
