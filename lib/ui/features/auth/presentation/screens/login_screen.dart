@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../args/login_args.dart';
@@ -23,10 +22,7 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(loginPresenterProvider(args));
-    final sessionNotifier = ref.watch(userSessionProvider.notifier);
-    final isDark =
-        ref.read(themeAppProvider.notifier).isDark(context);
-
+    final sessionNotifier = ref.read(userSessionProvider.notifier);
 
     ref.listen<LoginState>(
       loginProvider,
@@ -61,42 +57,39 @@ class LoginScreen extends ConsumerWidget {
             LoginMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
-          body: Container(
-            width: double.infinity,
-            decoration: AuthTheme.getBackground(context, isDark),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const FlutterLogo(size: 100),
-                      const SizedBox(height: 50),
-                      HeaderTitle(title: model.title),
-                      const SizedBox(height: 30),
-                      _LoginForm(
-                        presenter: presenter,
-                        model: model,
-                      ),
-                      const SizedBox(height: 10),
-                      ButtonText(
-                        label: model.forgotPasswordLabel,
-                        callback: () {},
-                      ),
-                      ButtonSecondary(
-                        label: model.singInBtnLabel,
-                        callback: () {
-                          FocusScope.of(context).unfocus();
-                          if (!presenter.isValidForm()) return;
-                          presenter.signIn();
-                        },
-                      ),
-                      ButtonText(
-                        label: model.singUpBtnLabel,
-                        callback: args.onNewAccount,
-                      ),
-                    ],
-                  ),
+          backgroundColor: Theme.of(context).primaryColor,
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const FlutterLogo(size: 100),
+                    const SizedBox(height: 50),
+                    HeaderTitle(title: model.title),
+                    const SizedBox(height: 30),
+                    _LoginForm(
+                      presenter: presenter,
+                      model: model,
+                    ),
+                    const SizedBox(height: 10),
+                    ButtonText(
+                      label: model.forgotPasswordLabel,
+                      callback: () {},
+                    ),
+                    ButtonSecondary(
+                      label: model.singInBtnLabel,
+                      callback: () {
+                        FocusScope.of(context).unfocus();
+                        if (!presenter.isValidForm()) return;
+                        presenter.signIn();
+                      },
+                    ),
+                    ButtonText(
+                      label: model.singUpBtnLabel,
+                      callback: args.onNewAccount,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -118,7 +111,7 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginNotifier = ref.watch(loginProvider.notifier);
+    final loginNotifier = ref.read(loginProvider.notifier);
 
     return Form(
       key: presenter.formKey,

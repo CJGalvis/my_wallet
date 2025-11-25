@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/helpers.dart';
 import '../args/register_args.dart';
@@ -22,8 +21,6 @@ class RegisterScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(registerPresenterProvider(args));
-    final isDark =
-        ref.read(themeAppProvider.notifier).isDark(context);
 
     ref.listen<RegisterState>(
       registerProvider,
@@ -57,29 +54,26 @@ class RegisterScreen extends ConsumerWidget {
             RegisterMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
-          body: Container(
-            width: double.infinity,
-            decoration: AuthTheme.getBackground(context, isDark),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const FlutterLogo(size: 100),
-                      const SizedBox(height: 50),
-                      HeaderTitle(title: model.title),
-                      const SizedBox(height: 30),
-                      _RegisterForm(
-                        presenter: presenter,
-                        model: model,
-                      ),
-                      ButtonText(
-                        label: model.singInBtnLabel,
-                        callback: args.onAlreadyAccount,
-                      ),
-                    ],
-                  ),
+            backgroundColor: Theme.of(context).primaryColor,
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const FlutterLogo(size: 100),
+                    const SizedBox(height: 50),
+                    HeaderTitle(title: model.title),
+                    const SizedBox(height: 30),
+                    _RegisterForm(
+                      presenter: presenter,
+                      model: model,
+                    ),
+                    ButtonText(
+                      label: model.singInBtnLabel,
+                      callback: args.onAlreadyAccount,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -101,7 +95,7 @@ class _RegisterForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final registerProv = ref.watch(registerProvider.notifier);
+    final registerNotifier = ref.read(registerProvider.notifier);
 
     return Form(
       key: presenter.formKey,
@@ -111,7 +105,7 @@ class _RegisterForm extends ConsumerWidget {
           Input(
             texthint: model.texthintUsername,
             label: model.labelUsername,
-            onChanged: registerProv.setUsername,
+            onChanged: registerNotifier.setUsername,
             validator: (value) =>
                 FormValidators.textValidator(value ?? 'ƒ')
                     ? null
@@ -122,7 +116,7 @@ class _RegisterForm extends ConsumerWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: registerProv.setEmail,
+            onChanged: registerNotifier.setEmail,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -133,7 +127,7 @@ class _RegisterForm extends ConsumerWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: registerProv.setPassword,
+            onChanged: registerNotifier.setPassword,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null
