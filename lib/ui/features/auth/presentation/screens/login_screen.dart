@@ -40,11 +40,13 @@ class LoginScreen extends ConsumerWidget {
             message: next.errorMessage,
             isError: true,
           );
+          ref.read(loginProvider.notifier).resetError();
         }
 
         if (next.loginSuccess) {
           sessionNotifier.setUserSession(next.userAuth);
           args.onLoginSuccess.call();
+          ref.read(loginProvider.notifier).resetSuccessFlag();
         }
       },
     );

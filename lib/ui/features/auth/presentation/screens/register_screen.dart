@@ -38,10 +38,12 @@ class RegisterScreen extends ConsumerWidget {
             message: next.errorMessage,
             isError: true,
           );
+          ref.read(registerProvider.notifier).resetError();
         }
 
         if (next.registerSuccess) {
           args.onRegisterSuccess.call();
+          ref.read(registerProvider.notifier).resetSuccessFlag();
         }
       },
     );

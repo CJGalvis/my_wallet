@@ -25,8 +25,9 @@ class ButtonText extends ConsumerWidget {
         label,
         style: TextStyle(
           fontSize: labelButtonTextSize,
-          color:
-              isDark ? Theme.of(context).highlightColor : Colors.blueGrey,
+          color: isDark
+              ? Theme.of(context).highlightColor
+              : Colors.white,
         ),
       ),
     );

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/formatter_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/features/home/presentation/presenters/new_pocket_presenter.dart';
+import 'package:my_wallet/ui/features/home/presentation/states/new_pocket_state.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
+import '../../../../helpers/helpers.dart';
 import '../../domain/models/pocket_type.dart';
 import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
@@ -23,6 +26,31 @@ class NewPocketScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
+
+    ref.listen<NewPocketState>(
+      newPocketProvider,
+      (previous, next) {
+        if (next.isLoading) {
+          Loading().show(context);
+        } else {
+          Loading().hide();
+        }
+
+        if (next.errorMessage.isNotEmpty) {
+          MessageHelper.showSnackBar(
+            context,
+            message: next.errorMessage,
+            isError: true,
+          );
+        }
+
+        if (next.registerSuccess) {
+          ref.read(pocketProvider.notifier).addNewPocket(next.pocket);
+          args.createdSuccess.call();
+          ref.read(newPocketProvider.notifier).resetSuccessFlag();
+        }
+      },
+    );
 
     return asyncLabels.when(
       loading: () => LoadingScreen(),
@@ -54,9 +82,10 @@ class NewPocketView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final newPocket = ref.watch(newPocketProvider);
+    final presenter = ref.read(newPocketPresenterProvider(args));
 
     final controllerType = TextEditingController(
-      text: newPocket.type.name,
+      text: newPocket.pocket.type.name,
     );
 
     return Scaffold(
@@ -105,10 +134,7 @@ class NewPocketView extends ConsumerWidget {
               SizedBox(height: sizeBox20),
               ButtonPrimary(
                 callback: () {
-                  ref
-                      .read(pocketProvider.notifier)
-                      .addNewPocket(newPocket);
-                  args.onPressedPrimaryButton.call();
+                  presenter.createPocket(newPocket.pocket);
                 },
                 label: model.btnSave,
               ),
@@ -238,7 +264,7 @@ class PocketPreview extends ConsumerWidget {
                   ),
                   padding: EdgeInsets.all(5),
                   child: Icon(
-                    newPocket.type.icon,
+                    newPocket.pocket.type.icon,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -246,8 +272,8 @@ class PocketPreview extends ConsumerWidget {
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
-                    newPocket.name.isNotEmpty
-                        ? newPocket.name
+                    newPocket.pocket.name.isNotEmpty
+                        ? newPocket.pocket.name
                         : '...',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -255,7 +281,7 @@ class PocketPreview extends ConsumerWidget {
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
-                    '\$ ${FormatHelper.currency(newPocket.balance)}',
+                    '\$ ${FormatHelper.currency(newPocket.pocket.balance)}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

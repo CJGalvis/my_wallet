@@ -40,5 +40,18 @@ class RegisterNotifier extends _$RegisterNotifier {
     state = state.copyWith(registerSuccess: true);
   }
 
+  void resetError() {
+    state = state.copyWith(
+      errorMessage: '',
+    );
+  }
+
+  void resetSuccessFlag() {
+    state = state.copyWith(
+      registerSuccess: false,
+      registerEntity: null,
+    );
+  }
+
   RegisterEntity get register => state.registerEntity;
 }

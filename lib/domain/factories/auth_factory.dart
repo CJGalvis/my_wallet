@@ -15,18 +15,18 @@ class AuthGatewayFactory {
   }
 
   AuthGatewayFactory._internal(this.context) {
-    _updateEnviroment();
+    _updateEnvironment();
   }
 
   void _setContext(BuildContext newContext) {
     if (context != newContext) {
       _dispose();
       context = newContext;
-      _updateEnviroment();
+      _updateEnvironment();
     }
   }
 
-  void _updateEnviroment() {
+  void _updateEnvironment() {
     _environment = CurrentEnvironment.environment;
   }
 

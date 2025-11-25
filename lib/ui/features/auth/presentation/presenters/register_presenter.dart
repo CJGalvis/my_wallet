@@ -32,7 +32,6 @@ class RegisterPresenter {
 
     if (error != null) {
       _registerNotifier.showError(error.message);
-      _registerNotifier.build();
     }
 
     _registerNotifier.hideLoading();

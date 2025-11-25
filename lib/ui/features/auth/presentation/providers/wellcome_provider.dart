@@ -23,4 +23,17 @@ class WellcomeNotifier extends _$WellcomeNotifier {
       userAuth: user,
     );
   }
+
+  void resetError() {
+    state = state.copyWith(
+      errorMessage: '',
+    );
+  }
+
+  void resetSuccessFlag() {
+    state = state.copyWith(
+      signedIn: false,
+      userAuth: null,
+    );
+  }
 }

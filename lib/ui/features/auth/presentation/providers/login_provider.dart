@@ -35,6 +35,19 @@ class LoginNotifier extends _$LoginNotifier {
     );
   }
 
+  void resetError() {
+    state = state.copyWith(
+      errorMessage: '',
+    );
+  }
+
+  void resetSuccessFlag() {
+    state = state.copyWith(
+      loginSuccess: false,
+      userAuth: null,
+    );
+  }
+
   void loginSuccess(UserAuth userAuth) {
     state = state.copyWith(
       loginSuccess: true,

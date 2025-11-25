@@ -33,7 +33,6 @@ class LoginPresenter {
 
     if (error != null) {
       _loginNotifier.showError(error.message);
-      _loginNotifier.build();
     }
 
     _loginNotifier.hideLoading();

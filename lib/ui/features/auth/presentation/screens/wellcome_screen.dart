@@ -38,11 +38,13 @@ class WellcomeScreen extends ConsumerWidget {
             message: next.errorMessage,
             isError: true,
           );
+          ref.read(wellcomeProvider.notifier).resetError();
         }
 
         if (next.signedIn) {
           sessionNotifier.setUserSession(next.userAuth);
           args.onGoogleAuthSuccess.call();
+          ref.read(wellcomeProvider.notifier).resetSuccessFlag();
         }
       },
     );
