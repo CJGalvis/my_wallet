@@ -1,4 +1,4 @@
-import 'constans.dart';
+import 'constants.dart';
 
 class FormValidators {
   static bool emailValidator(String value) {
