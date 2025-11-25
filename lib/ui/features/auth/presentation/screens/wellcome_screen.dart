@@ -20,7 +20,6 @@ class WellcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
-    final presenter = ref.read(wellcomePresenterProvider(args));
     final sessionNotifier = ref.watch(userSessionProvider.notifier);
 
     ref.listen<WellcomeState>(
@@ -52,54 +51,72 @@ class WellcomeScreen extends ConsumerWidget {
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model =
-            WellcomeMapper().fromMap(labelsMap[args.language]!);
+        final model = WellcomeMapper().fromMap(
+          labelsMap[args.language]!,
+        );
 
-        return Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              children: [
-                SizedBox(height: 150),
-                FlutterLogo(size: 150),
-                SizedBox(height: 50),
-                HeaderTitle(title: model.title),
-                SizedBox(height: 30),
-                _OptionsAuth(
-                  presenter: presenter,
-                  model: model,
-                  args: args,
-                ),
-                SizedBox(height: 20),
-                ButtonSecondary(
-                  label: model.singInBtnLabel,
-                  callback: args.onLoginPressed,
-                ),
-                SizedBox(height: 30),
-                TextDisclaimer(description: model.policyText),
-              ],
-            ),
-          ),
+        return _WellcomeView(
+          model: model,
+          args: args,
         );
       },
     );
   }
 }
 
-class _OptionsAuth extends StatelessWidget {
-  const _OptionsAuth({
-    required this.presenter,
+class _WellcomeView extends StatelessWidget {
+  const _WellcomeView({
     required this.model,
     required this.args,
   });
 
-  final WellcomePresenter presenter;
   final WellcomeModelUi model;
   final WellcomeArgs args;
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        child: Column(
+          children: [
+            SizedBox(height: 150),
+            FlutterLogo(size: 150),
+            SizedBox(height: 50),
+            HeaderTitle(title: model.title),
+            SizedBox(height: 30),
+            _OptionsAuth(
+              model: model,
+              args: args,
+            ),
+            SizedBox(height: 20),
+            ButtonSecondary(
+              label: model.singInBtnLabel,
+              callback: args.onLoginPressed,
+            ),
+            SizedBox(height: 30),
+            TextDisclaimer(description: model.policyText),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OptionsAuth extends ConsumerWidget {
+  const _OptionsAuth({
+    required this.model,
+    required this.args,
+  });
+
+  final WellcomeModelUi model;
+  final WellcomeArgs args;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final presenter = ref.read(wellcomePresenterProvider(args));
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

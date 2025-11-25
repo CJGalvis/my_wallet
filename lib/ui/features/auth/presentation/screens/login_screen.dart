@@ -53,49 +53,71 @@ class LoginScreen extends ConsumerWidget {
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model =
-            LoginMapper().fromMap(labelsMap[args.language]!);
+        final model = LoginMapper().fromMap(
+          labelsMap[args.language]!,
+        );
 
-        return Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const FlutterLogo(size: 100),
-                    const SizedBox(height: 50),
-                    HeaderTitle(title: model.title),
-                    const SizedBox(height: 30),
-                    _LoginForm(
-                      presenter: presenter,
-                      model: model,
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonText(
-                      label: model.forgotPasswordLabel,
-                      callback: () {},
-                    ),
-                    ButtonSecondary(
-                      label: model.singInBtnLabel,
-                      callback: () {
-                        FocusScope.of(context).unfocus();
-                        if (!presenter.isValidForm()) return;
-                        presenter.signIn();
-                      },
-                    ),
-                    ButtonText(
-                      label: model.singUpBtnLabel,
-                      callback: args.onNewAccount,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+        return _LoginView(
+          model: model,
+          presenter: presenter,
+          args: args,
         );
       },
+    );
+  }
+}
+
+class _LoginView extends StatelessWidget {
+  const _LoginView({
+    required this.model,
+    required this.presenter,
+    required this.args,
+  });
+
+  final LoginModelUi model;
+  final LoginPresenter presenter;
+  final LoginArgs args;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const FlutterLogo(size: 100),
+                const SizedBox(height: 50),
+                HeaderTitle(title: model.title),
+                const SizedBox(height: 30),
+                _LoginForm(
+                  presenter: presenter,
+                  model: model,
+                ),
+                const SizedBox(height: 10),
+                ButtonText(
+                  label: model.forgotPasswordLabel,
+                  callback: () {},
+                ),
+                ButtonSecondary(
+                  label: model.singInBtnLabel,
+                  callback: () {
+                    FocusScope.of(context).unfocus();
+                    if (!presenter.isValidForm()) return;
+                    presenter.signIn();
+                  },
+                ),
+                ButtonText(
+                  label: model.singUpBtnLabel,
+                  callback: args.onNewAccount,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

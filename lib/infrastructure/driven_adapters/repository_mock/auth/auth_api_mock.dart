@@ -10,13 +10,13 @@ class AuthApiMock extends AuthGateway {
   Future<(ErrorItem?, UserAuth?)> signIn(
     LoginEntity loginEntity,
   ) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
 
     return Future.value(
       (
         ErrorItem(
           code: 999,
-          message: 'Login error',
+          message: 'Login error mock',
         ),
         null,
       ),
@@ -29,7 +29,13 @@ class AuthApiMock extends AuthGateway {
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, null));
+    return Future.value((
+      ErrorItem(
+        code: 999,
+        message: 'Register error mock',
+      ),
+      null
+    ));
   }
 
   @override

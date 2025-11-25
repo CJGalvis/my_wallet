@@ -36,6 +36,10 @@ class RegisterNotifier extends _$RegisterNotifier {
     state = state.copyWith(errorMessage: message);
   }
 
+  void clearError() {
+    state = state.copyWith(errorMessage: '');
+  }
+
   void registerSuccess() {
     state = state.copyWith(registerSuccess: true);
   }
