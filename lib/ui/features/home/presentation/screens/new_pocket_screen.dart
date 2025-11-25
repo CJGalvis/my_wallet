@@ -12,7 +12,7 @@ import '../mappers/new_pocket_mapper.dart';
 import '../models/new_pocket_model_ui.dart';
 import '../providers/providers.dart';
 
-//ToDo: agrear formulario y validacion 
+//ToDo: agrear formulario y validacion
 
 class NewPocketScreen extends ConsumerWidget {
   static const String routeName = '/new-pocket';
@@ -23,73 +23,94 @@ class NewPocketScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
-    final newPocket = ref.watch(newPocketProvider);
-    final controllerType =
-        TextEditingController(text: newPocket.type.name);
 
     return asyncLabels.when(
       loading: () => LoadingScreen(),
       error: (error, stackTrace) => ErrorScreen(),
       data: (labelsMap) {
-        final model =
-            NewPocketMapper().fromMap(labelsMap[args.language]!);
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(model.appBarTitle),
-            leading: IconButton(
-              onPressed: () {
-                context.pop();
-              },
-              icon: Icon(Icons.close),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  PocketPreview(),
-                  SizedBox(height: sizeBox20),
-                  CustomInput(
-                    readOnly: true,
-                    controller: controllerType,
-                    onTap: () =>
-                        _openBottomSheet(context, ref, model),
-                    prefixIcon: Icons.payments_outlined,
-                    onChanged: (value) {},
-                    texthint: model.typePocketInput.textHint,
-                    label: model.typePocketInput.label,
-                  ),
-                  SizedBox(height: sizeBox20),
-                  CustomInput(
-                    prefixIcon: Icons.text_fields,
-                    onChanged:
-                        ref.read(newPocketProvider.notifier).setName,
-                    texthint: model.namePocketInput.textHint,
-                    label: model.namePocketInput.label,
-                  ),
-                  SizedBox(height: sizeBox20),
-                  CustomInputBalance(
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: true),
-                    prefixIcon: Icons.attach_money_outlined,
-                    onChanged: (value) =>
-                        _onChangeBalance(value, ref),
-                    texthint: model.balancePocketInput.textHint,
-                    label: model.balancePocketInput.label,
-                  ),
-                  SizedBox(height: sizeBox20),
-                  ButtonPrimary(
-                    callback: args.onPressedPrimaryButton,
-                    label: model.btnSave,
-                  ),
-                ],
-              ),
-            ),
-          ),
+        final model = NewPocketMapper().fromMap(
+          labelsMap[args.language]!,
+        );
+        
+        return NewPocketView(
+          args: args,
+          model: model,
         );
       },
+    );
+  }
+}
+
+class NewPocketView extends ConsumerWidget {
+  final NewPocketModelUi model;
+  final NewPocketArgs args;
+
+  const NewPocketView({
+    super.key,
+    required this.model,
+    required this.args,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final newPocket = ref.watch(newPocketProvider);
+
+    final controllerType = TextEditingController(
+      text: newPocket.type.name,
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(model.appBarTitle),
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: Icon(Icons.close),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              PocketPreview(),
+              SizedBox(height: sizeBox20),
+              CustomInput(
+                readOnly: true,
+                controller: controllerType,
+                onTap: () => _openBottomSheet(context, ref, model),
+                prefixIcon: Icons.payments_outlined,
+                onChanged: (value) {},
+                texthint: model.typePocketInput.textHint,
+                label: model.typePocketInput.label,
+              ),
+              SizedBox(height: sizeBox20),
+              CustomInput(
+                prefixIcon: Icons.text_fields,
+                onChanged:
+                    ref.read(newPocketProvider.notifier).setName,
+                texthint: model.namePocketInput.textHint,
+                label: model.namePocketInput.label,
+              ),
+              SizedBox(height: sizeBox20),
+              CustomInputBalance(
+                keyboardType:
+                    TextInputType.numberWithOptions(decimal: true),
+                prefixIcon: Icons.attach_money_outlined,
+                onChanged: (value) => _onChangeBalance(value, ref),
+                texthint: model.balancePocketInput.textHint,
+                label: model.balancePocketInput.label,
+              ),
+              SizedBox(height: sizeBox20),
+              ButtonPrimary(
+                callback: args.onPressedPrimaryButton,
+                label: model.btnSave,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

@@ -1,7 +1,7 @@
-import 'package:my_wallet/ui/features/auth/domain/entities/login_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/user_auth_model.dart';
+import '../../domain/entities/login_entity.dart';
 import '../states/login_state.dart';
 
 part 'login_provider.g.dart';
@@ -32,12 +32,6 @@ class LoginNotifier extends _$LoginNotifier {
   void showError(String message) {
     state = state.copyWith(
       errorMessage: message,
-    );
-  }
-
-  void clearError() {
-    state = state.copyWith(
-      errorMessage: '',
     );
   }
 

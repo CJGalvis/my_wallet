@@ -6,6 +6,7 @@ import '../../../../design_system/design_system.dart';
 import '../../domain/models/summary_type.dart';
 import '../args/home_args.dart';
 import '../mappers/home_mapper.dart';
+import '../models/home_model_ui.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
@@ -21,81 +22,102 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLabels = ref.watch(languageProvider);
-    final userSession = ref.watch(userSessionProvider);
-    final incomes = ref.watch(incomesProvider);
-    final expenses = ref.watch(expensesProvider);
-    final themeMode = ref.watch(themeAppProvider);
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model = HomeMapper().fromMap(labelsMap[args.language]!);
+        final model = HomeMapper().fromMap(
+          labelsMap[args.language]!,
+        );
 
-        return Scaffold(
-          appBar: AppBar(
-            toolbarHeight: sizeAppBar,
-            title: _GreetingUser(
-              '${model.appBar.greeting} ${userSession.name}',
-            ),
-            leading: _Avatar(
-              onPressed: args.onPressedProfile,
-              photo: userSession.photo ?? model.appBar.avatar,
-            ),
-            actions: [
-              IconButton(
-                onPressed: args.onPressedSettings,
-                icon: Icon(Icons.settings_outlined),
-              ),
-              _ThemeModeButton(
-                themeMode: themeMode,
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Pockets(
-                  labelNewPocket: model.newPocketLabel,
-                  onPressedPocket: args.onPressedPocket,
-                  onPressedNewPocket: args.onPressedNewPocket,
-                ),
-                SizedBox(height: padding10),
-                SummaryCard(
-                  callback: args.onPressedIncomes,
-                  type: SummaryType.incomes,
-                  title: model.incomesLabel,
-                  description: model.descriptionIncomes,
-                  value: incomes,
-                ),
-                SizedBox(height: sizeBox20),
-                SummaryCard(
-                  type: SummaryType.expenses,
-                  title: model.expensesLabel,
-                  description: model.descriptionExpenses,
-                  value: expenses,
-                  callback: args.onPressedExpenses,
-                ),
-                SizedBox(height: sizeBox20),
-                Balance(label: model.currentBalance),
-                SizedBox(height: sizeBox20),
-                RecordsCategories(title: model.categoryExpenses),
-                SizedBox(height: sizeBox20),
-                LastRecords(
-                  title: model.latestRecords,
-                  labelShowMore: model.labelShowMore,
-                  onPressedShowMore: args.onPressedRecords,
-                ),
-                SizedBox(height: 100),
-              ],
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: args.onPressedNewRecord,
-            child: Icon(Icons.add),
-          ),
+        return _HomeView(
+          model: model,
+          args: args,
         );
       },
+    );
+  }
+}
+
+class _HomeView extends ConsumerWidget {
+  const _HomeView({
+    required this.model,
+    required this.args,
+  });
+
+  final HomeModelUi model;
+  final HomeArgs args;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userSession = ref.watch(userSessionProvider);
+    final incomes = ref.watch(incomesProvider);
+    final expenses = ref.watch(expensesProvider);
+    final themeMode = ref.watch(themeAppProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: sizeAppBar,
+        title: _GreetingUser(
+          '${model.appBar.greeting} ${userSession.name}',
+        ),
+        leading: _Avatar(
+          onPressed: args.onPressedProfile,
+          photo: userSession.photo ?? model.appBar.avatar,
+        ),
+        actions: [
+          IconButton(
+            onPressed: args.onPressedSettings,
+            icon: Icon(Icons.settings_outlined),
+          ),
+          _ThemeModeButton(
+            themeMode: themeMode,
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Pockets(
+              labelNewPocket: model.newPocketLabel,
+              onPressedPocket: args.onPressedPocket,
+              onPressedNewPocket: args.onPressedNewPocket,
+            ),
+            SizedBox(height: padding10),
+            SummaryCard(
+              callback: args.onPressedIncomes,
+              type: SummaryType.incomes,
+              title: model.incomesLabel,
+              description: model.descriptionIncomes,
+              value: incomes,
+            ),
+            SizedBox(height: sizeBox20),
+            SummaryCard(
+              type: SummaryType.expenses,
+              title: model.expensesLabel,
+              description: model.descriptionExpenses,
+              value: expenses,
+              callback: args.onPressedExpenses,
+            ),
+            SizedBox(height: sizeBox20),
+            Balance(label: model.currentBalance),
+            SizedBox(height: sizeBox20),
+            RecordsCategories(title: model.categoryExpenses),
+            SizedBox(height: sizeBox20),
+            LastRecords(
+              title: model.latestRecords,
+              labelShowMore: model.labelShowMore,
+              onPressedShowMore: args.onPressedRecords,
+            ),
+            SizedBox(height: 100),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: args.onPressedNewRecord,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:my_wallet/domain/models/user_auth_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../../domain/models/user_auth_model.dart';
 import '../states/wellcome_state.dart';
 
 part 'wellcome_provider.g.dart';
