@@ -5,7 +5,6 @@ import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
-import '../../../../helpers/theme.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../presenters/wellcome_presenter.dart';
@@ -23,8 +22,6 @@ class WellcomeScreen extends ConsumerWidget {
     final asyncLabels = ref.watch(languageProvider);
     final presenter = ref.read(wellcomePresenterProvider(args));
     final sessionNotifier = ref.watch(userSessionProvider.notifier);
-    final isDark =
-        ref.read(themeAppProvider.notifier).isDark(context);
 
     ref.listen<WellcomeState>(
       wellcomeProvider,
@@ -59,32 +56,29 @@ class WellcomeScreen extends ConsumerWidget {
             WellcomeMapper().fromMap(labelsMap[args.language]!);
 
         return Scaffold(
-          body: Container(
-            width: double.infinity,
-            decoration: AuthTheme.getBackground(context, isDark),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 150),
-                  const FlutterLogo(size: 150),
-                  const SizedBox(height: 50),
-                  HeaderTitle(title: model.title),
-                  const SizedBox(height: 30),
-                  _OptionsAuth(
-                    presenter: presenter,
-                    model: model,
-                    args: args,
-                  ),
-                  const SizedBox(height: 20),
-                  ButtonSecondary(
-                    label: model.singInBtnLabel,
-                    callback: args.onLoginPressed,
-                  ),
-                  const SizedBox(height: 30),
-                  TextDisclaimer(description: model.policyText),
-                ],
-              ),
+          backgroundColor: Theme.of(context).primaryColor,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              children: [
+                SizedBox(height: 150),
+                FlutterLogo(size: 150),
+                SizedBox(height: 50),
+                HeaderTitle(title: model.title),
+                SizedBox(height: 30),
+                _OptionsAuth(
+                  presenter: presenter,
+                  model: model,
+                  args: args,
+                ),
+                SizedBox(height: 20),
+                ButtonSecondary(
+                  label: model.singInBtnLabel,
+                  callback: args.onLoginPressed,
+                ),
+                SizedBox(height: 30),
+                TextDisclaimer(description: model.policyText),
+              ],
             ),
           ),
         );
