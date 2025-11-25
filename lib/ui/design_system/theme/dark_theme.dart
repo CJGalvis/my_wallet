@@ -22,6 +22,9 @@ class AppDarkTheme {
           ),
           iconColor: Colors.white70,
         ),
+        cardTheme: CardThemeData(
+          color: Colors.white54,
+        )
       );
 
   static TextTheme __textTheme() {
