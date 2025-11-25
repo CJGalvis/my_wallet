@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_wallet/ui/features/home/presentation/providers/records_provider.dart';
 
 import '../../../../../domain/providers/theme_provider.dart';
 import '../../../../design_system/design_system.dart';
-import '../providers/last_records_provider.dart';
 import 'widgets.dart';
 
 class LastRecords extends ConsumerWidget {
@@ -20,9 +20,10 @@ class LastRecords extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lastRecords = ref.watch(lastRecordsProvider);
+    final lastRecords = ref.watch(recordsProvider);
     final isDark =
         ref.watch(themeAppProvider.notifier).isDark(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -38,7 +39,7 @@ class LastRecords extends ConsumerWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: lastRecords.length,
+                itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {
                   return ItemRecord(record: lastRecords[index]);
                 },

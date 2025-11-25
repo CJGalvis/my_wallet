@@ -18,17 +18,15 @@ class ItemRecord extends StatelessWidget {
     final symbol = isIncome ? '+' : '-';
 
     return ListTile(
-      leading: record.icon != null
-          ? CircleAvatar(
-              backgroundColor: color,
-              child: Icon(
-                record.icon,
-                color: Colors.white,
-              ),
-            )
-          : null,
+      leading: CircleAvatar(
+        backgroundColor: color,
+        child: Icon(
+          record.category.icon,
+          color: Colors.white,
+        ),
+      ),
       title: Text(
-        record.category,
+        record.category.name,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
@@ -48,7 +46,7 @@ class ItemRecord extends StatelessWidget {
             ),
             Text(
               FormatHelper.date(record.date),
-               style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodySmall,
             )
           ],
         ),

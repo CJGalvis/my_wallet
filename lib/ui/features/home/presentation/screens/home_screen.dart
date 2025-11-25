@@ -103,8 +103,6 @@ class _HomeView extends ConsumerWidget {
             SizedBox(height: sizeBox20),
             Balance(label: model.currentBalance),
             SizedBox(height: sizeBox20),
-            RecordsCategories(title: model.categoryExpenses),
-            SizedBox(height: sizeBox20),
             LastRecords(
               title: model.latestRecords,
               labelShowMore: model.labelShowMore,

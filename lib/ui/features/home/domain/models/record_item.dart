@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
 
+import 'category_record.dart';
 import 'summary_type.dart';
 
 class RecordItem {
-  final IconData? icon;
   final String pocket;
-  final String category;
+  final CategoryRecord category;
   final double value;
   final DateTime date;
   final SummaryType type;
   final String? description;
 
   RecordItem({
-    this.icon,
     this.description,
     required this.pocket,
     required this.category,
