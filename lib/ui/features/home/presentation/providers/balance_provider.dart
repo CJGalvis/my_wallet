@@ -6,6 +6,8 @@ part 'balance_provider.g.dart';
 @riverpod
 double balance(Ref ref) {
   final pockets = ref.watch(pocketProvider);
+  if (pockets.isEmpty) return 0;
+
   final balance =
       pockets.map((p) => p.balance).reduce((a, b) => a + b);
   return balance;

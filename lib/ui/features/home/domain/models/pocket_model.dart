@@ -1,4 +1,6 @@
 
+import 'package:uuid/uuid.dart';
+
 import 'pocket_type.dart';
 
 class Pocket {
@@ -15,7 +17,7 @@ class Pocket {
   });
 
   factory Pocket.initial() => Pocket(
-        id: '',
+        id: Uuid().v4(),
         type: PocketType.initial(),
         name: '',
         balance: 0,

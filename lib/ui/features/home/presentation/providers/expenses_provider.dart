@@ -8,6 +8,7 @@ part 'expenses_provider.g.dart';
 @riverpod
 double expenses(Ref ref) {
   final records = ref.watch(recordsProvider);
+  if (records.isEmpty) return 0;
   final balance = records
       .where((a) => a.type == SummaryType.expenses)
       .map((p) => p.value)

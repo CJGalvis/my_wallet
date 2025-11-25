@@ -31,7 +31,7 @@ class NewPocketScreen extends ConsumerWidget {
         final model = NewPocketMapper().fromMap(
           labelsMap[args.language]!,
         );
-        
+
         return NewPocketView(
           args: args,
           model: model,
@@ -104,7 +104,12 @@ class NewPocketView extends ConsumerWidget {
               ),
               SizedBox(height: sizeBox20),
               ButtonPrimary(
-                callback: args.onPressedPrimaryButton,
+                callback: () {
+                  ref
+                      .read(pocketProvider.notifier)
+                      .addNewPocket(newPocket);
+                  args.onPressedPrimaryButton.call();
+                },
                 label: model.btnSave,
               ),
             ],

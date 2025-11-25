@@ -105,6 +105,7 @@ class _HomeView extends ConsumerWidget {
             SizedBox(height: sizeBox20),
             LastRecords(
               title: model.latestRecords,
+              labelEmpty: model.latestRecordsEmpty,
               labelShowMore: model.labelShowMore,
               onPressedShowMore: args.onPressedRecords,
             ),

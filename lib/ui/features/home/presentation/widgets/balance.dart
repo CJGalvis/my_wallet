@@ -16,6 +16,7 @@ class Balance extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final balance = ref.watch(balanceProvider);
+    
     final isDark =
         ref.read(themeAppProvider.notifier).isDark(context);
 

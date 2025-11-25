@@ -8,12 +8,14 @@ import 'widgets.dart';
 
 class LastRecords extends ConsumerWidget {
   final String title;
+  final String labelEmpty;
   final String labelShowMore;
   final VoidCallback onPressedShowMore;
 
   const LastRecords({
     super.key,
     required this.title,
+    required this.labelEmpty,
     required this.onPressedShowMore,
     required this.labelShowMore,
   });
@@ -21,6 +23,7 @@ class LastRecords extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lastRecords = ref.watch(recordsProvider);
+
     final isDark =
         ref.watch(themeAppProvider.notifier).isDark(context);
 
@@ -36,18 +39,24 @@ class LastRecords extends ConsumerWidget {
             children: [
               TitleFeed(title: title),
               Divider(),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (BuildContext context, int index) {
-                  return ItemRecord(record: lastRecords[index]);
-                },
-              ),
-              ButtonText(
-                callback: onPressedShowMore,
-                label: labelShowMore,
-              )
+              lastRecords.isEmpty
+                  ? Center(
+                      child: Text(labelEmpty),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 2,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemRecord(record: lastRecords[index]);
+                      },
+                    ),
+              lastRecords.isNotEmpty
+                  ? ButtonText(
+                      callback: onPressedShowMore,
+                      label: labelShowMore,
+                    )
+                  : SizedBox.shrink()
             ],
           ),
         ),

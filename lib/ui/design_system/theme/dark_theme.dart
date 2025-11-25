@@ -10,7 +10,18 @@ class AppDarkTheme {
         floatingActionButtonTheme: _floatingButtonTheme(),
         primaryColorDark: Colors.blueGrey.shade800,
         highlightColor: Colors.white70,
-        hintColor: Colors.white30
+        hintColor: Colors.white30,
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Colors.blueGrey.shade900,
+        ),
+        listTileTheme: ListTileThemeData(
+          titleTextStyle: TextStyle().copyWith(
+            color: Colors.white70,
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+          ),
+          iconColor: Colors.white70,
+        ),
       );
 
   static TextTheme __textTheme() {

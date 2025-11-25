@@ -11,5 +11,6 @@
     "currentBalance": "Saldo actual",
     "categoryExpenses": "Gastos por categoría",
     "latestRecords": "Últimos registros",
+    "latestRecordsEmpty": "Sin registros aún...",
     "labelShowMore": "Ver más"
 }
