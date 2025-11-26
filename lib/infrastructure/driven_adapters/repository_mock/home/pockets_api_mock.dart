@@ -4,8 +4,8 @@ import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
 
 class PocketsApiMock extends PocketsGateway {
   @override
-  Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) async {
+  Future<(ErrorItem?, bool)> createPocket(Pocket pocket) async {
    await Future.delayed(Duration(seconds: 1));
-   return Future.value((null, pocket));
+   return Future.value((null, true));
   }
 }

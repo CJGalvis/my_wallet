@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/formatter_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/features/home/presentation/interfaces/new_pocket_interface.dart';
 import 'package:my_wallet/ui/features/home/presentation/presenters/new_pocket_presenter.dart';
-import 'package:my_wallet/ui/features/home/presentation/states/new_pocket_state.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
-import '../../../../helpers/helpers.dart';
+import '../../../../helpers/message_helper.dart';
 import '../../domain/models/pocket_type.dart';
 import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
@@ -17,54 +17,68 @@ import '../providers/providers.dart';
 
 //ToDo: agrear formulario y validacion
 
-class NewPocketScreen extends ConsumerWidget {
+class NewPocketScreen extends ConsumerStatefulWidget {
   static const String routeName = '/new-pocket';
   final NewPocketArgs args;
 
   const NewPocketScreen({super.key, required this.args});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NewPocketScreen> createState() =>
+      _NewPocketScreenState();
+}
+
+class _NewPocketScreenState extends ConsumerState<NewPocketScreen>
+    implements NewPocketInterface {
+  late NewPocketPresenter _presenter;
+  late NewPocketModelUi _model;
+  late Loading _loading;
+
+  @override
+  Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
-
-    ref.listen<NewPocketState>(
-      newPocketProvider,
-      (previous, next) {
-        if (next.isLoading) {
-          Loading().show(context);
-        } else {
-          Loading().hide();
-        }
-
-        if (next.errorMessage.isNotEmpty) {
-          MessageHelper.showSnackBar(
-            context,
-            message: next.errorMessage,
-            isError: true,
-          );
-        }
-
-        if (next.registerSuccess) {
-          ref.read(pocketProvider.notifier).addNewPocket(next.pocket);
-          args.createdSuccess.call();
-          ref.read(newPocketProvider.notifier).resetSuccessFlag();
-        }
-      },
-    );
 
     return asyncLabels.when(
       loading: () => LoadingScreen(),
       error: (error, stackTrace) => ErrorScreen(),
       data: (labelsMap) {
-        final model = NewPocketMapper().fromMap(
-          labelsMap[args.language]!,
+        _model = NewPocketMapper().fromMap(
+          labelsMap[widget.args.language]!,
         );
 
         return NewPocketView(
-          args: args,
-          model: model,
+          presenter: _presenter,
+          args: widget.args,
+          model: _model,
         );
       },
+    );
+  }
+
+  @override
+  void initState() {
+    _presenter = NewPocketPresenter(this, widget.args);
+    _loading = Loading();
+    super.initState();
+  }
+
+  @override
+  void createdSuccess() {
+    widget.args.createdSuccess.call();
+  }
+
+  @override
+  void showLoading() => _loading.show(context);
+
+  @override
+  void hideLoading() => _loading.hide();
+
+  @override
+  void showError(String message) {
+    MessageHelper.showSnackBar(
+      context,
+      message: message,
+      isError: true,
     );
   }
 }
@@ -72,20 +86,18 @@ class NewPocketScreen extends ConsumerWidget {
 class NewPocketView extends ConsumerWidget {
   final NewPocketModelUi model;
   final NewPocketArgs args;
+  final NewPocketPresenter presenter;
 
-  const NewPocketView({
-    super.key,
-    required this.model,
-    required this.args,
-  });
+  const NewPocketView(
+      {super.key,
+      required this.model,
+      required this.args,
+      required this.presenter});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final newPocket = ref.watch(newPocketProvider);
-    final presenter = ref.read(newPocketPresenterProvider(args));
-
     final controllerType = TextEditingController(
-      text: newPocket.pocket.type.name,
+      text: '',
     );
 
     return Scaffold(
@@ -134,7 +146,7 @@ class NewPocketView extends ConsumerWidget {
               SizedBox(height: sizeBox20),
               ButtonPrimary(
                 callback: () {
-                  presenter.createPocket(newPocket.pocket);
+                  presenter.createPocket();
                 },
                 label: model.btnSave,
               ),
@@ -264,7 +276,7 @@ class PocketPreview extends ConsumerWidget {
                   ),
                   padding: EdgeInsets.all(5),
                   child: Icon(
-                    newPocket.pocket.type.icon,
+                    newPocket.type.icon,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -272,8 +284,8 @@ class PocketPreview extends ConsumerWidget {
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
-                    newPocket.pocket.name.isNotEmpty
-                        ? newPocket.pocket.name
+                    newPocket.name.isNotEmpty
+                        ? newPocket.name
                         : '...',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -281,7 +293,7 @@ class PocketPreview extends ConsumerWidget {
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
-                    '\$ ${FormatHelper.currency(newPocket.pocket.balance)}',
+                    '\$ ${FormatHelper.currency(newPocket.balance)}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

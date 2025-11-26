@@ -64,7 +64,8 @@ class _HomeView extends ConsumerWidget {
         ),
         leading: _Avatar(
           onPressed: args.onPressedProfile,
-          photo: userSession.photo ?? model.appBar.avatar,
+          // photo: userSession.photo ?? model.appBar.avatar,
+          photo: 'https://avatar.iran.liara.run/public'
         ),
         actions: [
           IconButton(

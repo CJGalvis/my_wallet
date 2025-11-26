@@ -1,45 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/ui/features/home/presentation/providers/providers.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:my_wallet/ui/features/home/domain/models/pocket_type.dart';
 
 import '../../../../../domain/models/error_item.dart';
 import '../../domain/models/pocket_model.dart';
 import '../args/new_pocket_args.dart';
-
-part 'new_pocket_presenter.g.dart';
+import '../interfaces/new_pocket_interface.dart';
 
 class NewPocketPresenter {
   final NewPocketArgs _args;
-  final NewPocketNotifier _notifier;
+  final NewPocketInterface _interface;
 
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
-  NewPocketPresenter(this._notifier, this._args);
+  Pocket newPocket = Pocket(
+    id: '',
+    type: PocketType.initial(),
+    name: '',
+    balance: 0,
+  );
 
-  Future<void> createPocket(Pocket data) async {
-    _notifier.isLoading();
-    final (ErrorItem?, Pocket?) response =
-        await _args.config.pocketsUseCases.createPocket(data);
+  NewPocketPresenter(this._interface, this._args);
+
+  Future<void> createPocket() async {
+    _interface.showLoading();
+    final (ErrorItem?, bool) response =
+        await _args.config.pocketsUseCases.createPocket(newPocket);
 
     final ErrorItem? error = response.$1;
-    final Pocket? success = response.$2;
+    final bool success = response.$2;
 
-    if (success != null) {
-      _notifier.createdSuccess(success);
+    if (success) {
+      _interface.createdSuccess();
     }
 
     if (error != null) {
-      _notifier.showError(error.message);
+      _interface.showError(error.message);
     }
 
-    _notifier.hideLoading();
+    _interface.hideLoading();
   }
-}
-
-@riverpod
-NewPocketPresenter newPocketPresenter(Ref ref, NewPocketArgs args) {
-  final newPocketNotifier = ref.read(newPocketProvider.notifier);
-  return NewPocketPresenter(newPocketNotifier, args);
 }

@@ -4,7 +4,7 @@ import '../../../../ui/features/home/domain/models/pocket_model.dart';
 
 class PocketsApi extends PocketsGateway {
   @override
-  Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) {
+  Future<(ErrorItem?, bool)> createPocket(Pocket pocket) {
     throw UnimplementedError();
   }
 }
