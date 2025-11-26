@@ -5,63 +5,72 @@ import '../../../../../domain/providers/language_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/helpers.dart';
 import '../args/register_args.dart';
+import '../interfaces/register_interface.dart';
 import '../mappers/register_mapper.dart';
 import '../models/register_model_ui.dart';
 import '../presenters/register_presenter.dart';
-import '../providers/register_provider.dart';
-import '../states/register_state.dart';
 
-class RegisterScreen extends ConsumerWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   static const String routeName = '/register';
   final RegisterArgs args;
 
   const RegisterScreen({super.key, required this.args});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RegisterScreen> createState() =>
+      _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen>
+    implements RegisterInterface {
+  late RegisterPresenter _presenter;
+  late RegisterModelUi _model;
+  late Loading _loading;
+
+  @override
+  Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
-    final presenter = ref.read(registerPresenterProvider(args));
-
-    ref.listen<RegisterState>(
-      registerProvider,
-      (previous, next) {
-        if (next.isLoading) {
-          Loading().show(context);
-        } else {
-          Loading().hide();
-        }
-
-        if (next.errorMessage.isNotEmpty) {
-          args.onRegisterError?.call(next.errorMessage);
-          MessageHelper.showSnackBar(
-            context,
-            message: next.errorMessage,
-            isError: true,
-          );
-          ref.read(registerProvider.notifier).resetError();
-        }
-
-        if (next.registerSuccess) {
-          args.onRegisterSuccess.call();
-          ref.read(registerProvider.notifier).resetSuccessFlag();
-        }
-      },
-    );
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model = RegisterMapper().fromMap(
-          labelsMap[args.language]!,
+        _model = RegisterMapper().fromMap(
+          labelsMap[widget.args.language]!,
         );
 
         return _RegisterView(
-          model: model,
-          presenter: presenter,
-          args: args,
+          model: _model,
+          presenter: _presenter,
+          args: widget.args,
         );
       },
+    );
+  }
+
+  @override
+  void initState() {
+    _presenter = RegisterPresenter(this, widget.args);
+    _loading = Loading();
+    super.initState();
+  }
+
+  @override
+  void showLoading() => _loading.show(context);
+
+  @override
+  void hideLoading() => _loading.hide();
+
+  @override
+  void registerSuccess() => widget.args.onRegisterSuccess.call();
+
+  @override
+  void showError(String message) {
+    widget.args.onRegisterError?.call(message);
+    MessageHelper.showSnackBar(
+      context,
+      message: message,
+      isError: true,
     );
   }
 }
@@ -108,7 +117,7 @@ class _RegisterView extends StatelessWidget {
   }
 }
 
-class _RegisterForm extends ConsumerWidget {
+class _RegisterForm extends StatelessWidget {
   const _RegisterForm({
     required this.presenter,
     required this.model,
@@ -118,9 +127,7 @@ class _RegisterForm extends ConsumerWidget {
   final RegisterModelUi model;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final registerNotifier = ref.read(registerProvider.notifier);
-
+  Widget build(BuildContext context) {
     return Form(
       key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -129,7 +136,7 @@ class _RegisterForm extends ConsumerWidget {
           Input(
             texthint: model.texthintUsername,
             label: model.labelUsername,
-            onChanged: registerNotifier.setUsername,
+            onChanged: (value) => presenter.register.username = value,
             validator: (value) =>
                 FormValidators.textValidator(value ?? 'ƒ')
                     ? null
@@ -140,7 +147,7 @@ class _RegisterForm extends ConsumerWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: registerNotifier.setEmail,
+            onChanged: (value) => presenter.register.email = value,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -151,7 +158,7 @@ class _RegisterForm extends ConsumerWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: registerNotifier.setPassword,
+            onChanged: (value) => presenter.register.password = value,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null

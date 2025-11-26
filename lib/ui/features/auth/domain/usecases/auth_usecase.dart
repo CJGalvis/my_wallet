@@ -1,5 +1,4 @@
 import '../../../../../domain/models/error_item.dart';
-import '../../../../../domain/models/user_auth_model.dart';
 import '../entities/login_entity.dart';
 import '../entities/register_entity.dart';
 import '../gateways/auth_gateway.dart';
@@ -13,8 +12,7 @@ class AuthUseCase {
     return _authGateway.signIn(loginEntity);
   }
 
-  Future<(ErrorItem?, UserAuth?)> signUp(
-      RegisterEntity registerEntity) {
+  Future<(ErrorItem?, bool)> signUp(RegisterEntity registerEntity) {
     return _authGateway.signUp(registerEntity);
   }
 

@@ -48,12 +48,12 @@ class AuthApi extends AuthGateway {
   }
 
   @override
-  Future<(ErrorItem?, UserAuth?)> signUp(
+  Future<(ErrorItem?, bool)> signUp(
     RegisterEntity registerEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, null));
+    return Future.value((null, false));
   }
 
   @override
