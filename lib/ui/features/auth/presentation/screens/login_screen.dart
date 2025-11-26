@@ -2,71 +2,76 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/providers/language_provider.dart';
-import '../../../../../domain/providers/user_session_provider.dart';
 import '../../../../design_system/design_system.dart';
 import '../args/login_args.dart';
 import '../../../../helpers/helpers.dart';
+import '../interfaces/login_interface.dart';
 import '../mappers/login_mapper.dart';
 import '../models/login_model_ui.dart';
 import '../presenters/login_presenter.dart';
-import '../providers/login_provider.dart';
-import '../states/login_state.dart';
 
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   static const String routeName = '/login';
   final LoginArgs args;
 
   const LoginScreen({super.key, required this.args});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen>
+    implements LoginInterface {
+  late LoginPresenter _presenter;
+  late LoginModelUi _model;
+  late Loading _loading;
+
+  @override
+  Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
-    final presenter = ref.read(loginPresenterProvider(args));
-    final sessionNotifier = ref.read(userSessionProvider.notifier);
-
-    ref.listen<LoginState>(
-      loginProvider,
-      (previous, next) {
-        if (next.isLoading) {
-          Loading().show(context);
-        } else {
-          Loading().hide();
-        }
-
-        if (next.errorMessage.isNotEmpty) {
-          args.onLoginError?.call(next.errorMessage);
-          MessageHelper.showSnackBar(
-            context,
-            message: next.errorMessage,
-            isError: true,
-          );
-          ref.read(loginProvider.notifier).resetError();
-        }
-
-        if (next.loginSuccess) {
-          sessionNotifier.setUserSession(next.userAuth);
-          args.onLoginSuccess.call();
-          ref.read(loginProvider.notifier).resetSuccessFlag();
-        }
-      },
-    );
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model = LoginMapper().fromMap(
-          labelsMap[args.language]!,
+        _model = LoginMapper().fromMap(
+          labelsMap[widget.args.language]!,
         );
 
         return _LoginView(
-          model: model,
-          presenter: presenter,
-          args: args,
+          model: _model,
+          presenter: _presenter,
+          args: widget.args,
         );
       },
     );
   }
+
+  @override
+  void initState() {
+    _presenter = LoginPresenter(this, widget.args);
+    _loading = Loading();
+    super.initState();
+  }
+
+  @override
+  void hideLoading() => _loading.hide();
+
+  @override
+  void showLoading() => _loading.show(context);
+
+  @override
+  void showError(String message) {
+    widget.args.onLoginError?.call(message);
+    MessageHelper.showSnackBar(
+      context,
+      message: message,
+      isError: true,
+    );
+  }
+
+  @override
+  void loginSuccess() => widget.args.onLoginSuccess.call();
 }
 
 class _LoginView extends StatelessWidget {
@@ -97,23 +102,7 @@ class _LoginView extends StatelessWidget {
                 _LoginForm(
                   presenter: presenter,
                   model: model,
-                ),
-                const SizedBox(height: 10),
-                ButtonText(
-                  label: model.forgotPasswordLabel,
-                  callback: () {},
-                ),
-                ButtonSecondary(
-                  label: model.singInBtnLabel,
-                  callback: () {
-                    FocusScope.of(context).unfocus();
-                    if (!presenter.isValidForm()) return;
-                    presenter.signIn();
-                  },
-                ),
-                ButtonText(
-                  label: model.singUpBtnLabel,
-                  callback: args.onNewAccount,
+                  args: args,
                 ),
               ],
             ),
@@ -128,15 +117,15 @@ class _LoginForm extends ConsumerWidget {
   const _LoginForm({
     required this.presenter,
     required this.model,
+    required this.args,
   });
 
   final LoginPresenter presenter;
   final LoginModelUi model;
+  final LoginArgs args;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginNotifier = ref.read(loginProvider.notifier);
-
     return Form(
       key: presenter.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -146,7 +135,7 @@ class _LoginForm extends ConsumerWidget {
             keyboardType: TextInputType.emailAddress,
             texthint: model.texthintEmail,
             label: model.labelEmail,
-            onChanged: loginNotifier.setEmail,
+            onChanged: (value) => presenter.login.email = value,
             validator: (value) =>
                 FormValidators.emailValidator(value ?? '')
                     ? null
@@ -157,11 +146,28 @@ class _LoginForm extends ConsumerWidget {
             obscureText: true,
             texthint: model.texthintPassword,
             label: model.labelPassword,
-            onChanged: loginNotifier.setPassword,
+            onChanged: (value) => presenter.login.password = value,
             validator: (value) =>
                 FormValidators.minLength(value, minValueLength)
                     ? null
                     : model.textErrorPassword,
+          ),
+          const SizedBox(height: 10),
+          ButtonText(
+            label: model.forgotPasswordLabel,
+            callback: () {},
+          ),
+          ButtonSecondary(
+            label: model.singInBtnLabel,
+            callback: () {
+              FocusScope.of(context).unfocus();
+              if (!presenter.isValidForm()) return;
+              presenter.signIn();
+            },
+          ),
+          ButtonText(
+            label: model.singUpBtnLabel,
+            callback: args.onNewAccount,
           ),
         ],
       ),

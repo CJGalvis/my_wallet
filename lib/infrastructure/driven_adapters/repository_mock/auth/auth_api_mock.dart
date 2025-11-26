@@ -18,7 +18,7 @@ class AuthApiMock extends AuthGateway {
   }) : _sessionManager = session ?? SessionManager();
 
   @override
-  Future<(ErrorItem?, UserAuth?)> signIn(
+  Future<(ErrorItem?, bool)> signIn(
     LoginEntity loginEntity,
   ) async {
     await Future.delayed(Duration(seconds: 1));
@@ -29,7 +29,7 @@ class AuthApiMock extends AuthGateway {
           code: 999,
           message: 'Login error mock',
         ),
-        null,
+        false,
       ),
     );
   }

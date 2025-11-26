@@ -1,6 +1,6 @@
-abstract class WellcomeInterface { 
+abstract class LoginInterface { 
   void showLoading();
   void hideLoading();
   void showError(String message);
-  void googleAuthSuccess();
+  void loginSuccess();
 }

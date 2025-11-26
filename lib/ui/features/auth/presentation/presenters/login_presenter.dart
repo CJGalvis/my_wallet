@@ -1,46 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
-import '../../../../../domain/models/user_auth_model.dart';
+import '../../domain/entities/login_entity.dart';
 import '../args/login_args.dart';
-import '../providers/login_provider.dart';
-
-part 'login_presenter.g.dart';
+import '../interfaces/login_interface.dart';
 
 class LoginPresenter {
   final LoginArgs _args;
-  final LoginNotifier _loginNotifier;
-  
+  final LoginInterface _interface;
+
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isValidForm() => formKey.currentState?.validate() ?? false;
 
-  LoginPresenter(this._loginNotifier, this._args);
+  LoginEntity login = LoginEntity(email: '', password: '');
+
+  LoginPresenter(this._interface, this._args);
 
   Future<void> signIn() async {
-    _loginNotifier.showLoading();
+    _interface.showLoading();
 
-    final (ErrorItem?, UserAuth?) response =
-        await _args.config.authUseCase.signIn(_loginNotifier.login);
+    final (ErrorItem?, bool) response =
+        await _args.config.authUseCase.signIn(login);
 
     final ErrorItem? error = response.$1;
-    final UserAuth? success = response.$2;
+    final bool res = response.$2;
 
-    if (success != null) {
-      _loginNotifier.loginSuccess(success);
+    if (res) {
+      _interface.loginSuccess();
     }
 
     if (error != null) {
-      _loginNotifier.showError(error.message);
+      _interface.showError(error.message);
     }
 
-    _loginNotifier.hideLoading();
+    _interface.hideLoading();
   }
-}
-
-@riverpod
-LoginPresenter loginPresenter(Ref ref, LoginArgs args) {
-  final loginNotifier = ref.read(loginProvider.notifier);
-  return LoginPresenter(loginNotifier, args);
 }

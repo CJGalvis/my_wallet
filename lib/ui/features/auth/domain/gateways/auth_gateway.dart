@@ -5,7 +5,7 @@ import '../entities/login_entity.dart';
 import '../entities/register_entity.dart';
 
 abstract class AuthGateway {
-  Future<(ErrorItem?, UserAuth?)> signIn(LoginEntity loginEntity);
+  Future<(ErrorItem?, bool)> signIn(LoginEntity loginEntity);
 
   Future<(ErrorItem?, UserAuth?)> signUp(RegisterEntity registerEntity);
 

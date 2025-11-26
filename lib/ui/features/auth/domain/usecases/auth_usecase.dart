@@ -9,7 +9,7 @@ class AuthUseCase {
 
   AuthUseCase(this._authGateway);
 
-  Future<(ErrorItem?, UserAuth?)> signIn(LoginEntity loginEntity) {
+  Future<(ErrorItem?, bool)> signIn(LoginEntity loginEntity) {
     return _authGateway.signIn(loginEntity);
   }
 

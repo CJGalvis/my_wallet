@@ -39,12 +39,12 @@ class AuthApi extends AuthGateway {
             );
 
   @override
-  Future<(ErrorItem?, UserAuth?)> signIn(
+  Future<(ErrorItem?, bool)> signIn(
     LoginEntity loginEntity,
   ) async {
     await Future.delayed(Duration(seconds: 3));
 
-    return Future.value((null, null));
+    return Future.value((null, false));
   }
 
   @override
