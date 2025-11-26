@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/formatter_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_wallet/ui/features/home/presentation/interfaces/new_pocket_interface.dart';
-import 'package:my_wallet/ui/features/home/presentation/presenters/new_pocket_presenter.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
@@ -11,8 +9,10 @@ import '../../../../helpers/message_helper.dart';
 import '../../domain/models/pocket_type.dart';
 import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
+import '../interfaces/new_pocket_interface.dart';
 import '../mappers/new_pocket_mapper.dart';
 import '../models/new_pocket_model_ui.dart';
+import '../presenters/new_pocket_presenter.dart';
 import '../providers/providers.dart';
 
 //ToDo: agrear formulario y validacion
@@ -96,8 +96,9 @@ class NewPocketView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final newPocket = ref.watch(newPocketProvider);
     final controllerType = TextEditingController(
-      text: '',
+      text: newPocket.type.name,
     );
 
     return Scaffold(
@@ -146,7 +147,7 @@ class NewPocketView extends ConsumerWidget {
               SizedBox(height: sizeBox20),
               ButtonPrimary(
                 callback: () {
-                  presenter.createPocket();
+                  presenter.createPocket(ref, newPocket);
                 },
                 label: model.btnSave,
               ),
