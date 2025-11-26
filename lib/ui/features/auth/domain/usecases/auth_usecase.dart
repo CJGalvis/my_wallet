@@ -18,7 +18,7 @@ class AuthUseCase {
     return _authGateway.signUp(registerEntity);
   }
 
-  Future<(ErrorItem?, UserAuth?)> signWithGoogle() {
+  Future<(ErrorItem?, bool)> signWithGoogle() {
     return _authGateway.signWithGoogle();
   }
 }

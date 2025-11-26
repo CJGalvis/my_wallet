@@ -1,41 +1,32 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../domain/models/error_item.dart';
-import '../../../../../domain/models/user_auth_model.dart';
 import '../args/wellcome_args.dart';
-import '../providers/wellcome_provider.dart';
+import '../interfaces/wellcome_interface.dart';
 
-part 'wellcome_presenter.g.dart';
 
 class WellcomePresenter {
   final WellcomeArgs _args;
-  final WellcomeNotifier _wellcomeNotifier;
+  final WellcomeInterface _interface;
 
-  WellcomePresenter(this._wellcomeNotifier, this._args);
+  WellcomePresenter(this._interface, this._args);
 
   Future<void> signWithGoogle() async {
-    _wellcomeNotifier.showLoading();
+    _interface.showLoading();
 
-    final (ErrorItem?, UserAuth?) response =
+    final (ErrorItem?, bool) response =
         await _args.config.authUseCase.signWithGoogle();
 
     final ErrorItem? error = response.$1;
-    final UserAuth? res = response.$2;
+    final bool res = response.$2;
 
-    if (res != null) {
-      _wellcomeNotifier.signSuccess(res);
+    if (res) {
+      _interface.googleAuthSuccess();
     }
 
     if (error != null) {
-      _wellcomeNotifier.showError(error.message);
+      _interface.showError(error.message);
     }
 
-    _wellcomeNotifier.hideLoading();
+    _interface.hideLoading();
   }
-}
-
-@riverpod
-WellcomePresenter wellcomePresenter(Ref ref, WellcomeArgs args) {
-  final wellcomeNotifier = ref.read(wellcomeProvider.notifier);
-  return WellcomePresenter(wellcomeNotifier, args);
 }

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:api_http_client/api_http_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
+import '../../../../domain/mappers/user_auth_mapper.dart';
 import '../../../../domain/models/error_item.dart';
 import '../../../../domain/models/user_auth_model.dart';
 import '../../../../ui/features/auth/domain/entities/login_entity.dart';
@@ -54,14 +57,14 @@ class AuthApi extends AuthGateway {
   }
 
   @override
-  Future<(ErrorItem?, UserAuth?)> signWithGoogle() async {
+  Future<(ErrorItem?, bool)> signWithGoogle() async {
     try {
       User? user = await _googleAuthService.signInWithGoogle();
 
       if (user == null) {
         return (
           ErrorItem(message: "Google sign-in cancelled", code: 001),
-          null
+          false
         );
       }
 
@@ -75,11 +78,15 @@ class AuthApi extends AuthGateway {
         uid: user.uid,
       );
 
-      return (null, userAuth);
+      final userMap = UserAuthMapper().toMap(userAuth);
+
+      _sessionManager.setUserSession(json.encode(userMap));
+
+      return (null, true);
     } catch (e) {
       return (
         ErrorItem(message: e.toString(), code: 999),
-        null,
+        false,
       );
     }
   }

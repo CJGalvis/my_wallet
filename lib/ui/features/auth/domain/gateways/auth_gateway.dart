@@ -9,5 +9,5 @@ abstract class AuthGateway {
 
   Future<(ErrorItem?, UserAuth?)> signUp(RegisterEntity registerEntity);
 
-  Future<(ErrorItem?, UserAuth?)> signWithGoogle();
+  Future<(ErrorItem?, bool)> signWithGoogle();
 }

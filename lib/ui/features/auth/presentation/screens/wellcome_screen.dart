@@ -5,75 +5,86 @@ import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/message_helper.dart';
 import '../args/wellcome_args.dart';
+import '../interfaces/wellcome_interface.dart';
 import '../mappers/wellcome_mapper.dart';
 import '../models/wellcome_model_ui.dart';
 import '../presenters/wellcome_presenter.dart';
-import '../providers/wellcome_provider.dart';
-import '../states/wellcome_state.dart';
 
-class WellcomeScreen extends ConsumerWidget {
+class WellcomeScreen extends ConsumerStatefulWidget {
   static const String routeName = '/wellcome';
   final WellcomeArgs args;
 
   const WellcomeScreen({super.key, required this.args});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WellcomeScreen> createState() =>
+      _WellcomeScreenState();
+}
+
+class _WellcomeScreenState extends ConsumerState<WellcomeScreen>
+    implements WellcomeInterface {
+  late Loading _loading;
+  late WellcomePresenter _presenter;
+  late WellcomeModelUi _model;
+
+  @override
+  Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
-    final sessionNotifier = ref.watch(userSessionProvider.notifier);
-
-    ref.listen<WellcomeState>(
-      wellcomeProvider,
-      (previous, next) {
-        if (next.isLoading) {
-          Loading().show(context);
-        } else {
-          Loading().hide();
-        }
-
-        if (next.errorMessage.isNotEmpty) {
-          args.onGoogleAuthError?.call(next.errorMessage);
-          MessageHelper.showSnackBar(
-            context,
-            message: next.errorMessage,
-            isError: true,
-          );
-          ref.read(wellcomeProvider.notifier).resetError();
-        }
-
-        if (next.signedIn) {
-          sessionNotifier.setUserSession(next.userAuth);
-          args.onGoogleAuthSuccess.call();
-          ref.read(wellcomeProvider.notifier).resetSuccessFlag();
-        }
-      },
-    );
 
     return asyncLabels.when(
       loading: () => const LoadingScreen(),
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
-        final model = WellcomeMapper().fromMap(
-          labelsMap[args.language]!,
+        _model = WellcomeMapper().fromMap(
+          labelsMap[widget.args.language]!,
         );
 
         return _WellcomeView(
-          model: model,
-          args: args,
+          model: _model,
+          args: widget.args,
+          presenter: _presenter,
         );
       },
     );
   }
+
+  @override
+  void initState() {
+    _presenter = WellcomePresenter(this, widget.args);
+    _loading = Loading();
+    super.initState();
+  }
+
+  @override
+  void showError(String message) {
+    widget.args.onGoogleAuthError?.call(message);
+    MessageHelper.showSnackBar(
+      context,
+      message: message,
+      isError: true,
+    );
+  }
+
+  @override
+  void googleAuthSuccess() => widget.args.onGoogleAuthSuccess.call();
+
+  @override
+  void showLoading() => _loading.show(context);
+
+  @override
+  void hideLoading() => _loading.hide();
 }
 
 class _WellcomeView extends StatelessWidget {
   const _WellcomeView({
     required this.model,
     required this.args,
+    required this.presenter,
   });
 
   final WellcomeModelUi model;
   final WellcomeArgs args;
+  final WellcomePresenter presenter;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +102,7 @@ class _WellcomeView extends StatelessWidget {
             _OptionsAuth(
               model: model,
               args: args,
+              presenter: presenter,
             ),
             SizedBox(height: 20),
             ButtonSecondary(
@@ -110,15 +122,15 @@ class _OptionsAuth extends ConsumerWidget {
   const _OptionsAuth({
     required this.model,
     required this.args,
+    required this.presenter,
   });
 
   final WellcomeModelUi model;
   final WellcomeArgs args;
+  final WellcomePresenter presenter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final presenter = ref.read(wellcomePresenterProvider(args));
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
