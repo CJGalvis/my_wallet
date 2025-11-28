@@ -4,6 +4,7 @@ class AssetsConfigLanguage {
   static const assetsLanguageWellcome = 'wellcome';
   static const assetsLanguageHome = 'home';
   static const assetsLanguageNewPocket = 'new-pocket';
+  static const assetsLanguageAuthCheck = 'auth-check';
 
   static const assetsFileNames = [
     assetsLanguageLogin,
@@ -11,5 +12,6 @@ class AssetsConfigLanguage {
     assetsLanguageWellcome,
     assetsLanguageHome,
     assetsLanguageNewPocket,
+    assetsLanguageAuthCheck,
   ];
 }

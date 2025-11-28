@@ -1,6 +1,7 @@
 export 'auth/presentation/screens/login_screen.dart';
 export 'auth/presentation/screens/register_screen.dart';
 export 'auth/presentation/screens/wellcome_screen.dart';
+export 'auth/presentation/screens/auth_check_screen.dart';
 export 'home/presentation/screens/home_screen.dart';
 export 'home/presentation/screens/new_pocket_screen.dart';
 export 'home/presentation/screens/new_record_screen.dart';

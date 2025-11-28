@@ -1,30 +1,25 @@
 
-import 'package:uuid/uuid.dart';
-
-import 'pocket_type.dart';
-
 class Pocket {
-  final String id;
-  final PocketType type;
+  final int? id;
+  final String type;
   final String name;
   final double balance;
 
   Pocket({
-    required this.id,
+    this.id,
     required this.type,
     required this.name,
     required this.balance,
   });
 
   factory Pocket.initial() => Pocket(
-        id: Uuid().v4(),
-        type: PocketType.initial(),
+        type: '',
         name: '',
         balance: 0,
       );
 
   Pocket copyWith({
-    PocketType? type,
+    String? type,
     String? name,
     double? balance,
   }) {
@@ -33,6 +28,23 @@ class Pocket {
       type: type ?? this.type,
       name: name ?? this.name,
       balance: balance ?? this.balance,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type,
+      'name': name,
+      'balance': balance,
+    };
+  }
+
+  static Pocket fromMap(Map<String, dynamic> map) {
+    return Pocket(
+      id: map['id'],
+      name: map['name'],
+      type: map['type'],
+      balance: map['balance'],
     );
   }
 }

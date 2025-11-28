@@ -26,7 +26,7 @@ class NewPocketPresenter {
     final bool success = response.$2;
 
     if (success) {
-      ref.read(pocketProvider.notifier).addNewPocket(newPocket);
+      ref.read(pocketsProvider.notifier).addPocket(newPocket);
       _interface.createdSuccess();
     }
 

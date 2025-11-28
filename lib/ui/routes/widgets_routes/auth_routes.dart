@@ -15,9 +15,7 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginSuccess: () {
-
-        },
+        onLoginSuccess: () {},
         onNewAccount: () => context.pushReplacementNamed(
           WellcomeScreen.routeName,
         ),
@@ -55,6 +53,38 @@ class AuthRoutes {
         ),
         onGoogleAuthSuccess: () => context.go(HomeScreen.routeName),
       ),
+    );
+  }
+
+  static AuthCheckScreen getAuthCheckScreen(BuildContext context) {
+    return AuthCheckScreen(
+      args: AuthCheckArgs(
+        language: AssetsConfigLanguage.assetsLanguageAuthCheck,
+        checkSuccess: () => _navigateToHomeDelayed(context),
+        checkError: () => _navigateToWellcomeDelayed(context),
+      ),
+    );
+  }
+
+  static void _navigateToHomeDelayed(BuildContext context) {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        if (context.mounted) {
+          context.go(HomeScreen.routeName);
+        }
+      },
+    );
+  }
+
+  static void _navigateToWellcomeDelayed(BuildContext context) {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        if (context.mounted) {
+          context.go(WellcomeScreen.routeName);
+        }
+      },
     );
   }
 }

@@ -1,20 +1,29 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../../infrastructure/local_storage/local_db.dart';
 import '../../domain/models/pocket_model.dart';
 
 part 'pockets_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class PocketNotifier extends _$PocketNotifier {
+class PocketsNotifier extends _$PocketsNotifier {
   @override
-  List<Pocket> build() {
-    return [];
+  Future<List<Pocket>> build() {
+    return LocalDB.db.getPockets();
   }
 
-  void addNewPocket(Pocket data) {
-    state = [
-      ...state,
-      data,
-    ];
+  Future<void> addPocket(Pocket pocket) async {
+    await LocalDB.db.newPocket(pocket);
+    state = AsyncValue.data(await LocalDB.db.getPockets());
+  }
+
+  Future<void> updatePocket(Pocket pocket) async {
+    await LocalDB.db.updatePocket(pocket);
+    state = AsyncValue.data(await LocalDB.db.getPockets());
+  }
+
+  Future<void> deletePocket(int id) async {
+    await LocalDB.db.deletePocket(id);
+    state = AsyncValue.data(await LocalDB.db.getPockets());
   }
 }

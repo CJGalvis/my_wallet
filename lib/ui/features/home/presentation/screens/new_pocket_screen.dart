@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
 import '../../../../helpers/message_helper.dart';
-import '../../domain/models/pocket_type.dart';
 import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
 import '../interfaces/new_pocket_interface.dart';
@@ -98,7 +97,7 @@ class NewPocketView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final newPocket = ref.watch(newPocketProvider);
     final controllerType = TextEditingController(
-      text: newPocket.type.name,
+      text: newPocket.type,
     );
 
     return Scaffold(
@@ -192,10 +191,7 @@ class NewPocketView extends ConsumerWidget {
                   onTap: () => _selectPocketType(
                     ref,
                     context,
-                    PocketType(
-                      icon: Icons.account_balance,
-                      name: model.typePocketOptions[0],
-                    ),
+                    model.typePocketOptions[0],
                   ),
                 ),
                 ListTile(
@@ -204,10 +200,7 @@ class NewPocketView extends ConsumerWidget {
                   onTap: () => _selectPocketType(
                     ref,
                     context,
-                    PocketType(
-                      icon: Icons.credit_card,
-                      name: model.typePocketOptions[2],
-                    ),
+                    model.typePocketOptions[1],
                   ),
                 ),
                 ListTile(
@@ -216,10 +209,7 @@ class NewPocketView extends ConsumerWidget {
                   onTap: () => _selectPocketType(
                     ref,
                     context,
-                    PocketType(
-                      icon: Icons.money,
-                      name: model.typePocketOptions[2],
-                    ),
+                    model.typePocketOptions[2],
                   ),
                 ),
               ],
@@ -233,14 +223,9 @@ class NewPocketView extends ConsumerWidget {
   void _selectPocketType(
     WidgetRef ref,
     BuildContext context,
-    PocketType type,
+    String type,
   ) {
-    ref.read(newPocketProvider.notifier).setType(
-          PocketType(
-            icon: type.icon,
-            name: type.name,
-          ),
-        );
+    ref.read(newPocketProvider.notifier).setType(type);
     context.pop();
   }
 }
@@ -277,7 +262,7 @@ class PocketPreview extends ConsumerWidget {
                   ),
                   padding: EdgeInsets.all(5),
                   child: Icon(
-                    newPocket.type.icon,
+                    Icons.wallet_outlined,
                     color: Colors.white,
                     size: 20,
                   ),

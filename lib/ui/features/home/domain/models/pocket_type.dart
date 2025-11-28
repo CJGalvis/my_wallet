@@ -11,4 +11,3 @@ class PocketType {
         name: '',
       );
 }
-

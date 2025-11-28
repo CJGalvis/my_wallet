@@ -23,47 +23,67 @@ class Pockets extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pockets = ref.watch(pocketProvider);
+    final pocketAsync = ref.watch(pocketsProvider);
+
     final isDark =
         ref.read(themeAppProvider.notifier).isDark(context);
 
-    final int length = pockets.length >= maxPockets
-        ? pockets.length
-        : pockets.length + 1;
-
-    return Container(
-      decoration: Decorations.pocketBackgroundDecorations(isDark),
-      width: double.infinity,
-      height: 120,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: SizedBox(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: length,
-            itemBuilder: (context, index) {
-              if (index == pockets.length &&
-                  pockets.length < maxPockets) {
-                return Row(
-                  children: [
-                    NewPocket(
-                      label: labelNewPocket,
-                      onPressed: onPressedNewPocket,
-                    ),
-                    const SizedBox(width: 50),
-                  ],
-                );
-              }
-
-              final pocket = pockets[index];
-              return PocketItem(
-                model: pocket,
-                onPressed: onPressedPocket,
-              );
-            },
+    return pocketAsync.when(
+      loading: () => CircularProgressIndicator.adaptive(),
+      error: (error, _) => Center(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.account_balance_wallet, size: 50),
+                Text('Error al cargar tus bolsillos'),
+              ],
+            ),
           ),
         ),
       ),
+      data: (pockets) {
+        final int length = pockets.length >= maxPockets
+            ? pockets.length
+            : pockets.length + 1;
+
+        return Container(
+          decoration: Decorations.pocketBackgroundDecorations(isDark),
+          width: double.infinity,
+          height: 120,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: SizedBox(
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: length,
+                itemBuilder: (context, index) {
+                  if (index == pockets.length &&
+                      pockets.length < maxPockets) {
+                    return Row(
+                      children: [
+                        NewPocket(
+                          label: labelNewPocket,
+                          onPressed: onPressedNewPocket,
+                        ),
+                        const SizedBox(width: 50),
+                      ],
+                    );
+                  }
+
+                  final pocket = pockets[index];
+                  return PocketItem(
+                    model: pocket,
+                    onPressed: onPressedPocket,
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -99,7 +119,7 @@ class PocketItem extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _PocketIcon(model.type.icon),
+                  _PocketIcon(Icons.wallet_outlined),
                   _PocketName(model.name),
                   _PocketBalance(model.balance),
                 ],

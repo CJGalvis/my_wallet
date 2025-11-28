@@ -14,8 +14,14 @@ GoRouter appRouter(Ref ref) {
 
   return GoRouter(
     navigatorKey: key,
-    initialLocation: WellcomeScreen.routeName,
+    initialLocation: AuthCheckScreen.routeName,
     routes: [
+      GoRoute(
+        path: AuthCheckScreen.routeName,
+        name: AuthCheckScreen.routeName,
+        builder: (context, _) =>
+            AuthRoutes.getAuthCheckScreen(context),
+      ),
       GoRoute(
         path: WellcomeScreen.routeName,
         name: WellcomeScreen.routeName,
