@@ -51,7 +51,7 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen>
   @override
   void initState() {
     _presenter = WellcomePresenter(this, widget.args);
-    _loading = Loading();
+    _loading = Loading(context);
     super.initState();
   }
 
@@ -69,7 +69,7 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen>
   void googleAuthSuccess() => widget.args.onGoogleAuthSuccess.call();
 
   @override
-  void showLoading() => _loading.show(context);
+  void showLoading() => _loading.show();
 
   @override
   void hideLoading() => _loading.hide();

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_wallet/domain/providers/providers.dart';
-import 'package:my_wallet/domain/providers/session_manager_provider.dart';
-import 'package:my_wallet/ui/design_system/design_system.dart';
-import 'package:my_wallet/ui/features/auth/presentation/mappers/auth_check_mapper.dart';
-import 'package:my_wallet/ui/features/auth/presentation/models/auth_check_model_ui.dart';
 
+import '../../../../../domain/providers/providers.dart';
+import '../../../../design_system/design_system.dart';
 import '../args/args.dart';
+import '../mappers/auth_check_mapper.dart';
+import '../models/auth_check_model_ui.dart';
 
 class AuthCheckScreen extends ConsumerStatefulWidget {
   static const String routeName = '/check';

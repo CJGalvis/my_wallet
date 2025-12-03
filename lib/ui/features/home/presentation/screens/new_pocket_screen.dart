@@ -55,7 +55,7 @@ class _NewPocketScreenState extends ConsumerState<NewPocketScreen>
   @override
   void initState() {
     _presenter = NewPocketPresenter(this, widget.args);
-    _loading = Loading();
+    _loading = Loading(context);
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _NewPocketScreenState extends ConsumerState<NewPocketScreen>
   }
 
   @override
-  void showLoading() => _loading.show(context);
+  void showLoading() => _loading.show();
 
   @override
   void hideLoading() => _loading.hide();

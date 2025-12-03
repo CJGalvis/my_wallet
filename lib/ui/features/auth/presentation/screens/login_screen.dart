@@ -50,7 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   @override
   void initState() {
     _presenter = LoginPresenter(this, widget.args);
-    _loading = Loading();
+    _loading = Loading(context);
     super.initState();
   }
 
@@ -58,7 +58,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   void hideLoading() => _loading.hide();
 
   @override
-  void showLoading() => _loading.show(context);
+  void showLoading() => _loading.show();
 
   @override
   void showError(String message) {

@@ -2,58 +2,56 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+
 class Loading {
-  static final Loading _instance = Loading._internal();
-  factory Loading() => _instance;
-  Loading._internal();
+  Loading(this.context);
 
-  OverlayEntry? _overlayEntry;
+  final BuildContext context;
+  bool _isLoading = false;
 
-  void show(BuildContext context) {
-    if (_overlayEntry != null) return;
-    _overlayEntry = OverlayEntry(
-      builder: (context) => Stack(
-        children: [
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-              child: Container(
-                color: Colors.black.withValues(alpha: 0.2),
-                alignment: Alignment.center,
-              ),
-            ),
-          ),
-          Center(
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircularProgressIndicator.adaptive(
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'Cargando...',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+  void show({String message = 'Cargando...'}) {
+    _isLoading = true;
+
+    showGeneralDialog<void>(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: PopScope(
+            child: Center(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator.adaptive(),
+                      const SizedBox(height: 5),
+                      Text(
+                        message,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
-    );
-
-    Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
+          ),
+        );
+      },
+    ).then((_) => _isLoading = false);
   }
 
   void hide() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+    if (context.mounted) {
+      if (Navigator.of(context).canPop()) {
+        Navigator.pop(context);
+      }
+    }
   }
+
+  bool isLoading() => _isLoading;
 }

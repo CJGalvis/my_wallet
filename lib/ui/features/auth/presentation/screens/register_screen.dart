@@ -51,12 +51,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
   @override
   void initState() {
     _presenter = RegisterPresenter(this, widget.args);
-    _loading = Loading();
+    _loading = Loading(context);
     super.initState();
   }
 
   @override
-  void showLoading() => _loading.show(context);
+  void showLoading() => _loading.show();
 
   @override
   void hideLoading() => _loading.hide();
