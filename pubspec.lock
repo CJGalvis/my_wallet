@@ -501,10 +501,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_android
-      sha256: "13759dc6dbff7501452830995d1a4446e4af172050e16a0091f98fcf607fa2c7"
+      sha256: "5ec98ab35387c68c0050495bb211bd88375873723a80fae7c2e9266ea0bdd8bb"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.6"
+    version: "7.2.7"
   google_sign_in_ios:
     dependency: transitive
     description:
@@ -1067,10 +1067,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7b6da612b884ab8705435026deea582e55648e6e"
+      resolved-ref: "0a867181a94172a0db8fb78880bb40f05f0814fd"
       url: "https://github.com/CJGalvis/user_session_manager.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   uuid:
     dependency: "direct main"
     description:

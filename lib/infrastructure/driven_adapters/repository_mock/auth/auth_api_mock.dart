@@ -56,6 +56,8 @@ class AuthApiMock extends AuthGateway {
 
     final userMap = UserAuthMapper().toMap(user);
 
+    _sessionManager.saveToken(user.email);
+
     _sessionManager.setUserSession(json.encode(userMap));
 
     return Future.value((

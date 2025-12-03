@@ -19,8 +19,9 @@ class NewPocketPresenter {
 
   Future<void> createPocket(WidgetRef ref, Pocket newPocket) async {
     _interface.showLoading();
+    
     final (ErrorItem?, bool) response =
-        await _args.config.pocketsUseCases.createPocket(newPocket);
+        await _args.config.usecases.createPocket(newPocket);
 
     final ErrorItem? error = response.$1;
     final bool success = response.$2;

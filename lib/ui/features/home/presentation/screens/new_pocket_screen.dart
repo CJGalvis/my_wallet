@@ -14,8 +14,6 @@ import '../models/new_pocket_model_ui.dart';
 import '../presenters/new_pocket_presenter.dart';
 import '../providers/providers.dart';
 
-//ToDo: agrear formulario y validacion
-
 class NewPocketScreen extends ConsumerStatefulWidget {
   static const String routeName = '/new-pocket';
   final NewPocketArgs args;
@@ -117,38 +115,51 @@ class NewPocketView extends ConsumerWidget {
             children: [
               PocketPreview(),
               SizedBox(height: sizeBox20),
-              CustomInput(
-                readOnly: true,
-                controller: controllerType,
-                onTap: () => _openBottomSheet(context, ref, model),
-                prefixIcon: Icons.payments_outlined,
-                onChanged: (value) {},
-                texthint: model.typePocketInput.textHint,
-                label: model.typePocketInput.label,
-              ),
-              SizedBox(height: sizeBox20),
-              CustomInput(
-                prefixIcon: Icons.text_fields,
-                onChanged:
-                    ref.read(newPocketProvider.notifier).setName,
-                texthint: model.namePocketInput.textHint,
-                label: model.namePocketInput.label,
-              ),
-              SizedBox(height: sizeBox20),
-              CustomInputBalance(
-                keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
-                prefixIcon: Icons.attach_money_outlined,
-                onChanged: (value) => _onChangeBalance(value, ref),
-                texthint: model.balancePocketInput.textHint,
-                label: model.balancePocketInput.label,
-              ),
-              SizedBox(height: sizeBox20),
-              ButtonPrimary(
-                callback: () {
-                  presenter.createPocket(ref, newPocket);
-                },
-                label: model.btnSave,
+              Form(
+                key: presenter.formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  children: [
+                    CustomInput(
+                      readOnly: true,
+                      controller: controllerType,
+                      onTap: () =>
+                          _openBottomSheet(context, ref, model),
+                      prefixIcon: Icons.payments_outlined,
+                      onChanged: (value) {},
+                      texthint: model.typePocketInput.textHint,
+                      label: model.typePocketInput.label,
+                    ),
+                    SizedBox(height: sizeBox20),
+                    CustomInput(
+                      prefixIcon: Icons.text_fields,
+                      onChanged: ref
+                          .read(newPocketProvider.notifier)
+                          .setName,
+                      texthint: model.namePocketInput.textHint,
+                      label: model.namePocketInput.label,
+                    ),
+                    SizedBox(height: sizeBox20),
+                    CustomInputBalance(
+                      texthint: model.balancePocketInput.textHint,
+                      label: model.balancePocketInput.label,
+                      prefixIcon: Icons.attach_money_outlined,
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true),
+                      onChanged: (value) =>
+                          _onChangeBalance(value, ref),
+                    ),
+                    SizedBox(height: sizeBox20),
+                    ButtonPrimary(
+                      label: model.btnSave,
+                      callback: () {
+                        FocusScope.of(context).unfocus();
+                        if (!presenter.isValidForm()) return;
+                        presenter.createPocket(ref, newPocket);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
