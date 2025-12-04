@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/features/auth/presentation/screens/wellcome_screen.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
+import '../../../../helpers/helpers.dart';
 import '../../domain/models/summary_type.dart';
 import '../args/home_args.dart';
+import '../interfaces/home_interface.dart';
 import '../mappers/home_mapper.dart';
 import '../models/home_model_ui.dart';
+import '../presenters/home_presenter.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   static const String routeName = '/home';
   final HomeArgs args;
 
@@ -20,7 +25,15 @@ class HomeScreen extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    implements HomeInterface {
+  late final HomePresenter _presenter;
+
+  @override
+  Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
 
     return asyncLabels.when(
@@ -28,14 +41,30 @@ class HomeScreen extends ConsumerWidget {
       error: (err, st) => ErrorScreen(),
       data: (labelsMap) {
         final model = HomeMapper().fromMap(
-          labelsMap[args.language]!,
+          labelsMap[widget.args.language]!,
         );
 
         return _HomeView(
           model: model,
-          args: args,
+          args: widget.args,
         );
       },
+    );
+  }
+
+  @override
+  void initState() {
+    _presenter = HomePresenter(this, widget.args);
+    _presenter.getPockets(ref);
+    super.initState();
+  }
+
+  @override
+  void showError(String message) {
+    MessageHelper.showSnackBar(
+      context,
+      message: message,
+      isError: true,
     );
   }
 }
@@ -59,14 +88,17 @@ class _HomeView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: sizeAppBar,
-        title: _GreetingUser(
-          '${model.appBar.greeting} ${userSession.name}',
+        title: userSession.when(
+          loading: () => CircularProgressIndicator(),
+          error: (error, stackTrace) => Text('Error loading session'),
+          data: (user) => _GreetingUser(
+            '${model.appBar.greeting} ${user?.name}',
+          ),
         ),
         leading: _Avatar(
-          onPressed: args.onPressedProfile,
-          // photo: userSession.photo ?? model.appBar.avatar,
-          photo: 'https://avatar.iran.liara.run/public'
-        ),
+            onPressed: args.onPressedProfile,
+            // photo: userSession.photo ?? model.appBar.avatar,
+            photo: 'https://avatar.iran.liara.run/public'),
         actions: [
           IconButton(
             onPressed: args.onPressedSettings,
@@ -74,6 +106,13 @@ class _HomeView extends ConsumerWidget {
           ),
           _ThemeModeButton(
             themeMode: themeMode,
+          ),
+          IconButton(
+            onPressed: () {
+              ref.read(sessionManagerProvider).clearSession();
+              context.go(WellcomeScreen.routeName);
+            },
+            icon: Icon(Icons.exit_to_app),
           ),
         ],
       ),

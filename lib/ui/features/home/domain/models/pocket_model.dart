@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Pocket {
-  final int? id;
+  final String? id;
   final String type;
   final String name;
+  final String owner;
+  final Timestamp created;
   final double balance;
 
   Pocket({
@@ -10,17 +13,22 @@ class Pocket {
     required this.type,
     required this.name,
     required this.balance,
+    required this.owner,
+    required this.created,
   });
 
   factory Pocket.initial() => Pocket(
         type: '',
         name: '',
         balance: 0,
+        owner: '',
+        created: Timestamp.fromDate(DateTime.now()),
       );
 
   Pocket copyWith({
     String? type,
     String? name,
+    String? owner,
     double? balance,
   }) {
     return Pocket(
@@ -28,6 +36,8 @@ class Pocket {
       type: type ?? this.type,
       name: name ?? this.name,
       balance: balance ?? this.balance,
+      owner: owner ?? this.owner,
+      created: created,
     );
   }
 
@@ -36,6 +46,8 @@ class Pocket {
       'type': type,
       'name': name,
       'balance': balance,
+      'owner': owner,
+      'created': created,
     };
   }
 
@@ -44,7 +56,9 @@ class Pocket {
       id: map['id'],
       name: map['name'],
       type: map['type'],
-      balance: map['balance'],
+      balance: (map['balance'] as num).toDouble(),
+      owner: map['owner'],
+      created: map['created'],
     );
   }
 }

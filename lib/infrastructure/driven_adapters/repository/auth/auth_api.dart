@@ -1,86 +1,88 @@
-import 'dart:convert';
-
-import 'package:api_http_client/api_http_client.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
-import '../../../../domain/mappers/user_auth_mapper.dart';
 import '../../../../domain/models/error_item.dart';
-import '../../../../domain/models/user_auth_model.dart';
 import '../../../../ui/features/auth/domain/entities/login_entity.dart';
 import '../../../../ui/features/auth/domain/entities/register_entity.dart';
 import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
-import '../../../firebase/google_auth_service.dart';
-import '../../../helpers/auth_endpoints.dart';
+import '../../../firebase/firebase_service.dart';
 
 class AuthApi extends AuthGateway {
-  final GoogleAuthService _googleAuthService;
+  final FirebaseService _firebaseService;
   final SessionManager _sessionManager;
-  // ignore: unused_field
-  final HttpClient _apiClient;
 
   AuthApi({
-    GoogleAuthService? googleAuthService,
+    FirebaseService? firebaseService,
     SessionManager? session,
-    HttpClient? client,
-  })  : _googleAuthService = googleAuthService ?? GoogleAuthService(),
-        _sessionManager = session ?? SessionManager(),
-        _apiClient = client ??
-            HttpClient(
-              HttpConfig(
-                baseUrl: AuthEndpoints.firebaseAuthBaseUrl,
-                tokenProvider: () async =>
-                    await (session ?? SessionManager()).getToken(),
-                onUnauthorized: () async {
-                  await (session ?? SessionManager())
-                      .handleUnauthorized();
-                },
-              ),
-            );
+  })  : _firebaseService = firebaseService ?? FirebaseService(),
+        _sessionManager = session ?? SessionManager();
 
   @override
   Future<(ErrorItem?, bool)> signIn(
     LoginEntity loginEntity,
   ) async {
-    await Future.delayed(Duration(seconds: 3));
+    try {
+      final response = await _firebaseService.login(
+        loginEntity.email,
+        loginEntity.password,
+      );
 
-    return Future.value((null, false));
+      Map<String, dynamic> user = response.$2 ?? {};
+
+      _sessionManager.saveToken(user['token']);
+
+      _sessionManager.setUserSession(user);
+
+      return (null, true);
+    } catch (e) {
+      return (
+        ErrorItem(
+          code: 000,
+          message: 'Ocurrió un error en la autenticación',
+        ),
+        false
+      );
+    }
   }
 
   @override
   Future<(ErrorItem?, bool)> signUp(
     RegisterEntity registerEntity,
   ) async {
-    await Future.delayed(Duration(seconds: 3));
+    try {
+      final response = await _firebaseService.register(
+        registerEntity.username,
+        registerEntity.email,
+        registerEntity.password,
+      );
 
-    return Future.value((null, false));
+      Map<String, dynamic> user = response.$2 ?? {};
+
+      _sessionManager.saveToken(user['token']);
+
+      _sessionManager.setUserSession(user);
+
+      return (null, true);
+    } catch (e) {
+      return (
+        ErrorItem(
+          code: 000,
+          message: 'Ocurrió un error al intentar hacer el registro',
+        ),
+        false
+      );
+    }
   }
 
   @override
   Future<(ErrorItem?, bool)> signWithGoogle() async {
     try {
-      User? user = await _googleAuthService.signInWithGoogle();
+      final response = await _firebaseService.googleAuth();
 
-      if (user == null) {
-        return (
-          ErrorItem(message: "Google sign-in cancelled", code: 001),
-          false
-        );
-      }
+      Map<String, dynamic> user = response.$2 ?? {};
 
-      final String? token = await user.getIdToken();
-      _sessionManager.saveToken(token ?? '');
+      _sessionManager.saveToken(user['token']);
 
-      final UserAuth userAuth = UserAuth(
-        name: user.displayName!,
-        email: user.email!,
-        photo: user.photoURL,
-        uid: user.uid,
-      );
-
-      final userMap = UserAuthMapper().toMap(userAuth);
-
-      _sessionManager.setUserSession(json.encode(userMap));
+      _sessionManager.setUserSession(user);
 
       return (null, true);
     } catch (e) {

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../application/config/assets_config_language.dart';
 import '../../../domain/factories/pockets_factory.dart';
-import '../../features/home/config/new_pocket_config.dart';
+import '../../features/home/config/pockets_config.dart';
 import '../../features/home/presentation/args/new_pocket_args.dart';
 import '../../features/screens.dart';
 
@@ -13,7 +13,7 @@ class PocketsRoutes {
       args: NewPocketArgs(
         language: AssetsConfigLanguage.assetsLanguageNewPocket,
         createdSuccess: () => context.pop(),
-        config: NewPocketConfig(
+        config: PocketsConfig(
           PocketsGatewayFactory(context).pocketsGateway,
         ),
       ),

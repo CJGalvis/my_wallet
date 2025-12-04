@@ -8,7 +8,11 @@ class PocketsUseCase {
 
   PocketsUseCase(this._newPocketGateway);
 
-  Future<(ErrorItem?, bool)> createPocket(Pocket loginEntity) {
+  Future<(ErrorItem?, Pocket?)> createPocket(Pocket loginEntity) {
     return _newPocketGateway.createPocket(loginEntity);
+  }
+
+  Future<(ErrorItem?, List<Pocket>?)> getPockets(String owner) {
+    return _newPocketGateway.getPockets(owner);
   }
 }

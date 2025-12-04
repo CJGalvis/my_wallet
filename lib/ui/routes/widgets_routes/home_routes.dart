@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/features/home/config/pockets_config.dart';
 
 import '../../../application/config/assets_config_language.dart';
+import '../../../domain/factories/pockets_factory.dart';
 import '../../features/home/presentation/args/home_args.dart';
 import '../../features/screens.dart';
 
@@ -9,6 +11,9 @@ class HomeRoutes {
   static HomeScreen getHomeScreen(BuildContext context) {
     return HomeScreen(
       args: HomeArgs(
+        pocketsconfig: PocketsConfig(
+          PocketsGatewayFactory(context).pocketsGateway,
+        ),
         language: AssetsConfigLanguage.assetsLanguageHome,
         onPressedProfile: () => context.push(ProfileScreen.routeName),
         onPressedSettings: () =>
@@ -22,8 +27,7 @@ class HomeRoutes {
         onPressedRecords: () => context.push(RecordsScreen.routeName),
         onPressedNewPocket: () =>
             context.push(NewPocketScreen.routeName),
-        onPressedIncomes: () =>
-            context.push(RecordsScreen.routeName),
+        onPressedIncomes: () => context.push(RecordsScreen.routeName),
         onPressedExpenses: () =>
             context.push(RecordsScreen.routeName),
       ),

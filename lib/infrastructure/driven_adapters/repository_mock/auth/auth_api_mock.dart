@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:user_session_manager/user_session_manager.dart';
 
@@ -58,7 +57,7 @@ class AuthApiMock extends AuthGateway {
 
     _sessionManager.saveToken(user.email);
 
-    _sessionManager.setUserSession(json.encode(userMap));
+    _sessionManager.setUserSession(userMap);
 
     return Future.value((
       null,

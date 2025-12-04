@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
-import '../../../../helpers/message_helper.dart';
+import '../../../../helpers/helpers.dart';
 import '../args/new_pocket_args.dart';
 import '../helpers/format_helper.dart';
 import '../interfaces/new_pocket_interface.dart';
@@ -85,11 +85,12 @@ class NewPocketView extends ConsumerWidget {
   final NewPocketArgs args;
   final NewPocketPresenter presenter;
 
-  const NewPocketView(
-      {super.key,
-      required this.model,
-      required this.args,
-      required this.presenter});
+  const NewPocketView({
+    super.key,
+    required this.model,
+    required this.args,
+    required this.presenter,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -129,6 +130,10 @@ class NewPocketView extends ConsumerWidget {
                       onChanged: (value) {},
                       texthint: model.typePocketInput.textHint,
                       label: model.typePocketInput.label,
+                      validator: (value) => FormValidators.minLength(
+                              value, minValueLengthPocket)
+                          ? null
+                          : 'Debe seleccionar un tipo',
                     ),
                     SizedBox(height: sizeBox20),
                     CustomInput(
@@ -138,6 +143,10 @@ class NewPocketView extends ConsumerWidget {
                           .setName,
                       texthint: model.namePocketInput.textHint,
                       label: model.namePocketInput.label,
+                      validator: (value) => FormValidators.minLength(
+                              value, minValueLengthPocket)
+                          ? null
+                          : 'Mínimo 3 caracteres',
                     ),
                     SizedBox(height: sizeBox20),
                     CustomInputBalance(

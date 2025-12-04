@@ -33,6 +33,7 @@ dependencies:
   flutter_multi_formatter: ^2.13.10
   sqflite: ^2.4.2
   path_provider: ^2.1.5
+  cloud_firestore: ^6.1.0
     # path: ../../Paquetes/api_http_client
 
 dev_dependencies:

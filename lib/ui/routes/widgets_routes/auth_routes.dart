@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/ui/routes/widgets_routes/home_routes.dart';
 
 import '../../../application/config/assets_config_language.dart';
 import '../../../domain/factories/auth_factory.dart';
@@ -15,7 +16,9 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginSuccess: () {},
+        onLoginSuccess: () => context.pushReplacementNamed(
+          HomeScreen.routeName,
+        ),
         onNewAccount: () => context.pushReplacementNamed(
           WellcomeScreen.routeName,
         ),
@@ -30,7 +33,9 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onRegisterSuccess: () => debugPrint('Register success'),
+        onRegisterSuccess: () => context.pushReplacementNamed(
+          HomeScreen.routeName,
+        ),
         onAlreadyAccount: () => context.pushReplacementNamed(
           LoginScreen.routeName,
         ),
@@ -60,31 +65,22 @@ class AuthRoutes {
     return AuthCheckScreen(
       args: AuthCheckArgs(
         language: AssetsConfigLanguage.assetsLanguageAuthCheck,
-        checkSuccess: () => _navigateToHomeDelayed(context),
-        checkError: () => _navigateToWellcomeDelayed(context),
+        checkSuccess: () => Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) =>
+                HomeRoutes.getHomeScreen(context),
+            transitionDuration: Duration.zero,
+          ),
+        ),
+        checkError: () => Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => getWellcomeScreen(context),
+            transitionDuration: Duration.zero,
+          ),
+        ),
       ),
-    );
-  }
-
-  static void _navigateToHomeDelayed(BuildContext context) {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        if (context.mounted) {
-          context.go(HomeScreen.routeName);
-        }
-      },
-    );
-  }
-
-  static void _navigateToWellcomeDelayed(BuildContext context) {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        if (context.mounted) {
-          context.go(WellcomeScreen.routeName);
-        }
-      },
     );
   }
 }

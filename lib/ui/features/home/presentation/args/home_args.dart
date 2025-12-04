@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/ui/features/home/config/pockets_config.dart';
 
 import '../../domain/models/pocket_model.dart';
 
@@ -12,6 +13,7 @@ class HomeArgs {
   final VoidCallback onPressedNewPocket;
   final VoidCallback onPressedIncomes;
   final VoidCallback onPressedExpenses;
+  final PocketsConfig pocketsconfig;
 
   HomeArgs({
     required this.language,
@@ -23,5 +25,6 @@ class HomeArgs {
     required this.onPressedNewPocket,
     required this.onPressedIncomes,
     required this.onPressedExpenses,
+    required this.pocketsconfig,
   });
 }

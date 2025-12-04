@@ -6,7 +6,7 @@ import '../../../../design_system/design_system.dart';
 import '../../domain/models/pocket_model.dart';
 import '../helpers/constants.dart';
 import '../helpers/format_helper.dart';
-import '../providers/pockets_provider.dart';
+import '../providers/pockets_cloud_provider.dart';
 import 'widgets.dart';
 
 class Pockets extends ConsumerWidget {
@@ -23,13 +23,18 @@ class Pockets extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pocketAsync = ref.watch(pocketsProvider);
+    final pocketAsync = ref.watch(pocketsCloudProvider);
 
     final isDark =
         ref.read(themeAppProvider.notifier).isDark(context);
 
     return pocketAsync.when(
-      loading: () => CircularProgressIndicator.adaptive(),
+      loading: () => Container(
+        decoration: Decorations.pocketBackgroundDecorations(isDark),
+        width: double.infinity,
+        height: 120,
+        child: CircularProgressIndicator.adaptive(),
+      ),
       error: (error, _) => Center(
         child: Center(
           child: Padding(

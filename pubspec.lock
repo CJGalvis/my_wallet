@@ -186,6 +186,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.2"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      sha256: fc1de79a62fe21615e9012f396070e6121838ef0d879475a4ec8320e79378208
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: "2d2ee96a32ec3dd22fb682295e9bed6336e49a43f056d7841690228adca3ee7d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.4"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: "28c39f3d050bf669787ef13fa0890df2b4af236de864e2db0cc3897b857066cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   code_builder:
     dependency: transitive
     description:
@@ -1067,10 +1091,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "0a867181a94172a0db8fb78880bb40f05f0814fd"
+      resolved-ref: "70b17dd023f4cc10a332490317a9f091cd4e41a0"
       url: "https://github.com/CJGalvis/user_session_manager.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.5"
   uuid:
     dependency: "direct main"
     description:

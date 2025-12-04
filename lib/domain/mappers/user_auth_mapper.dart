@@ -7,17 +7,15 @@ class UserAuthMapper extends Mapper<UserAuth> {
     return UserAuth(
       email: json['email'],
       name: json['name'],
-      uid: json['uid'],
-      photo: json['photo'],
+      photo: json['photo'] ?? '',
     );
   }
 
   @override
-  Map<String, dynamic>? toMap(UserAuth data) {
+  Map<String, dynamic> toMap(UserAuth data) {
     return {
       'email': data.email,
       'name': data.name,
-      'uid': data.uid,
       'photo': data.photo,
     };
   }
