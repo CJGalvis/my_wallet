@@ -1,12 +1,12 @@
 class UserAuth {
   final String name;
   final String email;
-  final String? photo;
+  final String photo;
 
   UserAuth({
     required this.name,
     required this.email,
-    this.photo,
+    required this.photo,
   });
 
   factory UserAuth.initial() => UserAuth(

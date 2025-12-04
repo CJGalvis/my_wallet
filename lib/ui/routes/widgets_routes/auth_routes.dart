@@ -15,10 +15,10 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onLoginSuccess: () => context.pushReplacementNamed(
+        onLoginSuccess: () => context.go(
           HomeScreen.routeName,
         ),
-        onNewAccount: () => context.pushReplacementNamed(
+        onNewAccount: () => context.go(
           WellcomeScreen.routeName,
         ),
       ),
@@ -32,10 +32,10 @@ class AuthRoutes {
         config: AuthConfig(
           AuthGatewayFactory(context).authGateway,
         ),
-        onRegisterSuccess: () => context.pushReplacementNamed(
+        onRegisterSuccess: () => context.go(
           HomeScreen.routeName,
         ),
-        onAlreadyAccount: () => context.pushReplacementNamed(
+        onAlreadyAccount: () => context.go(
           LoginScreen.routeName,
         ),
       ),

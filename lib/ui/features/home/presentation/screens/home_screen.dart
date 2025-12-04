@@ -160,7 +160,8 @@ class _HomeView extends ConsumerWidget {
         ),
         leading: _Avatar(
           onPressed: args.onPressedProfile,
-          photo: user?.photo ?? model.appBar.avatar,
+          photo: user?.photo ?? '',
+          photoDefault: model.appBar.avatar,
         ),
         actions: [
           IconButton(
@@ -225,10 +226,12 @@ class _Avatar extends StatelessWidget {
   const _Avatar({
     required this.photo,
     required this.onPressed,
+    required this.photoDefault,
   });
 
   final String photo;
   final VoidCallback onPressed;
+  final String photoDefault;
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +241,7 @@ class _Avatar extends StatelessWidget {
         padding: EdgeInsets.all(padding10),
         child: CircleAvatar(
           backgroundImage: NetworkImage(
-            photo,
+            photo.isNotEmpty ? photo : photoDefault,
           ),
         ),
       ),
