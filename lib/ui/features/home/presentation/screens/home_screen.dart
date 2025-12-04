@@ -137,8 +137,12 @@ class _HomeView extends ConsumerWidget {
     );
   }
 
-  PreferredSizeWidget? _buildAppBar(AsyncValue<UserAuth?> userSession,
-      ThemeMode themeMode, WidgetRef ref, BuildContext context) {
+  PreferredSizeWidget? _buildAppBar(
+    AsyncValue<UserAuth?> userSession,
+    ThemeMode themeMode,
+    WidgetRef ref,
+    BuildContext context,
+  ) {
     return userSession.when(
       loading: () => AppBar(),
       error: (error, stackTrace) => AppBar(),

@@ -26,15 +26,13 @@ class _AuthCheckScreenState extends ConsumerState<AuthCheckScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final String token = snapshot.data!;
-            if (token.isNotEmpty) {
-              Future.microtask(
-                () => widget.args.checkSuccess.call(),
-              );
-            } else {
-              Future.microtask(
-                () => widget.args.checkError.call(),
-              );
-            }
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (token.isNotEmpty) {
+                widget.args.checkSuccess.call();
+              } else {
+                widget.args.checkError.call();
+              }
+            });
           }
           return SizedBox.shrink();
         },

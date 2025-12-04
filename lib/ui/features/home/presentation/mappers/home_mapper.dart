@@ -8,7 +8,7 @@ class HomeMapper extends Mapper<HomeModelUi> {
     return HomeModelUi(
       appBar: AppBarHome(
         greeting: json['appBar']['greeting'],
-        avatar: json['appBar']['greeting'],
+        avatar: json['appBar']['avatar'],
       ),
       newPocketLabel: json['newPocketLabel'],
       incomesLabel: json['incomesLabel'],
