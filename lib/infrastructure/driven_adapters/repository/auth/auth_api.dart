@@ -87,7 +87,7 @@ class AuthApi extends AuthGateway {
       return (null, true);
     } catch (e) {
       return (
-        ErrorItem(message: e.toString(), code: 999),
+        ErrorItem(message: 'Error al autenticar con google', code: 999),
         false,
       );
     }

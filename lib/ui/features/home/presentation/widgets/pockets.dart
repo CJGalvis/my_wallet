@@ -33,7 +33,9 @@ class Pockets extends ConsumerWidget {
         decoration: Decorations.pocketBackgroundDecorations(isDark),
         width: double.infinity,
         height: 120,
-        child: CircularProgressIndicator.adaptive(),
+        child: Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
       ),
       error: (error, _) => Center(
         child: Center(
