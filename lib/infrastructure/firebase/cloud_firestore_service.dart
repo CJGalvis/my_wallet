@@ -56,7 +56,7 @@ class CloudFirestoreService {
       return data;
     }).toList();
 
-    return results.first;
+    return results.isNotEmpty ? results.first : null;
   }
 
   Future<void> saveNewUser(

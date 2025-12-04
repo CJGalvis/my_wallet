@@ -42,6 +42,7 @@ class FirebaseService {
         {
           'name': userCloud?['username'],
           'email': user.email,
+          'photo': userCloud?['photoURL'],
           'token': token,
         }
       ));
@@ -82,6 +83,7 @@ class FirebaseService {
       await _cloudService.saveNewUser({
         'username': name,
         'email': email,
+        'photo': '',
       });
 
       final token = await user.getIdToken();
@@ -91,6 +93,7 @@ class FirebaseService {
         {
           'name': name,
           'email': user.email,
+          'photo': '',
           'token': token,
         }
       ));
@@ -116,6 +119,7 @@ class FirebaseService {
           null
         );
       }
+      
       final Map<String, dynamic>? userDb =
           await _cloudService.getUser(user.email!);
 
@@ -123,6 +127,7 @@ class FirebaseService {
         await _cloudService.saveNewUser({
           'username': user.displayName,
           'email': user.email,
+          'photo': user.photoURL,
         });
       }
 
@@ -133,6 +138,7 @@ class FirebaseService {
         {
           'name': user.displayName,
           'email': user.email,
+          'photo': user.photoURL,
           'token': token,
         }
       ));

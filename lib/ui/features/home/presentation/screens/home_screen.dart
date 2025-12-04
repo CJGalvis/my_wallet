@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet/domain/models/user_auth_model.dart';
 import 'package:my_wallet/ui/features/auth/presentation/screens/wellcome_screen.dart';
 
 import '../../../../../domain/providers/providers.dart';
@@ -86,35 +87,11 @@ class _HomeView extends ConsumerWidget {
     final themeMode = ref.watch(themeAppProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: sizeAppBar,
-        title: userSession.when(
-          loading: () => CircularProgressIndicator(),
-          error: (error, stackTrace) => Text('Error loading session'),
-          data: (user) => _GreetingUser(
-            '${model.appBar.greeting} ${user?.name}',
-          ),
-        ),
-        leading: _Avatar(
-            onPressed: args.onPressedProfile,
-            // photo: userSession.photo ?? model.appBar.avatar,
-            photo: 'https://avatar.iran.liara.run/public'),
-        actions: [
-          IconButton(
-            onPressed: args.onPressedSettings,
-            icon: Icon(Icons.settings_outlined),
-          ),
-          _ThemeModeButton(
-            themeMode: themeMode,
-          ),
-          IconButton(
-            onPressed: () {
-              ref.read(sessionManagerProvider).clearSession();
-              context.go(WellcomeScreen.routeName);
-            },
-            icon: Icon(Icons.exit_to_app),
-          ),
-        ],
+      appBar: _buildAppBar(
+        userSession,
+        themeMode,
+        ref,
+        context,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -156,6 +133,40 @@ class _HomeView extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: args.onPressedNewRecord,
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  PreferredSizeWidget? _buildAppBar(AsyncValue<UserAuth?> userSession,
+      ThemeMode themeMode, WidgetRef ref, BuildContext context) {
+    return userSession.when(
+      loading: () => AppBar(),
+      error: (error, stackTrace) => AppBar(),
+      data: (user) => AppBar(
+        toolbarHeight: sizeAppBar,
+        title: _GreetingUser(
+          '${model.appBar.greeting} ${user?.name}',
+        ),
+        leading: _Avatar(
+          onPressed: args.onPressedProfile,
+          photo: user?.photo ?? model.appBar.avatar,
+        ),
+        actions: [
+          IconButton(
+            onPressed: args.onPressedSettings,
+            icon: Icon(Icons.settings_outlined),
+          ),
+          _ThemeModeButton(
+            themeMode: themeMode,
+          ),
+          IconButton(
+            onPressed: () {
+              ref.read(sessionManagerProvider).clearSession();
+              context.go(WellcomeScreen.routeName);
+            },
+            icon: Icon(Icons.exit_to_app),
+          ),
+        ],
       ),
     );
   }
