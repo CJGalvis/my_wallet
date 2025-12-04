@@ -1,3 +1,5 @@
+import 'package:user_session_manager/user_session_manager.dart';
+
 import '../../../../domain/models/error_item.dart';
 import '../../../../ui/features/home/domain/gateways/pockets_gateway.dart';
 import '../../../../ui/features/home/domain/models/pocket_model.dart';
@@ -5,10 +7,13 @@ import '../../../firebase/cloud_firestore_service.dart';
 
 class PocketsApi extends PocketsGateway {
   final CloudFirestoreService _cloudFirestore;
+  final SessionManager _sessionManager;
 
   PocketsApi({
     CloudFirestoreService? cloudFirestore,
-  }) : _cloudFirestore = cloudFirestore ?? CloudFirestoreService();
+    SessionManager? session,
+  })  : _cloudFirestore = cloudFirestore ?? CloudFirestoreService(),
+        _sessionManager = session ?? SessionManager();
 
   @override
   Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) async {
@@ -31,9 +36,12 @@ class PocketsApi extends PocketsGateway {
   }
 
   @override
-  Future<(ErrorItem?, List<Pocket>?)> getPockets(String owner) async {
+  Future<(ErrorItem?, List<Pocket>?)> getPockets() async {
     try {
-      final data = await _cloudFirestore.queryPockets(owner);
+      final session = await _sessionManager.getUserSession();
+
+      final data =
+          await _cloudFirestore.queryPockets(session?['email']);
 
       final List<Pocket> pockets =
           data.map((map) => Pocket.fromMap(map)).toList();

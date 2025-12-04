@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_wallet/domain/models/user_auth_model.dart';
 import 'package:my_wallet/ui/features/auth/presentation/screens/wellcome_screen.dart';
+import 'package:my_wallet/ui/features/home/domain/models/pocket_model.dart';
 
 import '../../../../../domain/providers/providers.dart';
 import '../../../../design_system/design_system.dart';
@@ -56,7 +57,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   void initState() {
     _presenter = HomePresenter(this, widget.args);
-    _presenter.getPockets(ref);
+    _presenter.getPockets();
     super.initState();
   }
 
@@ -67,6 +68,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       message: message,
       isError: true,
     );
+  }
+
+  @override
+  void uploadedData(List<Pocket> pockets) {
+    if (!mounted) return;
+    ref.read(pocketsCloudProvider.notifier).setData(pockets);
   }
 }
 

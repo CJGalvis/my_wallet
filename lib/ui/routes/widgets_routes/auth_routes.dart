@@ -6,7 +6,6 @@ import '../../../domain/factories/auth_factory.dart';
 import '../../features/auth/config/auth_config.dart';
 import '../../features/auth/presentation/args/args.dart';
 import '../../features/screens.dart';
-import '../routes.dart';
 
 class AuthRoutes {
   static LoginScreen getLoginScreen(BuildContext context) {
@@ -64,21 +63,8 @@ class AuthRoutes {
   static AuthCheckScreen getAuthCheckScreen(BuildContext context) {
     return AuthCheckScreen(
       args: AuthCheckArgs(
-        checkSuccess: () => Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) =>
-                HomeRoutes.getHomeScreen(context),
-            transitionDuration: Duration.zero,
-          ),
-        ),
-        checkError: () => Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => getWellcomeScreen(context),
-            transitionDuration: Duration.zero,
-          ),
-        ),
+        checkSuccess: () => context.go(HomeScreen.routeName),
+        checkError: () => context.go(WellcomeScreen.routeName),
       ),
     );
   }

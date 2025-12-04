@@ -10,7 +10,7 @@ class PocketsApiMock extends PocketsGateway {
   }
   
   @override
-  Future<(ErrorItem?, List<Pocket>?)> getPockets(String owner) {
+  Future<(ErrorItem?, List<Pocket>?)> getPockets() {
     throw UnimplementedError();
   }
 }
