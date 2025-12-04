@@ -23,7 +23,7 @@ class GoogleAuthService {
 
   Future<User?> signInWithGoogle() async {
     try {
-      _init();
+      await _init();
 
       final googleUser = await _googleSignIn.authenticate();
 
@@ -49,7 +49,7 @@ class GoogleAuthService {
     String password,
   ) async {
     try {
-      _init();
+      await _init();
 
       final UserCredential credential =
           await _auth.createUserWithEmailAndPassword(
@@ -69,7 +69,7 @@ class GoogleAuthService {
     String password,
   ) async {
     try {
-      _init();
+      await _init();
 
       final UserCredential credential =
           await _auth.signInWithEmailAndPassword(

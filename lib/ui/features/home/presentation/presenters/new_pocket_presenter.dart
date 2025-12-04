@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../domain/models/error_item.dart';
-import '../../../../../domain/providers/providers.dart';
 import '../../domain/models/pocket_model.dart';
 import '../args/new_pocket_args.dart';
 import '../interfaces/new_pocket_interface.dart';
@@ -20,12 +19,9 @@ class NewPocketPresenter {
 
   Future<void> createPocket(WidgetRef ref, Pocket newPocket) async {
     _interface.showLoading();
-    final session = ref.read(sessionManagerProvider);
-    final userSession = await session.getUserSession();
-    final newData = newPocket.copyWith(owner: userSession?['email']);
-
+   
     final (ErrorItem?, Pocket?) response =
-        await _args.config.usecases.createPocket(newData);
+        await _args.config.usecases.createPocket(newPocket);
 
     final ErrorItem? error = response.$1;
     final Pocket? data = response.$2;

@@ -18,8 +18,12 @@ class PocketsApi extends PocketsGateway {
   @override
   Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) async {
     try {
+      final session = await _sessionManager.getUserSession();
+
+      final newData = pocket.copyWith(owner: session?['email']);
+
       final data =
-          await _cloudFirestore.saveNewPocket(pocket.toMap());
+          await _cloudFirestore.saveNewPocket(newData.toMap());
 
       final Pocket newPocket = Pocket.fromMap(data);
 
