@@ -38,8 +38,8 @@ class GoogleAuthService {
           await _auth.signInWithCredential(credential);
 
       return userCredential.user;
-    } catch (e) {
-      debugPrint("Sign-in error: $e");
+    } on GoogleSignInException catch (e, _) {
+      debugPrint(e.description);
       return null;
     }
   }
