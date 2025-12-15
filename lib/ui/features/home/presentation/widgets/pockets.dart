@@ -97,12 +97,12 @@ class Pockets extends ConsumerWidget {
 
 class PocketItem extends ConsumerWidget {
   final Pocket model;
-  final ValueChanged<Pocket> onPressed;
+  final ValueChanged<Pocket>? onPressed;
 
   const PocketItem({
     super.key,
     required this.model,
-    required this.onPressed,
+    this.onPressed,
   });
 
   @override
@@ -111,26 +111,26 @@ class PocketItem extends ConsumerWidget {
         ref.read(themeAppProvider.notifier).isDark(context);
 
     return GestureDetector(
-      onTap: () => onPressed.call(model),
+      onTap: () => onPressed?.call(model),
       child: Container(
         margin: EdgeInsets.only(left: 10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            width: 130,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
             color: isDark
                 ? Theme.of(context).primaryColorDark
                 : Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _PocketIcon(Icons.wallet_outlined),
-                  _PocketName(model.name),
-                  _PocketBalance(model.balance),
-                ],
-              ),
+          ),
+          width: 130,
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _PocketIcon(Icons.wallet_outlined),
+                _PocketName(model.name),
+                _PocketBalance(model.balance),
+              ],
             ),
           ),
         ),

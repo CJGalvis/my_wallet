@@ -14,17 +14,9 @@ class AppDarkTheme {
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: Colors.blueGrey.shade900,
         ),
-        listTileTheme: ListTileThemeData(
-          titleTextStyle: TextStyle().copyWith(
-            color: Colors.white70,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-          ),
-          iconColor: Colors.white70,
-        ),
         cardTheme: CardThemeData(
           color: Colors.white54,
-        )
+        ),
       );
 
   static TextTheme __textTheme() {
@@ -45,6 +37,16 @@ class AppDarkTheme {
         color: Colors.blueGrey.shade300,
       ),
       labelSmall: TextStyle(color: Colors.blueGrey, fontSize: 12),
+      displayMedium: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+        color: Colors.blueGrey.shade200,
+      ),
+      displayLarge: TextStyle(
+        fontSize: 26,
+        fontWeight: FontWeight.w500,
+        color: Colors.blueGrey.shade200,
+      ),
     );
   }
 

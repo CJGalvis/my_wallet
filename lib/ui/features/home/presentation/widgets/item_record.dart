@@ -21,12 +21,14 @@ class ItemRecord extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: color,
         child: Icon(
-          record.category.icon,
+          isIncome
+              ? Icons.call_received_outlined
+              : Icons.call_made_outlined,
           color: Colors.white,
         ),
       ),
       title: Text(
-        record.category.name,
+        record.tag,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
@@ -39,10 +41,9 @@ class ItemRecord extends StatelessWidget {
           children: [
             Text(
               '$symbol \$ ${FormatHelper.currency(record.value)}',
-              style: TextStyle(
-                fontSize: 14,
-                color: color,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: color,
+                  ),
             ),
             Text(
               FormatHelper.date(record.date),
