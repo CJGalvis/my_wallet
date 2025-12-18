@@ -7,3 +7,4 @@ export 'input.dart';
 export 'custom_input.dart';
 export 'custom_input_balance.dart';
 export 'title_feed.dart';
+export 'custom_card.dart';

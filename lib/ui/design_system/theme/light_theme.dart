@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 class AppLightTheme {
   static ThemeData theme() => ThemeData(
-      brightness: Brightness.light,
-      primaryColor: Colors.indigo,
-      textTheme: __textTheme(),
-      scaffoldBackgroundColor: Colors.blueGrey.shade50,
-      appBarTheme: _appBarTheme(),
-      floatingActionButtonTheme: _floatingButtonTheme(),
-      primaryColorLight: Colors.indigo,
-      highlightColor: Colors.indigo,
-      hintColor: Colors.indigo.shade200);
+        brightness: Brightness.light,
+        primaryColor: Colors.indigo,
+        textTheme: __textTheme(),
+        scaffoldBackgroundColor: Colors.blueGrey.shade50,
+        appBarTheme: _appBarTheme(),
+        floatingActionButtonTheme: _floatingButtonTheme(),
+        primaryColorLight: Colors.indigo,
+        highlightColor: Colors.indigo,
+        hintColor: Colors.indigo.shade200,
+      );
 
   static TextTheme __textTheme() {
     return TextTheme(
