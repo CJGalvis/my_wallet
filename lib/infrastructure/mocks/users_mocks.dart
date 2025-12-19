@@ -1,5 +1,4 @@
-import '../../domain/models/user_auth_model.dart';
-
+import 'package:my_wallet_core/models/user_auth_model.dart';
 class UsersMocks {
   static UserAuth getUserAuth() => UserAuth(
         name: 'Fulanito',

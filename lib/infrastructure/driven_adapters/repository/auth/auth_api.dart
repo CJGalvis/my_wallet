@@ -1,9 +1,7 @@
+import 'package:my_wallet_auth/my_wallet_auth.dart';
+import 'package:my_wallet_core/my_wallet_core.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
-import '../../../../domain/models/error_item.dart';
-import '../../../../ui/features/auth/domain/entities/login_entity.dart';
-import '../../../../ui/features/auth/domain/entities/register_entity.dart';
-import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
 import '../../../firebase/firebase_service.dart';
 
 class AuthApi extends AuthGateway {
@@ -38,6 +36,7 @@ class AuthApi extends AuthGateway {
         ErrorItem(
           code: 000,
           message: 'Ocurrió un error en la autenticación',
+          description: '',
         ),
         false
       );
@@ -67,6 +66,7 @@ class AuthApi extends AuthGateway {
         ErrorItem(
           code: 000,
           message: 'Ocurrió un error al intentar hacer el registro',
+          description: '',
         ),
         false
       );
@@ -87,7 +87,11 @@ class AuthApi extends AuthGateway {
       return (null, true);
     } catch (e) {
       return (
-        ErrorItem(message: 'Error al autenticar con google', code: 999),
+        ErrorItem(
+          message: 'Error al autenticar con google',
+          code: 999,
+          description: '',
+        ),
         false,
       );
     }

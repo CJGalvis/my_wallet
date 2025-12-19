@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet_auth/my_wallet_auth.dart';
 
 import '../../infrastructure/driven_adapters/repository/auth/auth_api.dart';
 import '../../infrastructure/driven_adapters/repository_mock/auth/auth_api_mock.dart';
 import '../../ui/current_environment.dart';
-import '../../ui/features/auth/domain/gateways/auth_gateway.dart';
 
 class AuthGatewayFactory {
   factory AuthGatewayFactory(BuildContext context) {

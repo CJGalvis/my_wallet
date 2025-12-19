@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_wallet/domain/models/error_item.dart';
+import 'package:my_wallet_core/my_wallet_core.dart';
 
 import 'cloud_firestore_service.dart';
 import 'google_auth_service.dart';
@@ -27,7 +27,11 @@ class FirebaseService {
 
       if (user == null) {
         throw (
-          ErrorItem(message: 'Credenciales inválidas', code: 001),
+          ErrorItem(
+            message: 'Credenciales inválidas',
+            code: 001,
+            description: '',
+          ),
           null,
         );
       }
@@ -52,6 +56,7 @@ class FirebaseService {
           code: 001,
           message:
               'Error al intentar cargar los datos de la autenticación',
+          description: '',
         ),
         null
       ));
@@ -75,6 +80,7 @@ class FirebaseService {
           ErrorItem(
             message: "Error al realizar el registro",
             code: 002,
+            description: '',
           ),
           null
         );
@@ -103,6 +109,7 @@ class FirebaseService {
           code: 001,
           message:
               'Error al intentar cargar los datos de la autenticación',
+          description: '',
         ),
         null
       ));
@@ -115,11 +122,14 @@ class FirebaseService {
 
       if (user == null) {
         return (
-          ErrorItem(message: "Google sign-in cancelled", code: 001),
+          ErrorItem(
+              message: "Google sign-in cancelled",
+              code: 001,
+              description: ''),
           null
         );
       }
-      
+
       final Map<String, dynamic>? userDb =
           await _cloudService.getUser(user.email!);
 
@@ -148,6 +158,7 @@ class FirebaseService {
           code: 001,
           message:
               'Error al intentar cargar los datos de la autenticación',
+          description: '',
         ),
         null
       ));

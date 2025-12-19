@@ -1,11 +1,7 @@
-
+import 'package:my_wallet_auth/my_wallet_auth.dart';
+import 'package:my_wallet_core/my_wallet_core.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
-import '../../../../domain/mappers/user_auth_mapper.dart';
-import '../../../../domain/models/error_item.dart';
-import '../../../../ui/features/auth/domain/entities/login_entity.dart';
-import '../../../../ui/features/auth/domain/entities/register_entity.dart';
-import '../../../../ui/features/auth/domain/gateways/auth_gateway.dart';
 import '../../../mocks/users_mocks.dart';
 
 class AuthApiMock extends AuthGateway {
@@ -26,6 +22,7 @@ class AuthApiMock extends AuthGateway {
         ErrorItem(
           code: 999,
           message: 'Login error mock',
+          description: '',
         ),
         false,
       ),
@@ -42,6 +39,7 @@ class AuthApiMock extends AuthGateway {
       ErrorItem(
         code: 999,
         message: 'Register error mock',
+        description: '',
       ),
       false
     ));

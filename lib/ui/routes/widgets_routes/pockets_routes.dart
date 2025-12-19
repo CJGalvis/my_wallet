@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet_home/my_wallet_home.dart';
 
 import '../../../application/config/assets_config_language.dart';
 import '../../../domain/factories/pockets_factory.dart';
-import '../../features/home/config/pockets_config.dart';
-import '../../features/home/presentation/args/new_pocket_args.dart';
-import '../../features/screens.dart';
+import '../../../domain/providers/language_provider.dart';
 
 class PocketsRoutes {
   static NewPocketScreen getNewPocketScreen(BuildContext context) {
@@ -17,6 +16,7 @@ class PocketsRoutes {
           PocketsGatewayFactory(context).pocketsGateway,
         ),
       ),
+      languageProvider: languageProvider,
     );
   }
 }

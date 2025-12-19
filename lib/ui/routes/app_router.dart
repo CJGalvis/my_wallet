@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_wallet_auth/my_wallet_auth.dart';
+import 'package:my_wallet_home/my_wallet_home.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../features/home/domain/models/pocket_model.dart';
-import '../features/screens.dart';
 import 'routes.dart';
 
 part 'app_router.g.dart';

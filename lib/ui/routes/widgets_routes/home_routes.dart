@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_wallet/ui/features/home/config/pockets_config.dart';
+import 'package:my_wallet/domain/providers/language_provider.dart';
+import 'package:my_wallet_home/my_wallet_home.dart';
 
 import '../../../application/config/assets_config_language.dart';
 import '../../../domain/factories/pockets_factory.dart';
-import '../../features/home/presentation/args/home_args.dart';
-import '../../features/screens.dart';
 
 class HomeRoutes {
   static HomeScreen getHomeScreen(BuildContext context) {
@@ -31,6 +30,7 @@ class HomeRoutes {
         onPressedExpenses: () =>
             context.push(RecordsScreen.routeName),
       ),
+      languageProvider: languageProvider,
     );
   }
 }

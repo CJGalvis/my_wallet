@@ -1,8 +1,7 @@
+import 'package:my_wallet_core/my_wallet_core.dart';
+import 'package:my_wallet_home/my_wallet_home.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
-import '../../../../domain/models/error_item.dart';
-import '../../../../ui/features/home/domain/gateways/pockets_gateway.dart';
-import '../../../../ui/features/home/domain/models/pocket_model.dart';
 import '../../../firebase/cloud_firestore_service.dart';
 
 class PocketsApi extends PocketsGateway {
@@ -33,6 +32,7 @@ class PocketsApi extends PocketsGateway {
         ErrorItem(
           code: 004,
           message: 'Error al intentar crear el nuevo bolsillo',
+          description: '',
         ),
         null
       ));
@@ -56,6 +56,7 @@ class PocketsApi extends PocketsGateway {
         ErrorItem(
           code: 004,
           message: 'Error al intentar cargar los bolsillos',
+          description: '',
         ),
         null
       ));
