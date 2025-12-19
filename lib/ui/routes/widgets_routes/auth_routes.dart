@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_wallet/domain/providers/language_provider.dart';
 import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_home/my_wallet_home.dart';
 
@@ -22,7 +21,6 @@ class AuthRoutes {
           WellcomeScreen.routeName,
         ),
       ),
-      languageProvider: languageProvider,
     );
   }
 
@@ -40,8 +38,6 @@ class AuthRoutes {
           LoginScreen.routeName,
         ),
       ),
-      
-      languageProvider: languageProvider,
     );
   }
 
@@ -59,7 +55,7 @@ class AuthRoutes {
           RegisterScreen.routeName,
         ),
         onGoogleAuthSuccess: () => context.go(HomeScreen.routeName),
-      ), languageProvider: languageProvider,
+      ),
     );
   }
 

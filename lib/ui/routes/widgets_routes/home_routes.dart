@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_wallet/domain/providers/language_provider.dart';
+import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_home/my_wallet_home.dart';
 
 import '../../../application/config/assets_config_language.dart';
@@ -29,8 +29,8 @@ class HomeRoutes {
         onPressedIncomes: () => context.push(RecordsScreen.routeName),
         onPressedExpenses: () =>
             context.push(RecordsScreen.routeName),
+        onPressedExit: () => context.go(WellcomeScreen.routeName),
       ),
-      languageProvider: languageProvider,
     );
   }
 }
