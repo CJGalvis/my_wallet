@@ -5,18 +5,14 @@ import 'package:my_wallet_core/my_wallet_core.dart';
 import '../providers/balance_provider.dart';
 
 class Balance extends ConsumerWidget {
-  const Balance({
-    super.key,
-    required this.label,
-  });
+  const Balance({super.key, required this.label});
   final String label;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balance = ref.watch(balanceProvider);
-    
-    final isDark =
-        ref.read(themeProvider.notifier).isDark(context);
+    final double balance = ref.watch(balanceProvider);
+
+    final isDark = ref.read(themeProvider.notifier).isDark(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -32,11 +28,16 @@ class Balance extends ConsumerWidget {
               Divider(),
               FittedBox(
                 fit: BoxFit.contain,
-                child: Text(
-                  '\$ ${FormatHelper.currency(balance)}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              )
+                child: balance != 0
+                    ? Text(
+                        '\$ ${FormatHelper.currency(balance)}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      )
+                    : Padding(
+                        padding: EdgeInsetsGeometry.only(left: 15),
+                        child: SkeletonLoader(width: 10, height: 10),
+                      ),
+              ),
             ],
           ),
         ),
