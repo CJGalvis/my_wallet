@@ -12,8 +12,8 @@ class HomePresenter {
 
   Future<void> getPockets() async {
     final (ErrorItem?, List<Pocket>?) response = await _args
-        .pocketsconfig
-        .usecases
+        .homeConfig
+        .pocketsUseCases
         .getPockets();
 
     final ErrorItem? error = response.$1;

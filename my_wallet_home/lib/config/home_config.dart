@@ -1,12 +1,12 @@
-
 import 'package:my_wallet_pockets/domain/gateways/pockets_gateway.dart';
 import 'package:my_wallet_pockets/domain/usecases/pockets_usecases.dart';
 
 class HomeConfig {
   final PocketsGateway _pocketsApi;
-  late PocketsUseCase usecases;
+  late PocketsUseCase pocketsUseCases;
 
-  HomeConfig(this._pocketsApi) {
-    usecases = PocketsUseCase(_pocketsApi);
+  HomeConfig({required PocketsGateway pocketsApi})
+    : _pocketsApi = pocketsApi {
+    pocketsUseCases = PocketsUseCase(_pocketsApi);
   }
 }
