@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/providers.dart';
 import '../tokens/tokens.dart';
 
 class ButtonSecondary extends ConsumerWidget {
@@ -16,14 +15,11 @@ class ButtonSecondary extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark =
-        ref.read(themeProvider.notifier).isDark(context);
-
     return MaterialButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radiusCircular),
       ),
-      color: isDark ? Theme.of(context).highlightColor : Colors.white,
+      color: Colors.white70,
       onPressed: callback,
       child: SizedBox(
         height: buttonHeight,

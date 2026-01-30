@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/providers.dart';
 import '../tokens/tokens.dart';
 
 class ButtonText extends ConsumerWidget {
@@ -16,18 +15,13 @@ class ButtonText extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark =
-        ref.read(themeProvider.notifier).isDark(context);
-
     return TextButton(
       onPressed: callback,
       child: Text(
         label,
         style: TextStyle(
           fontSize: labelButtonTextSize,
-          color: isDark
-              ? Theme.of(context).highlightColor
-              : Theme.of(context).highlightColor,
+          color: Colors.white70,
         ),
       ),
     );

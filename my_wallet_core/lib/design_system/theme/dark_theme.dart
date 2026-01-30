@@ -10,7 +10,7 @@ class AppDarkTheme {
         floatingActionButtonTheme: _floatingButtonTheme(),
         primaryColorDark: Colors.blueGrey.shade800,
         highlightColor: Colors.white70,
-        hintColor: Colors.white30,
+        hintColor: Colors.white54,
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: Colors.blueGrey.shade900,
         ),

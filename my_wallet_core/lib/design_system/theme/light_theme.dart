@@ -10,7 +10,7 @@ class AppLightTheme {
         floatingActionButtonTheme: _floatingButtonTheme(),
         primaryColorLight: Colors.indigo,
         highlightColor: Colors.indigo,
-        hintColor: Colors.indigo.shade200,
+        hintColor: Colors.indigo.shade400,
       );
 
   static TextTheme __textTheme() {

@@ -15,6 +15,7 @@ class Loading {
     showGeneralDialog<void>(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
+        
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
           child: PopScope(
@@ -32,6 +33,7 @@ class Loading {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
+                          color: Colors.black45
                         ),
                       ),
                     ],

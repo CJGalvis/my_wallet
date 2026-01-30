@@ -14,7 +14,8 @@ class ThemeNotifier extends Notifier<ThemeMode> {
   bool isDark(BuildContext context) {
     return state == ThemeMode.dark ||
         (state == ThemeMode.system &&
-            Theme.of(context).brightness == Brightness.dark);
+            MediaQuery.platformBrightnessOf(context) ==
+                Brightness.dark);
   }
 
   void setTheme(ThemeMode mode) {

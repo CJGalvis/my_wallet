@@ -12,10 +12,7 @@ class WellcomeScreen extends ConsumerStatefulWidget {
   static const String routeName = '/wellcome';
   final WellcomeArgs args;
 
-  const WellcomeScreen({
-    super.key,
-    required this.args,
-  });
+  const WellcomeScreen({super.key, required this.args});
 
   @override
   ConsumerState<WellcomeScreen> createState() =>
@@ -99,54 +96,20 @@ class _WellcomeView extends StatelessWidget {
             FlutterLogo(size: 150),
             SizedBox(height: 50),
             HeaderTitle(title: model.title),
-            SizedBox(height: 30),
-            _OptionsAuth(
-              model: model,
-              args: args,
-              presenter: presenter,
-            ),
             SizedBox(height: 20),
             ButtonSecondary(
               label: model.singInBtnLabel,
               callback: args.onLoginPressed,
+            ),
+            ButtonText(
+              callback: args.onNewAccountPressed,
+              label: model.labelNewAccount,
             ),
             SizedBox(height: 30),
             TextDisclaimer(description: model.policyText),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _OptionsAuth extends ConsumerWidget {
-  const _OptionsAuth({
-    required this.model,
-    required this.args,
-    required this.presenter,
-  });
-
-  final WellcomeModelUi model;
-  final WellcomeArgs args;
-  final WellcomePresenter presenter;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ButtonCircularSVG(
-          bottomLabel: model.labelGoogle,
-          callback: () => presenter.signWithGoogle(),
-          path: 'assets/icons/google.svg',
-        ),
-        const SizedBox(width: 10),
-        ButtonCircular(
-          bottomLabel: model.labelNewAccount,
-          callback: args.onNewAccountPressed,
-          icon: Icons.person_add_alt_1_outlined,
-        ),
-      ],
     );
   }
 }
