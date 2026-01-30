@@ -80,7 +80,7 @@ class _HomeView extends ConsumerWidget {
     final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
-      appBar: _buildAppBar(userSession, themeMode, context, () {
+      appBar: _buildAppBar(context, userSession, themeMode, () {
         ref.read(sessionManagerProvider).clearSession();
         args.onPressedExit.call();
       }),
@@ -128,9 +128,9 @@ class _HomeView extends ConsumerWidget {
   }
 
   PreferredSizeWidget? _buildAppBar(
+    BuildContext context,
     AsyncValue<UserAuth?> userSession,
     ThemeMode themeMode,
-    BuildContext context,
     VoidCallback exitPressed,
   ) {
     return userSession.when(

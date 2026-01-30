@@ -24,9 +24,9 @@ class Pockets extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pocketAsync = ref.watch(pocketsProvider);
+    final pocketsNotifier = ref.watch(pocketsProvider);
 
-    return pocketAsync.when(
+    return pocketsNotifier.when(
       loading: () => PocketsContainer(
         child: Center(child: CircularProgressIndicator.adaptive()),
       ),
