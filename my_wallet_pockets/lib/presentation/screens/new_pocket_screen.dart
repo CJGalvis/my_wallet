@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_wallet_core/helpers/format_helper.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
 
 import '../args/new_pocket_args.dart';
