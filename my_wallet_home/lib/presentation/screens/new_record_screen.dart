@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_wallet_core/helpers/format_helper.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
 
 import '../../domain/models/summary_type.dart';
-import '../helpers/format_helper.dart';
 import '../providers/providers.dart';
 
 class NewRecordScreen extends ConsumerStatefulWidget {

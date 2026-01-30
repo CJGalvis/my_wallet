@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_home/my_wallet_home.dart';
+import 'package:my_wallet_pockets/domain/models/pocket_model.dart';
 import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {

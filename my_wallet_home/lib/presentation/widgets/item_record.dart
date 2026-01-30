@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet_core/helpers/format_helper.dart';
 
 import '../../domain/models/record_item.dart';
 import '../../domain/models/summary_type.dart';
-import '../helpers/format_helper.dart';
 
 class ItemRecord extends StatelessWidget {
   final RecordItem record;

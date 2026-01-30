@@ -1,5 +1,6 @@
 import 'package:my_wallet_core/my_wallet_core.dart';
-import 'package:my_wallet_home/my_wallet_home.dart';
+import 'package:my_wallet_pockets/domain/gateways/pockets_gateway.dart';
+import 'package:my_wallet_pockets/domain/models/pocket_model.dart';
 import 'package:user_session_manager/user_session_manager.dart';
 
 import '../../../mocks/mocks_response.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'providers.dart';
+import 'package:my_wallet_pockets/presentation/providers/providers.dart';
 
 final balanceProvider = Provider<double>((ref) {
   final pockets = ref.watch(pocketsProvider);

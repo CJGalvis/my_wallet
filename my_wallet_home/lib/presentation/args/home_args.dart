@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet_pockets/config/pockets_config.dart';
+import 'package:my_wallet_pockets/domain/models/pocket_model.dart';
 
-import '../../config/pockets_config.dart';
-import '../../domain/models/pocket_model.dart';
 
 class HomeArgs {
   final String language;

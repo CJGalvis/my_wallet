@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
+import 'package:my_wallet_pockets/domain/models/pocket_model.dart';
+import 'package:my_wallet_pockets/presentation/providers/pockets_provider.dart';
+import 'package:my_wallet_pockets/presentation/widgets/pockets.dart';
 
-import '../../domain/models/pocket_model.dart';
 import '../../domain/models/summary_type.dart';
 import '../args/home_args.dart';
 import '../interfaces/home_interface.dart';
