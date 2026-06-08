@@ -5,10 +5,8 @@ import 'package:my_wallet_pockets/my_wallet_pockets.dart';
 import 'package:my_wallet_records/my_wallet_records.dart';
 
 import '../args/home_args.dart';
-import '../interfaces/home_interface.dart';
 import '../mappers/home_mapper.dart';
 import '../models/home_model_ui.dart';
-import '../presenters/home_presenter.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
@@ -22,10 +20,7 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen>
-    implements HomeInterface {
-  late final HomePresenter _presenter;
-
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncLabels = ref.watch(languageProvider);
@@ -45,24 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   void initState() {
-    _presenter = HomePresenter(this, widget.args);
-    _presenter.getPockets();
     super.initState();
-  }
-
-  @override
-  void showError(ErrorItem error) {
-    MessageHelper.showSnackBar(
-      context,
-      message: error.description,
-      isError: true,
-    );
-  }
-
-  @override
-  void uploadedData(List<Pocket> pockets) {
-    if (!mounted) return;
-    ref.read(pocketsProvider.notifier).loadPockets(pockets);
   }
 }
 
@@ -91,6 +69,7 @@ class _HomeView extends ConsumerWidget {
             labelNewPocket: model.newPocketLabel,
             onPressedPocket: args.onPressedPocket,
             onPressedNewPocket: args.onPressedNewPocket,
+            config: args.pocketsConfig,
           ),
           SizedBox(height: padding10),
           SummaryCard(

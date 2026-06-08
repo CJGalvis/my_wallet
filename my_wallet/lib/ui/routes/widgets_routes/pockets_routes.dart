@@ -9,13 +9,15 @@ import '../../../domain/providers/pockets_gateway_provider.dart';
 
 class PocketsRoutes {
   static NewPocketScreen getNewPocketScreen(
-      BuildContext context, Ref ref) {
+    BuildContext context,
+    Ref ref,
+  ) {
     return NewPocketScreen(
       args: NewPocketArgs(
         language: AssetsConfigLanguage.assetsLanguageNewPocket,
         createdSuccess: () => context.pop(),
         config: PocketsConfig(
-          ref.read(pocketsGatewayProvider),
+          pocketsApi: ref.read(pocketsGatewayProvider),
         ),
       ),
     );

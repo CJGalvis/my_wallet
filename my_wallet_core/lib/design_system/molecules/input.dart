@@ -42,7 +42,7 @@ class Input extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.white,
-          ), // Your desired focus color and width
+          ),
         ),
       ),
       validator: validator,

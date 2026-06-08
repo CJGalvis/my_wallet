@@ -14,7 +14,7 @@ class AuthApiMock extends AuthGateway {
   Future<(ErrorItem?, bool)> signIn(
     LoginEntity loginEntity,
   ) async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     final (ErrorItem?, UserAuth?) response =
         await MocksResponse.getAuthMock(loginEntity.email);

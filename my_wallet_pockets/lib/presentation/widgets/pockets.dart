@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
+import 'package:my_wallet_pockets/config/config.dart';
 import 'package:my_wallet_pockets/domain/models/pocket_model.dart';
+import 'package:my_wallet_pockets/presentation/interfaces/pockets_interface.dart';
+import 'package:my_wallet_pockets/presentation/presenters/pockets_presenter.dart';
 import 'package:my_wallet_pockets/presentation/widgets/pockets_container.dart';
 
 import '../helpers/constants.dart';
@@ -10,11 +13,12 @@ import 'new_pocket.dart';
 import 'pocket_item.dart';
 import 'pocket_item_skeleton.dart';
 
-class Pockets extends ConsumerWidget {
+class Pockets extends ConsumerStatefulWidget {
   final String labelNewPocket;
   final String textErrorLoadPockets;
   final ValueChanged<Pocket> onPressedPocket;
   final VoidCallback onPressedNewPocket;
+  final PocketsConfig config;
 
   const Pockets({
     super.key,
@@ -22,16 +26,25 @@ class Pockets extends ConsumerWidget {
     required this.textErrorLoadPockets,
     required this.onPressedPocket,
     required this.onPressedNewPocket,
+    required this.config,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Pockets> createState() => _PocketsState();
+}
+
+class _PocketsState extends ConsumerState<Pockets>
+    implements PocketsInterface {
+  late final PocketsPresenter _presenter;
+
+  @override
+  Widget build(BuildContext context) {
     final pocketsNotifier = ref.watch(pocketsProvider);
 
     return pocketsNotifier.when(
       loading: () => PocketItemSkeleton(),
       error: (_, _) => PocketsContainer(
-        child: DisplayInfo(textDisplay: textErrorLoadPockets),
+        child: DisplayInfo(textDisplay: widget.textErrorLoadPockets),
       ),
       data: (pockets) {
         final int length = pockets.length >= maxPockets
@@ -51,8 +64,8 @@ class Pockets extends ConsumerWidget {
                     return Row(
                       children: [
                         NewPocket(
-                          label: labelNewPocket,
-                          onPressed: onPressedNewPocket,
+                          label: widget.labelNewPocket,
+                          onPressed: widget.onPressedNewPocket,
                         ),
                         const SizedBox(width: 50),
                       ],
@@ -62,7 +75,7 @@ class Pockets extends ConsumerWidget {
                   final pocket = pockets[index];
                   return PocketItem(
                     model: pocket,
-                    onPressed: onPressedPocket,
+                    onPressed: widget.onPressedPocket,
                   );
                 },
               ),
@@ -71,5 +84,27 @@ class Pockets extends ConsumerWidget {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _presenter = PocketsPresenter(this, widget.config);
+    _presenter.getPockets();
+  }
+
+  @override
+  void showError(ErrorItem error) {
+    MessageHelper.showSnackBar(
+      context,
+      message: error.description,
+      isError: true,
+    );
+  }
+
+  @override
+  void updateData(List<Pocket> pockets) {
+    if (!mounted) return;
+    ref.read(pocketsProvider.notifier).loadPockets(pockets);
   }
 }

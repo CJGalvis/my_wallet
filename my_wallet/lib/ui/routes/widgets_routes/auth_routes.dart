@@ -16,7 +16,7 @@ class AuthRoutes {
       args: LoginArgs(
         language: AssetsConfigLanguage.assetsLanguageLogin,
         config: AuthConfig(
-          ref.read(authGatewayProvider),
+          authApi: ref.read(authGatewayProvider),
         ),
         onLoginSuccess: () => context.go(
           HomeScreen.routeName,
@@ -34,7 +34,7 @@ class AuthRoutes {
       args: RegisterArgs(
         language: AssetsConfigLanguage.assetsLanguageRegister,
         config: AuthConfig(
-          ref.read(authGatewayProvider),
+          authApi: ref.read(authGatewayProvider),
         ),
         onRegisterSuccess: () => context.go(
           HomeScreen.routeName,
@@ -52,7 +52,7 @@ class AuthRoutes {
       args: WellcomeArgs(
         language: AssetsConfigLanguage.assetsLanguageWellcome,
         config: AuthConfig(
-          ref.read(authGatewayProvider),
+          authApi: ref.read(authGatewayProvider),
         ),
         onLoginPressed: () => context.go(
           LoginScreen.routeName,

@@ -12,7 +12,7 @@ class PocketsApiMock extends PocketsGateway {
 
   @override
   Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
 
     final newPocket = pocket.copyWith(
       id: DateTime.timestamp().toString(),
@@ -23,7 +23,7 @@ class PocketsApiMock extends PocketsGateway {
 
   @override
   Future<(ErrorItem?, List<Pocket>?)> getPockets() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     final user = _sessionNotifier.getUser();
 
