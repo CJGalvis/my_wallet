@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_home/my_wallet_home.dart';
 
 import '../../../application/config/assets_config_language.dart';
-import '../../../domain/factories/auth_factory.dart';
+import '../../../domain/providers/auth_gateway_provider.dart';
 
 class AuthRoutes {
-  static LoginScreen getLoginScreen(BuildContext context) {
+  static LoginScreen getLoginScreen(
+    BuildContext context,
+    Ref ref,
+  ) {
     return LoginScreen(
       args: LoginArgs(
         language: AssetsConfigLanguage.assetsLanguageLogin,
         config: AuthConfig(
-          AuthGatewayFactory(context).authGateway,
+          ref.read(authGatewayProvider),
         ),
         onLoginSuccess: () => context.go(
           HomeScreen.routeName,
@@ -24,12 +28,13 @@ class AuthRoutes {
     );
   }
 
-  static RegisterScreen getRegisterScreen(BuildContext context) {
+  static RegisterScreen getRegisterScreen(
+      BuildContext context, Ref ref) {
     return RegisterScreen(
       args: RegisterArgs(
         language: AssetsConfigLanguage.assetsLanguageRegister,
         config: AuthConfig(
-          AuthGatewayFactory(context).authGateway,
+          ref.read(authGatewayProvider),
         ),
         onRegisterSuccess: () => context.go(
           HomeScreen.routeName,
@@ -41,12 +46,13 @@ class AuthRoutes {
     );
   }
 
-  static WellcomeScreen getWellcomeScreen(BuildContext context) {
+  static WellcomeScreen getWellcomeScreen(
+      BuildContext context, Ref ref) {
     return WellcomeScreen(
       args: WellcomeArgs(
         language: AssetsConfigLanguage.assetsLanguageWellcome,
         config: AuthConfig(
-          AuthGatewayFactory(context).authGateway,
+          ref.read(authGatewayProvider),
         ),
         onLoginPressed: () => context.go(
           LoginScreen.routeName,

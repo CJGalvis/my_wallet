@@ -9,21 +9,16 @@ class MocksResponse {
         photo: 'https://avatar.iran.liara.run/public',
       );
 
-  static Future<(ErrorItem?, Map<String, dynamic>?)> getAuthMock(
-      String email) {
+  static Future<(ErrorItem?, UserAuth?)> getAuthMock(String email) {
     switch (email) {
       case user1:
         return Future.value((
           null,
-          {
-            'data': {
-              'user': {
-                'name': 'User One',
-                'email': 'user1@mail.com',
-                'photo': 'https://avatar.iran.liara.run/public',
-              }
-            }
-          }
+          UserAuth(
+            name: 'Usuario',
+            email: 'user1@mail.com',
+            photo: 'https://avatar.iran.liara.run/public',
+          ),
         ));
       default:
         return Future.value((

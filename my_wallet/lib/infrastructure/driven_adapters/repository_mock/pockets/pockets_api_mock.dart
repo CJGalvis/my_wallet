@@ -1,31 +1,34 @@
 import 'package:my_wallet_core/my_wallet_core.dart';
 import 'package:my_wallet_pockets/my_wallet_pockets.dart';
-import 'package:user_session_manager/user_session_manager.dart';
 
 import '../../../mocks/mocks_response.dart';
 
 class PocketsApiMock extends PocketsGateway {
-  final SessionManager _sessionManager;
+  final SessionNotifier _sessionNotifier;
 
   PocketsApiMock({
-    SessionManager? session,
-  }) : _sessionManager = session ?? SessionManager();
+    required SessionNotifier sessionNotifier,
+  }) : _sessionNotifier = sessionNotifier;
 
   @override
   Future<(ErrorItem?, Pocket?)> createPocket(Pocket pocket) async {
     await Future.delayed(Duration(seconds: 3));
-    final newPocket =
-        pocket.copyWith(id: DateTime.timestamp().toString());
+
+    final newPocket = pocket.copyWith(
+      id: DateTime.timestamp().toString(),
+    );
+    
     return Future.value((null, newPocket));
   }
 
   @override
   Future<(ErrorItem?, List<Pocket>?)> getPockets() async {
     await Future.delayed(Duration(seconds: 2));
-    final session = await _sessionManager.getUserSession();
+
+    final user = _sessionNotifier.getUser();
 
     final (ErrorItem?, List<Map<String, dynamic>>?) data =
-        await MocksResponse.getPocketsUser(session?['email']);
+        await MocksResponse.getPocketsUser(user?.email ?? '');
 
     if (data.$2 != null) {
       final List<Pocket> pockets =

@@ -23,23 +23,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: WellcomeScreen.routeName,
         name: WellcomeScreen.routeName,
         builder: (context, _) =>
-            AuthRoutes.getWellcomeScreen(context),
+            AuthRoutes.getWellcomeScreen(context, ref),
       ),
       GoRoute(
         path: LoginScreen.routeName,
         name: LoginScreen.routeName,
-        builder: (context, _) => AuthRoutes.getLoginScreen(context),
+        builder: (context, _) => AuthRoutes.getLoginScreen(context, ref),
       ),
       GoRoute(
         path: RegisterScreen.routeName,
         name: RegisterScreen.routeName,
         builder: (context, _) =>
-            AuthRoutes.getRegisterScreen(context),
+            AuthRoutes.getRegisterScreen(context, ref),
       ),
       GoRoute(
         path: HomeScreen.routeName,
         name: HomeScreen.routeName,
-        builder: (context, _) => HomeRoutes.getHomeScreen(context),
+        builder: (context, _) => HomeRoutes.getHomeScreen(context, ref),
       ),
       GoRoute(
         path: ProfileScreen.routeName,
@@ -55,7 +55,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: NewPocketScreen.routeName,
         name: NewPocketScreen.routeName,
         builder: (context, _) =>
-            PocketsRoutes.getNewPocketScreen(context),
+            PocketsRoutes.getNewPocketScreen(context, ref),
       ),
       GoRoute(
         path: NewRecordScreen.routeName,

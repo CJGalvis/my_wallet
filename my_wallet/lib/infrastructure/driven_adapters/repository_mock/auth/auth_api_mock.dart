@@ -1,15 +1,14 @@
 import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
-import 'package:user_session_manager/user_session_manager.dart';
 
 import '../../../mocks/mocks_response.dart';
 
 class AuthApiMock extends AuthGateway {
-  final SessionManager _sessionManager;
+  final SessionNotifier _sessionManager;
 
   AuthApiMock({
-    SessionManager? session,
-  }) : _sessionManager = session ?? SessionManager();
+    required SessionNotifier sessionNotifier,
+  }) : _sessionManager = sessionNotifier;
 
   @override
   Future<(ErrorItem?, bool)> signIn(
@@ -17,13 +16,13 @@ class AuthApiMock extends AuthGateway {
   ) async {
     await Future.delayed(Duration(seconds: 2));
 
-    final (ErrorItem?, Map?) response =
+    final (ErrorItem?, UserAuth?) response =
         await MocksResponse.getAuthMock(loginEntity.email);
 
     if (response.$2 != null) {
       _sessionManager.saveToken('token123');
 
-      _sessionManager.setUserSession(response.$2!['data']['user']);
+      _sessionManager.setUser(response.$2!);
 
       return (null, true);
     }

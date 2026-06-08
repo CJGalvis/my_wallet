@@ -1,14 +1,13 @@
 import 'package:my_wallet_auth/my_wallet_auth.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
-import 'package:user_session_manager/user_session_manager.dart';
 
 class AuthApi extends AuthGateway {
   // ignore: unused_field
-  final SessionManager _sessionManager;
+  final SessionNotifier _sessionNotifier;
 
   AuthApi({
-    SessionManager? session,
-  }) : _sessionManager = session ?? SessionManager();
+    required SessionNotifier sessionNotifier,
+  }) : _sessionNotifier = sessionNotifier;
   
   @override
   Future<(ErrorItem?, bool)> signIn(LoginEntity loginEntity) {

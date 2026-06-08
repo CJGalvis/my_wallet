@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_wallet_core/my_wallet_core.dart';
@@ -19,11 +18,7 @@ class AuthCheckScreen extends ConsumerStatefulWidget {
 class _AuthCheckScreenState extends ConsumerState<AuthCheckScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+    return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 
   @override
@@ -33,15 +28,15 @@ class _AuthCheckScreenState extends ConsumerState<AuthCheckScreen> {
   }
 
   void _checkSession() async {
-    final sessionNotifier = ref.read(sessionManagerProvider);
-    final token = await sessionNotifier.getToken();
+    final sessionNotifier = ref.read(sessionProvider);
+    final token = sessionNotifier.isLoggedIn;
 
     if (mounted) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (token.isNotEmpty) {
+        if (token) {
           widget.args.checkSuccess.call();
         } else {
-           widget.args.checkError.call();
+          widget.args.checkError.call();
         }
       });
     }

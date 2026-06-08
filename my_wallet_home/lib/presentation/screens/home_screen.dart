@@ -74,14 +74,14 @@ class _HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userSession = ref.watch(userSessionProvider);
+    final userSession = ref.watch(sessionProvider).user;
     final incomes = ref.watch(incomesProvider);
     final expenses = ref.watch(expensesProvider);
     final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
       appBar: _buildAppBar(context, userSession, themeMode, () {
-        ref.read(sessionManagerProvider).clearSession();
+        ref.read(sessionProvider.notifier).clear();
         args.onPressedExit.call();
       }),
       body: ListView(
@@ -129,37 +129,31 @@ class _HomeView extends ConsumerWidget {
 
   PreferredSizeWidget? _buildAppBar(
     BuildContext context,
-    AsyncValue<UserAuth?> userSession,
+    UserAuth? user,
     ThemeMode themeMode,
     VoidCallback exitPressed,
   ) {
-    return userSession.when(
-      loading: () => AppBar(),
-      error: (error, stackTrace) => AppBar(),
-      data: (user) => AppBar(
-        toolbarHeight: sizeAppBar,
-        title: _GreetingUser(
-          '${model.appBar.greeting} ${user?.name}',
-        ),
-        leading: _Avatar(
-          onPressed: args.onPressedProfile,
-          photo: user?.photo ?? '',
-          photoDefault: model.appBar.avatar,
-        ),
-        actions: [
-          IconButton(
-            onPressed: args.onPressedSettings,
-            icon: Icon(Icons.settings_outlined),
-          ),
-          _ThemeModeButton(themeMode: themeMode),
-          IconButton(
-            onPressed: () {
-              exitPressed.call();
-            },
-            icon: Icon(Icons.exit_to_app),
-          ),
-        ],
+    return AppBar(
+      toolbarHeight: sizeAppBar,
+      title: _GreetingUser('${model.appBar.greeting} ${user?.name}'),
+      leading: _Avatar(
+        onPressed: args.onPressedProfile,
+        photo: user?.photo ?? '',
+        photoDefault: model.appBar.avatar,
       ),
+      actions: [
+        IconButton(
+          onPressed: args.onPressedSettings,
+          icon: Icon(Icons.settings_outlined),
+        ),
+        _ThemeModeButton(themeMode: themeMode),
+        IconButton(
+          onPressed: () {
+            exitPressed.call();
+          },
+          icon: Icon(Icons.exit_to_app),
+        ),
+      ],
     );
   }
 }
