@@ -3,6 +3,7 @@ import 'package:my_wallet_pockets/presentation/providers/providers.dart';
 
 final balanceProvider = Provider<double>((ref) {
   final pockets = ref.watch(pocketsProvider);
+  
   return pockets.when(
     loading: () => 0,
     error: (error, _) => 0,

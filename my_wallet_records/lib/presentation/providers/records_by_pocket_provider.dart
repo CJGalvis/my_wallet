@@ -6,7 +6,11 @@ import 'records_provider.dart';
 final recordsByPocketProvider =
     Provider.family<List<RecordItem>, String>((ref, pocket) {
       final records = ref.watch(recordsProvider);
-      return records.isEmpty
-          ? []
-          : records.where((item) => item.pocket == pocket).toList();
+
+      return records.when(
+        loading: () => [],
+        error: (error, _) => [],
+        data: (data) =>
+            data.where((item) => item.pocket == pocket).toList(),
+      );
     });

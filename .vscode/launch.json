@@ -1,0 +1,128 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "my_wallet",
+            "cwd": "my_wallet",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet (profile mode)",
+            "cwd": "my_wallet",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet (release mode)",
+            "cwd": "my_wallet",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_wallet_auth",
+            "cwd": "my_wallet_auth",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet_auth (profile mode)",
+            "cwd": "my_wallet_auth",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet_auth (release mode)",
+            "cwd": "my_wallet_auth",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_wallet_core",
+            "cwd": "my_wallet_core",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet_core (profile mode)",
+            "cwd": "my_wallet_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet_core (release mode)",
+            "cwd": "my_wallet_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_wallet_home",
+            "cwd": "my_wallet_home",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet_home (profile mode)",
+            "cwd": "my_wallet_home",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet_home (release mode)",
+            "cwd": "my_wallet_home",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_wallet_pockets",
+            "cwd": "my_wallet_pockets",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet_pockets (profile mode)",
+            "cwd": "my_wallet_pockets",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet_pockets (release mode)",
+            "cwd": "my_wallet_pockets",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_wallet_records",
+            "cwd": "my_wallet_records",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_wallet_records (profile mode)",
+            "cwd": "my_wallet_records",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_wallet_records (release mode)",
+            "cwd": "my_wallet_records",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

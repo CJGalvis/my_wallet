@@ -7,8 +7,6 @@ import 'package:my_wallet_records/my_wallet_records.dart';
 import '../args/home_args.dart';
 import '../mappers/home_mapper.dart';
 import '../models/home_model_ui.dart';
-import '../providers/providers.dart';
-import '../widgets/widgets.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const String routeName = '/home';
@@ -53,8 +51,6 @@ class _HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userSession = ref.watch(sessionProvider).user;
-    final incomes = ref.watch(incomesProvider);
-    final expenses = ref.watch(expensesProvider);
     final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
@@ -72,20 +68,14 @@ class _HomeView extends ConsumerWidget {
             config: args.pocketsConfig,
           ),
           SizedBox(height: padding10),
-          SummaryCard(
-            callback: args.onPressedIncomes,
-            type: SummaryType.incomes,
-            title: model.incomesLabel,
-            description: model.descriptionIncomes,
-            value: incomes,
-          ),
-          SizedBox(height: sizeBox20),
-          SummaryCard(
-            type: SummaryType.expenses,
-            title: model.expensesLabel,
-            description: model.descriptionExpenses,
-            value: expenses,
-            callback: args.onPressedExpenses,
+          RecordsSummary(
+            incomesTitle: model.incomesLabel,
+            incomesDescription: model.descriptionIncomes,
+            expensesTitle: model.expensesLabel,
+            expensesDescription: model.descriptionExpenses,
+            config: args.recordsConfig,
+            onPressedIncomes: args.onPressedIncomes,
+            onPressedExpenses: args.onPressedExpenses,
           ),
           SizedBox(height: sizeBox20),
           Balance(label: model.currentBalance),

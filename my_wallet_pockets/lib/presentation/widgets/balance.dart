@@ -4,6 +4,7 @@ import 'package:my_wallet_core/my_wallet_core.dart';
 
 import '../providers/balance_provider.dart';
 
+
 class Balance extends ConsumerWidget {
   const Balance({super.key, required this.label});
   final String label;

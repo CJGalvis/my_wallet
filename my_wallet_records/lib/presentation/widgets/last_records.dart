@@ -21,8 +21,7 @@ class LastRecords extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lastRecords = ref.watch(recordsProvider);
 
-    final isDark =
-        ref.watch(themeProvider.notifier).isDark(context);
+    final isDark = ref.watch(themeProvider.notifier).isDark(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -36,24 +35,19 @@ class LastRecords extends ConsumerWidget {
             children: [
               TitleFeed(title: title),
               Divider(),
-              lastRecords.isEmpty
-                  ? Center(
-                      child: Text(labelEmpty),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ItemRecord(record: lastRecords[index]);
-                      },
-                    ),
-              lastRecords.isNotEmpty
-                  ? ButtonText(
-                      callback: onPressedShowMore,
-                      label: labelShowMore,
-                    )
-                  : SizedBox.shrink()
+              lastRecords.when(
+                error: (error, stackTrace) =>
+                    Center(child: Text(labelEmpty)),
+                loading: () => Center(child: Text(labelEmpty)),
+                data: (data) => ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 2,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ItemRecord(record: data[index]);
+                  },
+                ),
+              ),
             ],
           ),
         ),
